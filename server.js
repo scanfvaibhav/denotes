@@ -14,9 +14,9 @@ app.use(require('cors')());
 app.use(require('helmet')());
 app.use('/api/users', require('./routes/users'));
 
-app.listen(PORT, () => console.log(`App running on port ${PORT}`)  );
+const server=app.listen(PORT, () => console.log(`App running on port ${PORT}`)  );
 
-const io = socketIO(app);
+const io = socketIO(server);
 
 var joinRoom = function(msg,socket){
   let myRoom =  "room-"+msg.from+"-"+msg.to;
