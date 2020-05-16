@@ -6,7 +6,7 @@ import Home from "../Layout/Home/Home";
 import NavBar from "../Layout/NavBar/NavBar";
 import Add from "../Layout/Add/Add";
 import Edit from "../Layout/Edit/Edit";
-import Chat from './Layout/Chat/Chat';
+import Chat from '../Layout/Chat/Chat';
 
 const Routes = () => {
   return (
