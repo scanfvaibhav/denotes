@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
-import 'whatwg-fetch';
+import React, { Component } from 'react'
 import io from 'socket.io-client';
-import { TextField} from '@material-ui/core';
-import {List, ChatFrom} from  '../../components/List'
+import { TextField } from '@material-ui/core';
+import { List, ChatFrom } from  '../../components/List'
 import "./Chat.css";
 
 const { isEmpty } = require('lodash');
 
 const socket = io();
-var isTabActive=false;
-
 
 class Chat extends Component {
  
@@ -21,7 +18,8 @@ class Chat extends Component {
       text:"",
       from:"",
       to:"",
-      typing:false
+      typing:false,
+      isTabActive:false
     };
 
 
@@ -42,7 +40,7 @@ componentWilUnmount() {
 }
 
 onTabFocus = (value) => {
-    isTabActive = value;
+    this.setState({isTabActive:value});
     this.sendReceipt();
 }
 
@@ -81,7 +79,7 @@ onFocus = async (e) => {
     await socket.emit('receipt', 
     {
         received :  true,
-        read : isTabActive,
+        read : this.state.isTabActive,
         from:this.state.from,
         to:this.state.to
     });
