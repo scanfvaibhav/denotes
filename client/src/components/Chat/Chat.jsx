@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import io from 'socket.io-client';
 import { TextField } from '@material-ui/core';
-import { List, ChatFrom } from  './List'
+import { List, ChatFrom } from  '../List';
 import "./Chat.css";
 
 const { isEmpty } = require('lodash');
