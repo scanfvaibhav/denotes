@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
-import Chat from '../../components/Chat/Chat';
+import ChatPanel from '../../components/Chat/Chat';
 
 const Chat = () => {
   return (
     <Fragment>
-      <Chat />
+      <ChatPanel />
     </Fragment>
   );
 };
