@@ -18,6 +18,15 @@ const server=app.listen(PORT, () => console.log(`App running on port ${PORT}`)  
 
 const io = socketIO(server);
 
+// Production
+if (process.env.NODE_ENV === 'production') {
+  // Set static folder
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res) => {
+    res.sendfile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 var joinRoom = function(msg,socket){
   let myRoom =  "room-"+msg.from+"-"+msg.to;
   let guestRoom = "room-"+msg.to+"-"+msg.from;
