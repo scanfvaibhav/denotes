@@ -16,7 +16,7 @@ const Routes = () => {
           <Route path="/" component={ Home } exact />
           <Route path="/add" component={ Add } exact />
           <Route path="/edit" component={ Edit } exact />
-          <Route exact path="/chat" component={Chat} exact/>
+          <Route path="/chat" component={Chat} exact/>
 
         </Switch>
       </Fragment>

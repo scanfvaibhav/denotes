@@ -24,7 +24,6 @@ class Home extends Component {
 
   removeUser = async id => {
     try {
-      const userRemoved = await axios.delete(`/api/users/${id}`);
       const users = await axios("/api/users/");
       this.setState({ data: users.data });
     } catch (err) {

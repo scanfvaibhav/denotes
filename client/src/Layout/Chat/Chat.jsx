@@ -8,7 +8,6 @@ import "./Chat.css";
 const { isEmpty } = require('lodash');
 
 const socket = io();
-var interval;
 var isTabActive=false;
 
 
