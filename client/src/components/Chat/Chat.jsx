@@ -152,7 +152,7 @@ updateTyping(value){
                 onBlur={this.onBlur}
               />  
              
-                      <button onClick={this.sendSocketIO}>Send Socket.io</button>
+                      <button onClick={this.sendSocketIO}>Send</button>
                 </div>
             </div>
 
