@@ -6,12 +6,10 @@ const Home = () => {
   return (
    <nav className="NavBar-Wrapper">
      <div>
-       <h3 className="NavBar-Title">MERN CRUD</h3>
+       <h3 className="NavBar-Title">CHAT APP</h3>
      </div>
      <div className="NavBar-Links">
-      <Link to="/" className="NavBar-Link">Home</Link>
-      <Link to="/add" className="NavBar-Link">Add</Link>
-      <Link to="/chat" className="NavBar-Link">Chat</Link>
+      <Link to="/" className="NavBar-Link">Chat</Link>
      </div>
    </nav>
   );
