@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import Profile from '../Profile/Profile';
 import  "./Posts.css";
 class Posts extends Component {
   constructor(props) {
@@ -26,19 +27,17 @@ render() {
           <div className="container">
        
     <div className="left-col">
-     <Pofile data={this.state.userData}/>
+     <Profile data={this.state.userData}/>
     </div>
     
     <div className="center-col">
-        <PostList posts={posts} data={store.getState()}/>
+        <PostList posts={posts}/>
     </div>
     
     <div className="right-col">
       Right col
     </div>
-  </div>
-            
-            );  
+  </div>);  
   }  
 } 
 function PostList(props){
