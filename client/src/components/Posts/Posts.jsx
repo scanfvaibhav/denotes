@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+import  "./Post.css";
 class Posts extends Component {
   constructor(props) {
     super(props);
@@ -21,15 +22,34 @@ render() {
           {"topic":"topicc","description":"description","details":"deetails"},
         ];
         return (
-            <div>
-            {posts.map(function(data, index){
-                return <Post key={index} data={data}/>
-              })}
+
+          <div className="container">
+       
+    <div className="left-col">
+     <Pofile data={this.state.userData}/>
+    </div>
+    
+    <div className="center-col">
+        <PostList posts={posts} data={store.getState()}/>
+    </div>
+    
+    <div className="right-col">
+      Right col
+    </div>
+  </div>
             
-            </div>
             );  
   }  
 } 
+function PostList(props){
+  
+  return(<div>
+    {props.posts.map(function(data, index){
+        return <Post key={index} data={data}/>
+      })}
+    
+    </div>);
+}
 function Post(props){
   return (<div>
               <Topic data={props.data.topic}/>
