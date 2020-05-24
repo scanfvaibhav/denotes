@@ -6,7 +6,7 @@ class Write extends Component {
   state = {
     title: "",
     description: "",
-    details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.userInfo).name:""}
+    details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""}
   };
 
   onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });
