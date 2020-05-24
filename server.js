@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(require('cors')());
 app.use(require('helmet')());
 app.use('/api/users', require('./routes/users'));
+app.use('/api/login', require('./routes/login'));
 
 const server=app.listen(PORT, () => console.log(`App running on port ${PORT}`)  );
 
