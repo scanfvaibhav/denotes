@@ -7,6 +7,8 @@ import NavBar from "../Layout/NavBar/NavBar";
 import Add from "../Layout/Add/Add";
 import Edit from "../Layout/Edit/Edit";
 import Chat from "../Layout/Chat/Chat";
+import Posts from "../Layout/Posts/Posts";
+
 
 const Routes = () => {
   return (
@@ -17,6 +19,7 @@ const Routes = () => {
           <Route path="/Add" component={ Add } exact />
           <Route path="/Edit" component={ Edit } exact />
           <Route path="/Chat" component={ Chat } exact />
+          <Route path="/Posts" component={ Posts } exact />
 
         </Switch>
       </Fragment>
