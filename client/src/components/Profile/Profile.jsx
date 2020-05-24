@@ -9,6 +9,7 @@ class Profile extends BaseComponent {
     
   render() {
     return (
+        <div>
         <div ><img src={this.state.data.picture.data.url}/></div>
             <div >{this.state.data.name}</div>
             <div > {this.state.data.email}</div>
@@ -18,6 +19,7 @@ class Profile extends BaseComponent {
                     starDimension="20px"
                     starSpacing="3px"
                 /> 
+            </div>
             </div>
         );  
     }  
