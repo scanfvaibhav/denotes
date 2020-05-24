@@ -29,7 +29,7 @@ class Write extends Component {
   render() {
     return (
       <div className="AddUser-Wrapper">
-        <h1>Add User:</h1>
+        <h1>Write your thoughts:</h1>
         <form onSubmit={this.addPost}>
           <label htmlFor="title">Title:</label>
           <input 
