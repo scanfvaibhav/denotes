@@ -1,5 +1,5 @@
 import React,{Component} from 'react';
-import  "./Post.css";
+import  "./Posts.css";
 class Posts extends Component {
   constructor(props) {
     super(props);
