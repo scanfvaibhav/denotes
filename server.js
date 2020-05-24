@@ -14,6 +14,7 @@ app.use(require('cors')());
 app.use(require('helmet')());
 app.use('/api/users', require('./routes/users'));
 app.use('/api/login', require('./routes/login'));
+app.use('/api/post', require('./routes/posts'));
 
 const server=app.listen(PORT, () => console.log(`App running on port ${PORT}`)  );
 

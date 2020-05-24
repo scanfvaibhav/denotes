@@ -1,27 +1,24 @@
 import React,{Component} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
+import {getPosts} from "../../service/BaseService"; 
 class Posts extends Component {
   constructor(props) {
     super(props);
     this.state={
-        data:this.props.data
-    }
+        data:this.props.data,
+        posts:[]
+    };
 }
-
-
+componentDidMount(){
+  getPosts(this).then((res)=>{
+    if(res){
+      this.setState({posts:res.data.posts});
+    }
+  }).catch();
+}
 render() {
-          let posts = [{"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-          {"topic":"topicc","description":"description","details":"deetails"},
-        ];
+      
         return (
 
           <div className="container">
@@ -31,7 +28,7 @@ render() {
     </div>
     
     <div className="center-col">
-        <PostList posts={posts}/>
+        <PostList posts={this.state.posts}/>
     </div>
     
     <div className="right-col">
