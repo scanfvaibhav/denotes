@@ -1,6 +1,6 @@
-import React from 'react';
+import React,{Component} from 'react';
 import StarRatings from 'react-star-ratings';
-class Profile extends BaseComponent {  
+class Profile extends Component {  
     constructor(props) {
         super(props);
         this.state={data:props.data};
