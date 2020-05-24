@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import StarRatings from 'react-star-ratings';
+import Login from '../Login/Login';
+
 class Profile extends Component {  
     constructor(props) {
         super(props);
@@ -9,6 +11,9 @@ class Profile extends Component {
     
   render() {
     return (
+        <div>
+        <Login/>
+        {this.state.data?
         <div>
         <div ><img src={this.state.data.picture.data.url}/></div>
             <div >{this.state.data.name}</div>
@@ -20,6 +25,7 @@ class Profile extends Component {
                     starSpacing="3px"
                 /> 
             </div>
+            </div>:""}
             </div>
         );  
     }  
