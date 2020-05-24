@@ -16,11 +16,8 @@ const postSchema = new mongoose.Schema({
         trim: true
       },
     details: {
-        type: String,
-        required: true,
-        minlength: 3,
-        maxlength: 33,
-        trim: true
+        type: Object,
+        required: true
       }
 });
 

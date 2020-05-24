@@ -61,6 +61,7 @@ function Description(props){
   return(<p>{props.data}</p>);
 }
 function Details(props){
-  return(<p>{props.data}</p>);
+ 
+  return(<p>name:{props.data.name}</p>);
 } 
 export default Posts;
