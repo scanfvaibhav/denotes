@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import './AddUser.css';
 import axios from "axios";
 
+import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
+
 class AddUser extends Component {
   state = {
     name: "",
@@ -9,7 +11,9 @@ class AddUser extends Component {
     age: "",
     response: ""
   };
-
+  componentDidMount() {
+    addResponseMessage("Welcome to this awesome chat!");
+  };
   onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });
 
   addUser = async e => {
@@ -26,10 +30,19 @@ class AddUser extends Component {
       this.setState({ response: err.message });
     }
   };
-
+  handleNewUserMessage = (newMessage) => {
+    console.log(`New message incomig! ${newMessage}`);
+    // Now send the message throught the backend API
+    addResponseMessage("");
+  };
   render() {
     return (
       <div className="AddUser-Wrapper">
+      <Chat
+      handleNewUserMessage={this.handleNewUserMessage}
+      title="Chat"
+      subtitle="And my cool subtitle"
+    />
         <h1>Add User:</h1>
         <form onSubmit={this.addUser}>
           <label htmlFor="name">Name:</label>

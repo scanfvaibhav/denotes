@@ -4,6 +4,7 @@ import { TextField } from '@material-ui/core';
 import { List, ChatFrom } from  '../List';
 import "./Chat.css";
 
+
 const { isEmpty } = require('lodash');
 
 const socket = io();
@@ -33,7 +34,7 @@ class Chat extends Component {
     window.addEventListener("focus", this.onTabFocus(true))
   }
 
- 
+  
 
 componentWilUnmount() {
     window.removeEventListener("focus", this.onTabFocus(false))
@@ -117,8 +118,12 @@ updateTyping(value){
   render() {
     return (
         <div>
-        <iframe src="https://powerva.microsoft.com/webchat/bots/34edd72c-5381-4c7c-9d00-572955c84eb9" frameborder="0" style="width: 100%; height: 100%;"></iframe>
-            <div className="users">
+        <div>
+       
+
+        <iframe src="https://powerva.microsoft.com/webchat/bots/34edd72c-5381-4c7c-9d00-572955c84eb9"></iframe>
+        </div>    
+        <div className="users">
 
             <div>
             <TextField
