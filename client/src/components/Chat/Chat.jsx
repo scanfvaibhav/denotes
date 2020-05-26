@@ -117,7 +117,9 @@ updateTyping(value){
   render() {
     return (
         <div>
+        <iframe src="https://powerva.microsoft.com/webchat/bots/34edd72c-5381-4c7c-9d00-572955c84eb9" frameborder="0" style="width: 100%; height: 100%;"></iframe>
             <div className="users">
+
             <div>
             <TextField
             id="standard-dense"
