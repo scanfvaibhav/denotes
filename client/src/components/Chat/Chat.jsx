@@ -79,9 +79,14 @@ onFocus = async (e) => {
     this.setState({ [name]: value });
   }
   
-  handleChange = (value,text) => {
+  handleToChange = (value,text) => {
     this.setState({ 
       "to": value });
+  };
+  handleChange = e => {
+    const name = e.target.name;
+    const value = e.target.value;
+    this.setState({ [name]: value });
   };
   scrollChatToBottom() {
     this.boxRef.current.scrollTop = this.boxRef.current.scrollHeight;
@@ -158,7 +163,7 @@ newMsg (msg){
           name="to"
           label="To"
           map={{text: 'text', value: 'value'}}
-          onChange={this.handleChange}
+          onChange={this.handleToChange}
             {...maxHeightProps} />
                 <div className="chatPanel" ref={this.boxRef}>
                 <List>
