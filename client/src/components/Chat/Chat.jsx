@@ -4,6 +4,9 @@ import { TextField } from '@material-ui/core';
 import { List, ChatFrom } from  '../List';
 import "./Chat.css";
 
+import { addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
+import Chatx from 'react-chat-popuup';
+
 
 const { isEmpty } = require('lodash');
 
@@ -31,9 +34,10 @@ class Chat extends Component {
 
   componentDidMount() {
     this.socketInit();
-    window.addEventListener("focus", this.onTabFocus(true))
+    window.addEventListener("focus", this.onTabFocus(true));
+    addResponseMessage("Welcome to this awesome chat!");
   }
-
+  
   
 
 componentWilUnmount() {
@@ -114,7 +118,11 @@ onFocus = async (e) => {
 updateTyping(value){
   this.setState({"typing":value});
 }
-
+handleNewUserMessage = (newMessage) => {
+  console.log(`New message incomig! ${newMessage}`);
+  // Now send the message throught the backend API
+  addResponseMessage("");
+}
   render() {
     return (
         <div>
@@ -122,6 +130,11 @@ updateTyping(value){
        
 
         <iframe src="https://powerva.microsoft.com/webchat/bots/34edd72c-5381-4c7c-9d00-572955c84eb9"></iframe>
+        <Chatx.Chat
+      handleNewUserMessage={this.handleNewUserMessage}
+      title="Chat"
+      subtitle="And my cool subtitle"
+    />
         </div>    
         <div className="users">
 
