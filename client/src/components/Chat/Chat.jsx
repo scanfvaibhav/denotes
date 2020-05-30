@@ -3,16 +3,21 @@ import io from 'socket.io-client';
 import { TextField } from '@material-ui/core';
 import { List, ChatFrom } from  '../List';
 import "./Chat.css";
+import ComboSelect from 'react-combo-select';
+import style from 'react-combo-select/style.css';
 
-import { addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
-import Chatx from 'react-chat-popuup';
+import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 
 
 const { isEmpty } = require('lodash');
+const maxHeightProps = {
+  scrollMaxHeight: 100, // number
+  preferredDirection: 'down' // 'top' | 'down'
+};
 
 const socket = io();
 
-class Chat extends Component {
+class ChatPanel extends Component {
  
   constructor(props) {
     super(props);
@@ -23,7 +28,10 @@ class Chat extends Component {
       from:"",
       to:"",
       typing:false,
-      isTabActive:false
+      isTabActive:false,
+      data :[
+        {text: "Vaibhav", value: "singhvaibhav396@gmail.com"}
+    ]
     };
 
 
@@ -71,10 +79,9 @@ onFocus = async (e) => {
     this.setState({ [name]: value });
   }
   
-  handleChange = e => {
-    const name = e.target.name;
-    const value = e.target.value;
-    this.setState({ [name]: value });
+  handleChange = (value,text) => {
+    this.setState({ 
+      "to": value });
   };
   scrollChatToBottom() {
     this.boxRef.current.scrollTop = this.boxRef.current.scrollHeight;
@@ -95,7 +102,7 @@ onFocus = async (e) => {
         newMsg:{
             text:this.state.text
         },
-        from:this.state.from,
+        from:JSON.parse(localStorage.userInfo).email,
         to:this.state.to
     });
   }
@@ -103,6 +110,7 @@ onFocus = async (e) => {
   socketInit(){
     socket.on("newMessage", data => {
     this.setState({"chat":data});
+    //this.newMsg(data);
     this.scrollChatToBottom();
     this.sendReceipt();
     });
@@ -119,9 +127,11 @@ updateTyping(value){
   this.setState({"typing":value});
 }
 handleNewUserMessage = (newMessage) => {
-  console.log(`New message incomig! ${newMessage}`);
   // Now send the message throught the backend API
-  addResponseMessage("");
+  addResponseMessage(newMessage);
+}
+newMsg (msg){
+  addResponseMessage(msg);
 }
   render() {
     return (
@@ -130,8 +140,9 @@ handleNewUserMessage = (newMessage) => {
        
 
         <iframe src="https://powerva.microsoft.com/webchat/bots/34edd72c-5381-4c7c-9d00-572955c84eb9"></iframe>
-        <Chatx.Chat
+        <Chat
       handleNewUserMessage={this.handleNewUserMessage}
+      addUserMessage={this.state.chat}
       title="Chat"
       subtitle="And my cool subtitle"
     />
@@ -139,20 +150,16 @@ handleNewUserMessage = (newMessage) => {
         <div className="users">
 
             <div>
-            <TextField
+            <ComboSelect style={style}
+            type="select" 
+            data={this.state.data} 
             id="standard-dense"
-            value={this.state.from}
-            name="from"
-            label="from"
-            onChange={this.handleChange}
-          /> 
-          <TextField
-          id="standard-dense"
           value={this.state.to}
           name="to"
           label="To"
+          map={{text: 'text', value: 'value'}}
           onChange={this.handleChange}
-        />
+            {...maxHeightProps} />
                 <div className="chatPanel" ref={this.boxRef}>
                 <List>
                     {!isEmpty(this.state.chat) ?this.state.chat.map(({ from, to, text,  read, sent, received }, key) => (
@@ -184,4 +191,4 @@ handleNewUserMessage = (newMessage) => {
   }
 }
 
-export default Chat;
+export default ChatPanel;
