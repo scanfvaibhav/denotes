@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import './AddUser.css';
 import axios from "axios";
 
-import { Chat, addResponseMessage, addLinkSnippet, addUserMessage } from 'react-chat-popup';
 
 class AddUser extends Component {
   state = {
@@ -10,9 +9,6 @@ class AddUser extends Component {
     genre: "",
     age: "",
     response: ""
-  };
-  componentDidMount() {
-    addResponseMessage("Welcome to this awesome chat!");
   };
   onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });
 

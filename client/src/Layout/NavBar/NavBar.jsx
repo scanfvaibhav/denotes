@@ -14,6 +14,7 @@ const Home = () => {
       <Link to="/Add" className="NavBar-Link">Add</Link>
       <Link to="/Edit" className="NavBar-Link">Edit</Link>
       <Link to="/Write" className="NavBar-Link">Write</Link>
+      
      </div>
    </nav>
   );

@@ -60,7 +60,7 @@ io.on('connection', function(socket){
   });
   socket.on('message', async function(msg){
     const newChat = new Chat({
-      text: msg.newMsg.text,
+      text: msg.text,
       from: msg.from,
       to: msg.to,
       read: false,
@@ -72,8 +72,8 @@ io.on('connection', function(socket){
     var room = joinRoom(msg,socket);
      
     await newChat.save();
-    const chats = await Chat.find({$or:[{from: msg.to,to:msg.from},{from: msg.from,to:msg.to}]});
-    io.sockets.in(room).emit('newMessage', chats);
+    //const chats = await Chat.find({$or:[{from: msg.to,to:msg.from},{from: msg.from,to:msg.to}]});
+    socket.broadcast.emit('newMessage', newChat);
   });
      
 });

@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import ChatPanel from '../../components/Chat/Chat';
+import ChatPanel from '../../components/ChatPanel/ChatPanel';
 
 const Chat = () => {
   return (
