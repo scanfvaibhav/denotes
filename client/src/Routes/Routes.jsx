@@ -16,12 +16,14 @@ const Routes = () => {
     <Fragment>
         <NavBar />
         <Switch>
-          <Route path="/" component={ Home } exact />
+          <Route path="/" component={ Posts } exact />
           <Route path="/Add" component={ Add } exact />
           <Route path="/Edit" component={ Edit } exact />
           <Route path="/Chat" component={ Chat } exact />
           <Route path="/Posts" component={ Posts } exact />
           <Route path="/Write" component={ Write } exact />
+          <Route path="/Users" component={ Home } exact />
+
 
         </Switch>
       </Fragment>
