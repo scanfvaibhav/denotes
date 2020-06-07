@@ -86,7 +86,7 @@ render() {
   else return <div className="Spinner-Wrapper"> <GridLoader color={'#333'} /> </div>;
 
   friends = this.state.friends && 
-        this.state.friends.map(data =>(
+        this.state.friends.users.map(data =>(
           <User key={data._id} columnModel={friendModel} data={friends} />
         ));
 
