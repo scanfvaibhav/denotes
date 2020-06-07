@@ -1,6 +1,7 @@
 import React from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
+import Chatbox from '../../components/Chatbox/Chatbox';
 
 const Home = () => {
   return (
@@ -15,6 +16,7 @@ const Home = () => {
       <Link to="/Edit" className="NavBar-Link">Edit</Link>
       <Link to="/Write" className="NavBar-Link">Write</Link>
       
+     <Chatbox/>
      </div>
    </nav>
   );

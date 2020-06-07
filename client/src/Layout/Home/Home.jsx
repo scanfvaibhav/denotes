@@ -46,12 +46,19 @@ class Home extends Component {
 
   render() {
     let users;
+    let columnModel = [{"text":"Name","index":"name"},
+  {"text":"Genre","index":"genre"},
+  {"text":"Age","index":"age"},
+  {"text":"Actions","index":"","type":"actions"}];
+  let Header  = columnModel.map(function(cm){
+    return <th>{cm.text}</th>
+  });
 
     if (this.state.data)
       users =
         this.state.data.users &&
         this.state.data.users.map(user => (
-          <User key={user._id} {...user} removeUser={this.removeUser} />
+          <User key={user._id} data={user} columnModel={columnModel} removeUser={this.removeUser} />
         ));
     else return <div className="Spinner-Wrapper"> <GridLoader color={'#333'} /> </div>;
 
@@ -67,10 +74,7 @@ class Home extends Component {
         <table className="Table">
           <thead>
             <tr>
-              <th>Name</th>
-              <th>Genre</th>
-              <th>Age</th>
-              <th>Actions</th>
+            {Header}
             </tr>
           </thead>
           <tbody>{users}</tbody>
