@@ -87,7 +87,7 @@ render() {
 
   friends = this.state.friends && 
         this.state.friends.users.map(data =>(
-          <User key={data._id} columnModel={friendModel} data={friends} />
+          <User key={data._id} columnModel={friendModel} data={data} />
         ));
 
   if (this.state.error) return <h1>{this.state.error}</h1>;
