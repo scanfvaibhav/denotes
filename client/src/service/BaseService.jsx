@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GLOBAL_SEARCH,GET_USER,GET_DEFAULT_POSTS} from '../constants/BaseConstants';
+import {GLOBAL_SEARCH,GET_USER,GET_DEFAULT_POSTS, GET_MSG} from '../constants/BaseConstants';
 export function getSearchinfo(query,_this){
     if (_this.cancel) {
 		_this.cancel.cancel();
@@ -43,6 +43,23 @@ export function getPosts(_this){
   _this.cancel = axios.CancelToken.source();
     return new Promise((resolve,reject)=>axios.get(GET_DEFAULT_POSTS,{
         cancelToken: _this.cancel.token
+    })
+    .then((res) => {
+        resolve(res);
+    })
+    .catch((error) => {
+        reject(error);
+        
+    })); 
+}
+export function getMessages(_this,email){
+    if (_this.cancel) {
+		_this.cancel.cancel();
+	}
+  _this.cancel = axios.CancelToken.source();
+    return new Promise((resolve,reject)=>axios.get(GET_MSG,{
+        cancelToken: _this.cancel.token,
+        params:{'email':email}
     })
     .then((res) => {
         resolve(res);

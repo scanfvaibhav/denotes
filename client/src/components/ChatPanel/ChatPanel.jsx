@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './Chat.css';
 import Profile from '../Profile/Profile';
 import  "../Posts/Posts.css";
-import {getPosts} from "../../service/BaseService"; 
+import {getMessages} from "../../service/BaseService"; 
 
 import "../../Layout/Home/Home.css";
 import axios from "axios";
@@ -21,12 +21,18 @@ class ChatPanel extends  Component{
   };
 
   async componentDidMount() {
-    try {
-      const users = await axios("/api/users/");
-      this.setState({ data: users.data });
-    } catch (err) {
-      this.setState({ error: err.message });
-    }
+    let email=localStorage.userInfo?JSON.parse(localStorage.userInfo).email:"";
+    if(email){
+      try {
+        getMessages(this,email).then((res)=>{
+          if(res){
+            this.setState({data:res.data.data});
+          }
+        }).catch();
+      } catch (err) {
+        this.setState({ error: err.message });
+      }
+  }
   }
 
   removeUser = async id => {
