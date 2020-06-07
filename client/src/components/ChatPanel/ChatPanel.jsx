@@ -33,6 +33,13 @@ class ChatPanel extends  Component{
         this.setState({ error: err.message });
       }
   }
+  try {
+    const users = await axios("/api/users/");
+    this.setState({ friends: users.data });
+  } catch (err) {
+    this.setState({ error: err.message });
+  }
+
   }
 
   removeUser = async id => {
@@ -63,10 +70,12 @@ render() {
   let columnModel = [{"text":"Messages","index":"text"},
   {"text":"From","index":"text"},
   {"text":"Date","index":"date"}];
+  let friendModel = [{"text":"Name","index":"name"},{"text":"Status","index":"status"}];
   let Header  = columnModel.map(function(cm){
     return <th>{cm.text}</th>
   });
   let msgs;
+  let friends;
 
   if (this.state.data)
     msgs =
@@ -75,6 +84,11 @@ render() {
         <User key={data._id} columnModel={columnModel} data={data} />
       ));
   else return <div className="Spinner-Wrapper"> <GridLoader color={'#333'} /> </div>;
+
+  friends = this.state.friends && 
+        this.state.friends.map(data =>(
+          <User key={data._id} columnModel={friendModel} data={friends} />
+        ));
 
   if (this.state.error) return <h1>{this.state.error}</h1>;
   if (this.state.data !== null)
@@ -86,8 +100,10 @@ render() {
           <div className="container">
        
     <div className="left-col">
+    <table className="Table">
+          <tbody>{friends}</tbody>
+        </table>
   
-    <Profile data={this.state.userData}/>
     </div>
     
     <div className="center-col">
@@ -107,7 +123,8 @@ render() {
     </div>
     
     <div className="right-col">
-      Right col
+     
+    <Profile data={this.state.userData}/>
     </div>
   </div>);  
   }  
