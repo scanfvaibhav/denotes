@@ -70,9 +70,9 @@ render() {
 
   if (this.state.data)
     users =
-      this.state.data.users &&
-      this.state.data.users.map(user => (
-        <User key={user._id} columnModel={columnModel} data={user} />
+      this.state.data &&
+      this.state.data.map(data => (
+        <User key={data._id} columnModel={columnModel} data={data} />
       ));
   else return <div className="Spinner-Wrapper"> <GridLoader color={'#333'} /> </div>;
 
