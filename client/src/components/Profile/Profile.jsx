@@ -15,7 +15,7 @@ class Profile extends Component {
         <Login/>
         {this.state.data?
         <div>
-        <div ><img src={this.state.data.picture.data.url}/></div>
+        <img src={this.state.data.picture.data.url}/>
             <div >{this.state.data.name}</div>
             <div > {this.state.data.email}</div>
             <div > <StarRatings
