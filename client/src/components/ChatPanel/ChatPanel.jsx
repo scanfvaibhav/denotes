@@ -66,10 +66,10 @@ render() {
   let Header  = columnModel.map(function(cm){
     return <th>{cm.text}</th>
   });
-  let users;
+  let msgs;
 
   if (this.state.data)
-    users =
+    msgs =
       this.state.data &&
       this.state.data.map(data => (
         <User key={data._id} columnModel={columnModel} data={data} />
@@ -78,7 +78,7 @@ render() {
 
   if (this.state.error) return <h1>{this.state.error}</h1>;
   if (this.state.data !== null)
-    if (!this.state.data.users.length)
+    if (!this.state.data.length)
       return <h1 className="No-Users">No users!</h1>;
 
         return (
@@ -100,7 +100,7 @@ render() {
             {Header}
             </tr>
           </thead>
-          <tbody>{users}</tbody>
+          <tbody>{msgs}</tbody>
         </table>
       </div>
         
