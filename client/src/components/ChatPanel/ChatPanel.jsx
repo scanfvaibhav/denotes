@@ -26,7 +26,7 @@ class ChatPanel extends  Component{
       try {
         getMessages(this,email).then((res)=>{
           if(res){
-            this.setState({data:res.data.data});
+            this.setState({data:res.data.chats});
           }
         }).catch();
       } catch (err) {
@@ -60,9 +60,9 @@ class ChatPanel extends  Component{
 render() {
 
 
-  let columnModel = [{"text":"Name","index":"name"},
-  {"text":"Genre","index":"genre"},
-  {"text":"Age","index":"age"}];
+  let columnModel = [{"text":"Messages","index":"text"},
+  {"text":"From","index":"text"},
+  {"text":"Date","index":"date"}];
   let Header  = columnModel.map(function(cm){
     return <th>{cm.text}</th>
   });
