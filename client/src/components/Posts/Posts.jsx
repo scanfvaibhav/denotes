@@ -24,7 +24,7 @@ render() {
           <div className="container">
        
     <div className="left-col">
-     <Profile data={this.state.userData}/>
+    
     </div>
     
     <div className="center-col">
@@ -32,7 +32,7 @@ render() {
     </div>
     
     <div className="right-col">
-      Right col
+    <Profile data={this.state.userData}/>
     </div>
   </div>);  
   }  
@@ -55,7 +55,7 @@ function Post(props){
           </div>);
 }
 function Topic(props){
-  return(<p>{props.data}</p>);
+  return(<p className="posts">{props.data}</p>);
 }
 function Description(props){
   return(<p>{props.data}</p>);
