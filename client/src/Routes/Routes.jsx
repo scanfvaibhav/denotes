@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment ,useState} from "react";
 import { Switch, Route } from "react-router-dom";
 
 // Components
@@ -9,14 +9,17 @@ import Edit from "../Layout/Edit/Edit";
 import Chat from "../Layout/Chat/Chat";
 import Posts from "../Layout/Posts/Posts";
 import Write from "../Layout/Write/Write";
+import Login from "../components/Login/Login";
 
 
 const Routes = () => {
+  const [login, setLogin] = useState(localStorage.getItem("userInfo")?true:false);
   return (
     <Fragment>
         <NavBar />
+        {login?
         <Switch>
-          <Route path="/" component={ Posts } exact />
+          <Route path="/" component={Posts } exact />
           <Route path="/Add" component={ Add } exact />
           <Route path="/Edit" component={ Edit } exact />
           <Route path="/Chat" component={ Chat } exact />
@@ -25,7 +28,7 @@ const Routes = () => {
           <Route path="/Users" component={ Home } exact />
 
 
-        </Switch>
+        </Switch>:<Login login={(value)=>this.setLogin(value)}/>}
       </Fragment>
   );
 };

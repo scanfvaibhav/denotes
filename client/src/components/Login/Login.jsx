@@ -49,14 +49,20 @@ export default class Login extends React.Component {
       user: "",
       picture: ""
     });
+    if(this.props.login){
+      this.props.login(false);
+    }
   }
   onLoginSuccess(method, response) {
       debugger
       this.closeModal();
       let token=response.authResponse.accessToken;
       this.initUser(token);
-     
+
       localStorage.setItem("authInfo",JSON.stringify(response));
+      if(this.props.login){
+        this.props.login(true);
+      }
 
     console.log("logged successfully with " + response);
   }

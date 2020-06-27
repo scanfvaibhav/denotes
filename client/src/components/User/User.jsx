@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 const User = ({ _id, columnModel, data, removeUser }) => {
 
   let column=columnModel.map(function(val){
-    if(val.type && val.type=="actions"){
+    if(val.type && val.type==="actions"){
 
       return <td>
       <button onClick={ () => removeUser(_id) } className="Action-Button fa fa-trash"></button>
