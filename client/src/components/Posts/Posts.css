@@ -29,11 +29,11 @@
     color: rgb(0, 0, 0);
   }
   .post-topic {
-    padding: 20px;
+    padding: 6px;
     text-align: center;
     background: #1abc9c;
     color: white;
-    font-size: 20px;
+    font-size: 15px;
   }
   .post-discription{
     margin-left: 10px
