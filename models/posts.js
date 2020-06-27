@@ -18,7 +18,11 @@ const postSchema = new mongoose.Schema({
     details: {
         type: Object,
         required: true
-      }
+      },
+    time :{
+      type: Date,
+      required:true
+    }
 });
 
 const Post = mongoose.model('Post', postSchema);

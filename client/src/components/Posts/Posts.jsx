@@ -50,7 +50,7 @@ function Post(props){
   return (<div>
               <Topic data={props.data.topic}/>
               <Description data={props.data.description}/>
-              <Details data={props.data.details}/>
+              <Details data={props.data}/>
               <hr/>
           </div>);
 }
@@ -62,6 +62,6 @@ function Description(props){
 }
 function Details(props){
  
-  return(<p className="post-details"><i>Author:</i>{props.data.name}</p>);
+  return(<p className="post-details"><i>Last Updated:</i>{props.data.details.time}<i> By:</i>{props.data.details.name}</p>);
 } 
 export default Posts;
