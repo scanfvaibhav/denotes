@@ -5,7 +5,7 @@ const Posts = require('../models/posts');
 
 router.get('/default', async(req, res) => {
     try {
-        const posts = await Posts.find({});
+        const posts = await Posts.find({}).sort( { time: 1 } );
         res.send({ posts })
       } catch(err) {
         res.status(400).send({ error: err });
@@ -13,7 +13,7 @@ router.get('/default', async(req, res) => {
     });
 router.post('/create', async (req, res) => {
       try {
-        const newUser = await Posts.create({ topic: req.body.title, description: req.body.description, details: req.body.details });
+        const newUser = await Posts.create({ topic: req.body.title, description: req.body.description, details: req.body.details ,time:Date.now()});
          res.send({ newUser });
       } catch(err) {
         res.status(400).send({ error: err });
