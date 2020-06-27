@@ -55,7 +55,7 @@ function Post(props){
           </div>);
 }
 function Topic(props){
-  return(<p className="posts">{props.data}</p>);
+  return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
   return(<p>{props.data}</p>);
