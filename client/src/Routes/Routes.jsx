@@ -28,7 +28,7 @@ const Routes = () => {
           <Route path="/Users" component={ Home } exact />
 
 
-        </Switch>:<Login login={(value)=>this.setLogin(value)}/>}
+        </Switch>:<Login login={(value)=>setLogin(value)}/>}
       </Fragment>
   );
 };

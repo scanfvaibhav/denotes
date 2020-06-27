@@ -11,12 +11,10 @@ const Home = () => {
      </div>
      <div className="NavBar-Links">
       <Link to="/" className="NavBar-Link">Home</Link>
-      <Link to="/Chat" className="NavBar-Link">Chat</Link>
       <Link to="/Add" className="NavBar-Link">Add</Link>
       <Link to="/Edit" className="NavBar-Link">Edit</Link>
       <Link to="/Write" className="NavBar-Link">Write</Link>
       
-     <Chatbox/>
      </div>
    </nav>
   );
