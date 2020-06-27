@@ -58,10 +58,10 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return(<p>{props.data}</p>);
+  return(<p className="post-discription">{props.data}</p>);
 }
 function Details(props){
  
-  return(<p>name:{props.data.name}</p>);
+  return(<p className="post-details"><i>Author:</i>{props.data.name}</p>);
 } 
 export default Posts;

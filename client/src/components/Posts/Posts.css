@@ -35,3 +35,9 @@
     color: white;
     font-size: 20px;
   }
+  .post-discription{
+    margin-left: 10px
+  }
+  .post-details{
+    text-align: right;
+  }
