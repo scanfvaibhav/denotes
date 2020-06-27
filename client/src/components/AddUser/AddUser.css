@@ -1,3 +1,4 @@
+
 .AddUser-Wrapper {
   display: flex;
   justify-content: center;
@@ -39,4 +40,32 @@
 
 label {
   padding-left: 2%;
+}
+
+.container {
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+}
+.containerHeader{
+  display: flex;
+  flex-direction: row;
+  overflow-y: scroll;
+}
+.left-col {
+  flex: 1.5;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+}
+
+.center-col {
+  flex: 3;
+}
+
+.right-col {
+  flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: top;
 }

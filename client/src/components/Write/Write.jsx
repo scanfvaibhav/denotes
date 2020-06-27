@@ -28,7 +28,14 @@ class Write extends Component {
 
   render() {
     return (
-      <div className="AddUser-Wrapper">
+      <div className="container">
+       
+    <div className="left-col">
+    
+    </div>
+    
+    <div className="center-col">
+    <div className="AddUser-Wrapper">
         <h1>Write your thoughts:</h1>
         <form onSubmit={this.addPost}>
           <textarea 
@@ -62,6 +69,12 @@ class Write extends Component {
 
         <p>{this.state.response}</p>
       </div>
+    </div>
+    
+    <div className="right-col">
+    </div>
+  </div>
+      
     );
   }
 }
