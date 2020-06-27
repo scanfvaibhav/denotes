@@ -44,7 +44,7 @@ class Write extends Component {
             id="title"
           />
           <label htmlFor="description">description</label>
-          <input
+          <textarea
           type="text"
           placeholder=""
           name="description"
@@ -53,7 +53,7 @@ class Write extends Component {
           className="Add-User-Input"
           required
           minLength="3"
-          maxLength="100"
+          maxLength="1000000"
           id="description"
         />
          
