@@ -62,6 +62,6 @@ function Description(props){
 }
 function Details(props){
  
-  return(<p className="post-details"><i>Last Updated:</i>{props.data.details.time}<i> By:</i>{props.data.details.name}</p>);
+  return(<p className="post-details"><i>Last Updated:</i>{props.data.time}<i> By:</i>{props.data.details.name}</p>);
 } 
 export default Posts;

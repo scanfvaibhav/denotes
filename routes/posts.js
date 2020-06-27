@@ -5,7 +5,7 @@ const Posts = require('../models/posts');
 
 router.get('/default', async(req, res) => {
     try {
-        const posts = await Posts.find({}).sort( { time: 1 } );
+        const posts = await Posts.find({}).sort({time:-1});
         res.send({ posts })
       } catch(err) {
         res.status(400).send({ error: err });
