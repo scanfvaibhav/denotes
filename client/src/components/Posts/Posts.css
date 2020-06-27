@@ -29,12 +29,12 @@
     color: rgb(0, 0, 0);
   }
   .post-topic {
-    padding: 6px;
+    padding: 15px;
     text-align: center;
-    background: rgb(53, 204, 230);
+    font-family: 'Times New Roman', Times, serif;
     color: white;
     border-radius: 3%;
-    font-size: 15px;
+    font-size: 20px;
   }
   .post-discription{
     margin-left: 10px
