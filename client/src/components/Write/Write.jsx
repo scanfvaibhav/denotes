@@ -31,10 +31,9 @@ class Write extends Component {
       <div className="AddUser-Wrapper">
         <h1>Write your thoughts:</h1>
         <form onSubmit={this.addPost}>
-          <label htmlFor="title">Title:</label>
           <input 
             type="text"
-            placeholder="For example: linked list"
+            placeholder="Title"
             name="title"
             onChange={this.onChangeHandler}
             ref="title"
@@ -43,10 +42,9 @@ class Write extends Component {
             maxLength="100"
             id="title"
           />
-          <label htmlFor="description">description</label>
           <textarea
           type="text"
-          placeholder=""
+          placeholder="Content"
           name="description"
           onChange={this.onChangeHandler}
           ref="description"
