@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import '../AddUser/AddUser.css';
 import axios from "axios";
+import Login from '../Login/Login';
 
 class Write extends Component {
   state = {
     title: "",
     description: "",
-    details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""}
+    details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""},
+    user:localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):{}
   };
 
   onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });
@@ -30,8 +32,8 @@ class Write extends Component {
     return (
       <div className="AddUser-Wrapper">
         <h1>Write your thoughts:</h1>
-        <form onSubmit={this.addPost}>
-          <input 
+        {this.state.user?<form onSubmit={this.addPost}>
+          <textarea 
             type="text"
             placeholder="Title"
             name="title"
@@ -58,7 +60,7 @@ class Write extends Component {
           <button type="submit" className="Add-User-Submit fa fa-plus"></button>
           <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
 
-       </form>
+       </form>:<Login/>}
 
         <p>{this.state.response}</p>
       </div>
