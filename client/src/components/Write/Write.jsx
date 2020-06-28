@@ -8,7 +8,7 @@ import draftToHtml from 'draftjs-to-html';
 class Write extends Component {
   state = {
     title: "",
-    description: EditorState.createEmpty(),
+    editorState: EditorState.createEmpty(),
     details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""}
   };
 
@@ -28,7 +28,11 @@ class Write extends Component {
       this.setState({ response: err.message });
     }
   };
-
+  onEditorStateChange (editorState) {
+    this.setState({
+      editorState,
+    });
+  }
   render() {
     return (
       <div className="container">
@@ -55,11 +59,11 @@ class Write extends Component {
           <Editor
           placeholder="Content"
           name="description"
-          editorState={this.state.description}
+          editorState={this.state.editorState}
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
           className="Add-User-Input"
-          onEditorStateChange={this.onChangeHandler}
+          onEditorStateChange={this.onEditorStateChange}
           ref="description"
           className="Add-User-Input"
           required
