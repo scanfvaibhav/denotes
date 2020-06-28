@@ -62,10 +62,8 @@ class Write extends Component {
           editorState={this.state.editorState}
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
-          className="Add-User-Input"
           onEditorStateChange={this.onEditorStateChange}
           ref="description"
-          className="Add-User-Input"
           required
           minLength="3"
           maxLength="1000000"
