@@ -55,7 +55,7 @@ class Write extends Component {
           <Editor
           placeholder="Content"
           name="description"
-          editorState={this.state}
+          editorState={this.state.description}
           wrapperClassName="demo-wrapper"
           editorClassName="demo-editor"
           className="Add-User-Input"
