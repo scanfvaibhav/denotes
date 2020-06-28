@@ -34,6 +34,7 @@ class Write extends Component {
       editorState,
     });
   }
+  
   render() {
     return (
       <div className="container">
@@ -45,7 +46,7 @@ class Write extends Component {
     <div className="center-col">
     <div className="AddUser-Wrapper">
         <h1>Write your thoughts:</h1>
-        <form onSubmit={this.addPost}>
+        <form className='editor' onSubmit={this.addPost}>
           <textarea 
             type="text"
             placeholder="Title"
@@ -61,14 +62,20 @@ class Write extends Component {
           placeholder="Content"
           name="description"
           editorState={this.state.editorState}
-          wrapperClassName="demo-wrapper"
-          editorClassName="demo-editor"
           onEditorStateChange={this.onEditorStateChange}
           ref="description"
           required
           minLength="3"
           maxLength="1000000"
           id="description"
+          toolbar={{
+            inline: { inDropdown: true },
+            list: { inDropdown: true },
+            textAlign: { inDropdown: true },
+            link: { inDropdown: true },
+            history: { inDropdown: true },
+            image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
+          }}
         />
           
          
@@ -87,6 +94,26 @@ class Write extends Component {
       
     );
   }
+}
+function uploadImageCallBack(file) {
+  return new Promise(
+    (resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', 'https://api.imgur.com/3/image');
+      xhr.setRequestHeader('Authorization', 'Client-ID XXXXX');
+      const data = new FormData();
+      data.append('image', file);
+      xhr.send(data);
+      xhr.addEventListener('load', () => {
+        const response = JSON.parse(xhr.responseText);
+        resolve(response);
+      });
+      xhr.addEventListener('error', () => {
+        const error = JSON.parse(xhr.responseText);
+        reject(error);
+      });
+    }
+  );
 }
 
 export default Write;
