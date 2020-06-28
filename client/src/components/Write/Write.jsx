@@ -5,6 +5,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 
+
 class Write extends Component {
   state = {
     title: "",
@@ -19,7 +20,7 @@ class Write extends Component {
     try {
       const newUser = await axios.post("/api/post/create", {
           title: this.refs.title.value,
-          description: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
+          description: WebUtility.HtmlEncode(draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))),
           details: this.state.details
         }
       );
