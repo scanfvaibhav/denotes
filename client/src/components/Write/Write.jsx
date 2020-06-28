@@ -28,7 +28,7 @@ class Write extends Component {
       this.setState({ response: err.message });
     }
   };
-  onEditorStateChange (editorState) {
+  onEditorStateChange =(editorState) =>{
     this.setState({
       editorState,
     });
