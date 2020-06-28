@@ -53,7 +53,7 @@ function PostList(props){
 function Post(props){
   return (<div>
               <Topic data={props.data.topic}/>
-              <Description data={props.data.description}/>
+              <Description className="post-discription" data={props.data.description}/>
               <Details data={props.data}/>
               <hr/>
           </div>);
@@ -62,7 +62,7 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return html`<pre className="post-discription">${props.data}</pre>`;
+  return html `${props.data}`;
 }
 
 function Details(props){
