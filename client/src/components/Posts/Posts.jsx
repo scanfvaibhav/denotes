@@ -61,7 +61,11 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return('<pre className="post-discription">'+props.data+'</pre>');
+  var el = document.createElement( 'html' );
+el.innerHTML = "<pre className='post-discription'>"+props.data+"</pre>";
+
+let value = el.getElementsByTagName( 'pre' )[0];
+  return({value});
 }
 
 function Details(props){
