@@ -2,9 +2,7 @@ import React,{Component} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
 import {getPosts} from "../../service/BaseService"; 
-import { html } from 'htm/react';
-
-import htmlToDraft from 'html-to-draftjs';
+import renderHTML from 'react-render-html';
 
 class Posts extends Component {
   constructor(props) {
@@ -62,7 +60,7 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return (props.data);
+  return renderHTML(props.data);
 }
 
 function Details(props){
