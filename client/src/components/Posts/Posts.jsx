@@ -62,8 +62,7 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  let value = WebUtility.HtmlDecode(props.data);
-  return value;
+  return (props.data);
 }
 
 function Details(props){

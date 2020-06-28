@@ -20,7 +20,7 @@ class Write extends Component {
     try {
       const newUser = await axios.post("/api/post/create", {
           title: this.refs.title.value,
-          description: WebUtility.HtmlEncode(draftToHtml(convertToRaw(this.state.editorState.getCurrentContent()))),
+          description: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
           details: this.state.details
         }
       );
