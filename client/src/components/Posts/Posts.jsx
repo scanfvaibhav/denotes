@@ -2,6 +2,7 @@ import React,{Component} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
 import {getPosts} from "../../service/BaseService"; 
+import { html } from 'htm/react';
 
 import htmlToDraft from 'html-to-draftjs';
 
@@ -61,11 +62,7 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  var el = document.createElement( 'html' );
-el.innerHTML = "<pre className='post-discription'>"+props.data+"</pre>";
-
-let value = el.getElementsByTagName( 'pre' )[0];
-  return({value});
+  return html`<pre className="post-discription">${props.data}</pre>`;
 }
 
 function Details(props){
