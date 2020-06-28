@@ -2,6 +2,9 @@ import React,{Component} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
 import {getPosts} from "../../service/BaseService"; 
+
+import htmlToDraft from 'html-to-draftjs';
+
 class Posts extends Component {
   constructor(props) {
     super(props);
@@ -58,16 +61,11 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return(<p className="post-discription">{stringToHTML(props.data)}</p>);
+  return(<p className="post-discription">{htmlToDraft(props.data)}</p>);
 }
 
 function Details(props){
  
   return(<p className="post-details"><i>Last Updated:</i>{props.data.time}<i> By:</i>{props.data.details.name}</p>);
 } 
-function stringToHTML(str) {
-	let parser = new DOMParser();
-	let doc = parser.parseFromString(str, 'text/html');
-	return doc.body;
-}
 export default Posts;

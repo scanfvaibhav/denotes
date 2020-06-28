@@ -1,11 +1,14 @@
 import React, { Component } from "react";
 import '../AddUser/AddUser.css';
 import axios from "axios";
+import { EditorState, convertToRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
 
 class Write extends Component {
   state = {
     title: "",
-    description: "",
+    description: EditorState.createEmpty(),
     details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""}
   };
 
@@ -16,7 +19,7 @@ class Write extends Component {
     try {
       const newUser = await axios.post("/api/post/create", {
           title: this.refs.title.value,
-          description: this.refs.description.value,
+          description: draftToHtml(convertToRaw(this.refs.description.value)),
           details: this.state.details
         }
       );
@@ -49,11 +52,14 @@ class Write extends Component {
             maxLength="100"
             id="title"
           />
-          <textarea
-          type="text"
+          <Editor
           placeholder="Content"
           name="description"
-          onChange={this.onChangeHandler}
+          editorState={this.state}
+          wrapperClassName="demo-wrapper"
+          editorClassName="demo-editor"
+          className="Add-User-Input"
+          onEditorStateChange={this.onChangeHandler}
           ref="description"
           className="Add-User-Input"
           required
@@ -61,6 +67,7 @@ class Write extends Component {
           maxLength="1000000"
           id="description"
         />
+          
          
           <button type="submit" className="Add-User-Submit fa fa-plus"></button>
           <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
