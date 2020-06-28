@@ -58,10 +58,16 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return(<p className="post-discription">{props.data}</p>);
+  return(<p className="post-discription">{stringToHTML(props.data)}</p>);
 }
+
 function Details(props){
  
   return(<p className="post-details"><i>Last Updated:</i>{props.data.time}<i> By:</i>{props.data.details.name}</p>);
 } 
+function stringToHTML(str) {
+	let parser = new DOMParser();
+	let doc = parser.parseFromString(str, 'text/html');
+	return doc.body;
+}
 export default Posts;
