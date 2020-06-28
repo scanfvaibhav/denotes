@@ -62,7 +62,7 @@ function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
 function Description(props){
-  return html `${props.data}`;
+  return html `${props.data}` ;
 }
 
 function Details(props){
