@@ -14,7 +14,13 @@ router.get('/default', async(req, res) => {
     });
 router.post('/create', async (req, res) => {
       try {
-        const newUser = await Posts.create({ topic: req.body.title, description: req.body.description, details: req.body.details ,time:Date.now()});
+        const newUser = await Posts.create({ 
+          topic: req.body.title,
+          description: req.body.description,
+          details: req.body.details,
+          time:Date.now(),
+          email:req.body.email
+        });
          res.send({ newUser });
       } catch(err) {
         res.status(400).send({ error: err });
