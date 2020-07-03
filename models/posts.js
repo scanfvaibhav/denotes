@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema({
         maxlength: 100000,
         trim: true
       },
+      email: {
+        type: String,
+        required: true
+      },
     details: {
         type: Object,
         required: true
