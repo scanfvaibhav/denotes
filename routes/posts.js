@@ -5,7 +5,8 @@ const Posts = require('../models/posts');
 
 router.get('/default', async(req, res) => {
     try {
-        const posts = await Posts.find({}).sort({time:-1});
+        let email=req.params.email; 
+        const posts = await Posts.find({$or:[{email: email}]}).sort({time:-1});
         res.send({ posts })
       } catch(err) {
         res.status(400).send({ error: err });

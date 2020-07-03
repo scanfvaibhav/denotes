@@ -21,7 +21,8 @@ class Write extends Component {
       const newUser = await axios.post("/api/post/create", {
           title: this.refs.title.value,
           description: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
-          details: this.state.details
+          details: this.state.details,
+          email:JSON.parse(localStorage.userInfo).email
         }
       );
       this.setState({ response: `User ${newUser.data.newUser.name} created!` });

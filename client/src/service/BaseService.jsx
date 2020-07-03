@@ -42,7 +42,8 @@ export function getPosts(_this){
 	}
   _this.cancel = axios.CancelToken.source();
     return new Promise((resolve,reject)=>axios.get(GET_DEFAULT_POSTS,{
-        cancelToken: _this.cancel.token
+        cancelToken: _this.cancel.token,
+        params:{'email':JSON.parse(localStorage.userInfo).email}
     })
     .then((res) => {
         resolve(res);
