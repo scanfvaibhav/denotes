@@ -120,6 +120,8 @@ export default class Login extends React.Component {
         }
       );
       localStorage.setItem("authInfo",JSON.stringify(newUser));
+      localStorage.setItem("userInfo",JSON.stringify(newUser));
+      
       if(this.props.login){
         this.props.login(true);
       }
