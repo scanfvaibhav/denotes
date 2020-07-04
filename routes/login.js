@@ -32,10 +32,7 @@ router.post('/register',async(req,res)=>{
       gender: req.body.gender,
       age:req.body.age
     });
-    res.send({ 
-      success:true,
-      data:user 
-    });
+    res.send(user);
   }catch(err) {
     res.status(400).send({ error: err });
   }
