@@ -1,5 +1,6 @@
 import React from "react";
 import ReactModalLogin from "react-modal-login";
+import axios from "axios";
  
 import { facebookConfig, googleConfig } from "../../config/social-config";
 import  {getUser}  from '../../service/BaseService';
@@ -151,7 +152,7 @@ export default class Login extends React.Component {
           maxLength="100"
           id="password"
         />
-          <button type="submit"></button>
+          <button type="submit">Login</button>
           <button onClick={() => this.openModal()}>Login with Facebook</button>
        </form>
           
