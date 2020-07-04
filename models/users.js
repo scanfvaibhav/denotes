@@ -8,7 +8,7 @@ const userSchema = new mongoose.Schema({
     maxlength: 33,
     trim: true
   },
-  genre: {
+  gender: {
     type: String,
     required: true,
     maxlength: 6,
@@ -19,7 +19,21 @@ const userSchema = new mongoose.Schema({
     type: Number,
     min: 1,
     max: 120
-  }
+  },
+  email: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 33,
+    trim: true
+  },
+  password: {
+    type: String,
+    required: true,
+    minlength: 3,
+    maxlength: 33,
+    trim: true
+  },
 });
 
 module.exports = mongoose.model('users', userSchema);

@@ -110,13 +110,52 @@ export default class Login extends React.Component {
       graphPopupmsg:"Friends"
     });
   } 
+  login = async e => {
+    e.preventDefault();
+    try {
+      const newUser = await axios.post("/api/login/login", {
+          email: this.refs.email.value,
+          password: this.refs.password.value,
+        }
+      );
+      localStorage.setItem("authInfo",JSON.stringify(newUser));
+      if(this.props.login){
+        this.props.login(true);
+      }
+    } catch (err) {
+      this.setState({ response: err.message });
+    }
+  };
  
   render() {
     return (
       <div>
       <p>{this.state.user.name}</p>
         <p>
-          {this.state.user.name?<button onClick={() => this.logout()}>Logout</button>:<button onClick={() => this.openModal()}>Login</button>}
+          {this.state.user.name?<button onClick={() => this.logout()}>Logout</button>:
+          <form className='editor' onSubmit={this.login}>
+          <input 
+            type="text"
+            placeholder="email"
+            name="email"
+            ref="email"
+            minLength="3"
+            maxLength="100"
+            id="email"
+          /><input 
+          type="text"
+          placeholder="Password"
+          name="password"
+          ref="password"
+          minLength="3"
+          maxLength="100"
+          id="password"
+        />
+          <button type="submit"></button>
+          <button onClick={() => this.openModal()}>Login with Facebook</button>
+       </form>
+          
+        }
         </p>
         <ReactModalLogin
           visible={this.state.showModal}
