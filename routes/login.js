@@ -42,10 +42,7 @@ router.post('/login',async(req,res)=>{
     let email = req.body.email;
     let password  = req.body.password;
     const user =  await User.find({$and:[{email: email},{password:password}]});
-    res.send({ 
-      success:true,
-      data:user 
-    });
+    res.send(user[0]);
   }catch(err) {
     res.status(400).send({ error: err });
   }

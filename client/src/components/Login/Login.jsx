@@ -20,8 +20,7 @@ export default class Login extends React.Component {
       showModal: false,
       loading: false,
       error: null,
-      user:localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):{},
-      picture:localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")).picture.data.url:""
+      user:localStorage.getItem("userInfo")?JSON.parse(localStorage.getItem("userInfo")):{}
     };
   }
  
@@ -119,8 +118,8 @@ export default class Login extends React.Component {
           password: this.refs.password.value,
         }
       );
-      localStorage.setItem("authInfo",JSON.stringify(newUser));
-      localStorage.setItem("userInfo",JSON.stringify(newUser));
+      localStorage.setItem("authInfo",JSON.stringify(newUser.data));
+      localStorage.setItem("userInfo",JSON.stringify(newUser.data));
       
       if(this.props.login){
         this.props.login(true);
