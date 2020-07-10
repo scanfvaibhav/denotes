@@ -23,6 +23,7 @@
   
   .center-col {
     flex: 3;
+    overflow-x: scroll;
   }
   
   .right-col {
