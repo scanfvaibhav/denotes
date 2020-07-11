@@ -1,9 +1,11 @@
-import React,{Component} from 'react';
+import React,{Component, useState} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
 import {getPosts,getTree} from "../../service/BaseService"; 
 import renderHTML from 'react-render-html';
 import {Treebeard} from 'react-treebeard';
+import Fullscreen from "react-full-screen";
+import {TREE_STYLE} from "../../constants/Style";
 
 
 class Posts extends Component {
@@ -12,10 +14,12 @@ class Posts extends Component {
     this.state={
         data:this.props.data,
         posts:[],
-        treeData:[]    
+        treeData:[],
+        isFull: false,   
     };
     this.onToggle = this.onToggle.bind(this);
 }
+
 componentDidMount(){
   getPosts(this).then((res)=>{
     if(res){
@@ -27,9 +31,8 @@ componentDidMount(){
       }
     }).catch();
   }).catch();
-  
-  
 }
+
 onToggle(node, toggled){
   const {cursor, data} = this.state;
   if (cursor) {
@@ -43,134 +46,67 @@ onToggle(node, toggled){
 };
 
 render() {
-  
-  let treestyle = {
-    tree: {
-        base: {
-            listStyle: 'none',
-            backgroundColor: '#ffffff',
-            margin: 0,
-            padding: 0,
-            color: 'black',
-            fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
-            fontSize: '14px'
-        },
-        node: {
-            base: {
-                position: 'relative'
-            },
-            link: {
-                cursor: 'pointer',
-                position: 'relative',
-                padding: '0px 5px',
-                display: 'block'
-            },
-            activeLink: {
-                background: '#ffffff'
-            },
-            toggle: {
-                base: {
-                    position: 'relative',
-                    display: 'inline-block',
-                    verticalAlign: 'top',
-                    marginLeft: '-5px',
-                    height: '24px',
-                    width: '24px'
-                },
-                wrapper: {
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    margin: '-7px 0 0 -7px',
-                    height: '14px'
-                },
-                height: 14,
-                width: 14,
-                arrow: {
-                    fill: '#9DA5AB',
-                    strokeWidth: 0
-                }
-            },
-            header: {
-                base: {
-                    display: 'inline-block',
-                    verticalAlign: 'top',
-                    color: 'black'
-                },
-                connector: {
-                    width: '2px',
-                    height: '12px',
-                    borderLeft: 'solid 2px black',
-                    borderBottom: 'solid 2px black',
-                    position: 'absolute',
-                    top: '0px',
-                    left: '-21px'
-                },
-                title: {
-                    lineHeight: '24px',
-                    verticalAlign: 'middle'
-                }
-            },
-            subtree: {
-                listStyle: 'none',
-                paddingLeft: '19px'
-            },
-            loading: {
-                color: '#E2C089'
-            }
-        }
-    }}
-        return (
+  return (
+    <div className="container">
 
-          <div className="container">
-       
-    <div className="left-col">
-    <div className="category">
-    <Treebeard
-                data={this.state.treeData}
-                onToggle={this.onToggle}
-                style={treestyle}
-            />
-            </div>
+      <div className="left-col">
+        <div className="category">
+          <Treebeard
+            data={this.state.treeData}
+            onToggle={this.onToggle}
+            style={TREE_STYLE}
+          />
+        </div>
+      </div>
     
-    </div>
-    
-    <div className="center-col">
+      <div className="center-col">
         <PostList posts={this.state.posts}/>
-    </div>
+      </div>
     
-    <div className="right-col">
-    <Profile data={this.state.userData}/>
-    </div>
+      <div className="right-col">
+        <Profile data={this.state.userData}/>
+      </div>
   </div>);  
   }  
 } 
+
 function PostList(props){
-  
-  return(<div>
-    {props.posts.map(function(data, index){
-        return <Post key={index} data={data}/>
+  return(
+    <div>{
+      props.posts.map(function(data, index){
+        return <Post className = "mainPost" key={index} data={data}/>
       })}
-    
     </div>);
 }
+
 function Post(props){
-  return (<div>
-              <Topic data={props.data.topic}/>
-              <Description className="post-discription" data={props.data.description}/>
-              <Details data={props.data}/>
-              <hr/>
-          </div>);
+
+  const [isFull,setIsFull]=useState(false);
+  
+  return (
+    <div>
+      <button  className="open-full-screen-button" title="Open in Full Screen" onClick={()=>setIsFull(true)}><i class="fa fa-window-maximize icon-3x"></i>
+      </button>
+      <Fullscreen enabled={isFull} onChange={(full) => setIsFull(full)}>
+        <div className="post-main">
+          <Topic data={props.data.topic}/>
+          <Description  className = "post-discription" data={props.data.description}/>
+          <Details data={props.data}/>
+        </div>
+      </Fullscreen>
+      <hr/>
+    </div>);
 }
+
 function Topic(props){
   return(<p className="post-topic">{props.data}</p>);
 }
+
 function Description(props){
   return renderHTML(props.data);
 }
 
 function Details(props){
- 
   return(<p className="post-details"><i>Last Updated:</i>{props.data.time}<i> By:</i>{props.data.details.name}</p>);
 } 
 

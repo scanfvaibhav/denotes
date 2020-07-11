@@ -15,19 +15,23 @@
     overflow-y: scroll;
   }
   .left-col {
-    flex: 1.5;
+    flex: 20;
     display: flex;
     justify-content: center;
     align-items: top;
   }
   
   .center-col {
-    flex: 3;
+    flex: 60;
+    overflow-x: scroll;
+  }
+  .mainPost{
+    justify-content: center;
     overflow-x: scroll;
   }
   
   .right-col {
-    flex: 2;
+    flex: 20;
     display: flex;
     justify-content: center;
     align-items: top;
@@ -44,8 +48,13 @@
     font-size: 20px;
     font-weight: bolder;
   }
+  .post-main{
+    max-height :  500px;
+    overflow-y:scroll;
+    background-color: #fdfdfd
+  }
   .post-discription{
-    margin-left: 10px
+    margin-left: 10px;
   }
   .post-details{
     text-align: right;
@@ -59,3 +68,17 @@
     font-family: lucida grande ,tahoma,verdana,arial,sans-serif;
     font-size: 17px;
 }
+
+ 
+.fullscreen-enabled .post-main {
+  background: #fff;
+  height: 100%;
+  max-height: 100%;
+  overflow-y:scroll;
+}
+.open-full-screen-button{
+  float: right;
+};
+
+
+
