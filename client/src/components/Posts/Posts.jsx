@@ -94,7 +94,6 @@ function Post(props){
           <Details data={props.data}/>
         </div>
       </Fullscreen>
-      <hr/>
     </div>);
 }
 
