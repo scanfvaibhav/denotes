@@ -61,6 +61,7 @@ label {
 
 .center-col {
   flex: 3;
+  height:100%;
 }
 
 .right-col {

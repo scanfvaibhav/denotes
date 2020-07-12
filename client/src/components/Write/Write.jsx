@@ -5,8 +5,8 @@ import axios from "axios";
 import { EditorState, convertToRaw ,convertFromHTML,ContentState} from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
-
 import {Treebeard} from 'react-treebeard';
+import {TREE_STYLE} from "../../constants/Style";
 
 
 class Write extends Component {
@@ -20,20 +20,21 @@ class Write extends Component {
       treeData:[] 
     };
     this.onToggle = this.onToggle.bind(this);
+    this.addNode = this.addNode.bind(this);
   }
   componentDidMount(){
-    getPosts(this).then((res)=>{
-      if(res){
-        this.setState({posts:res.data.posts});
-      }
-      getTree(this).then((res)=>{
+    if(this.state.treeData.length==0){
+      getPosts(this).then((res)=>{
         if(res){
-          this.setState({treeData:res.data});
+          this.setState({posts:res.data.posts});
         }
+        getTree(this).then((res)=>{
+          if(res){
+            this.setState({treeData:res.data});
+          }
+        }).catch();
       }).catch();
-    }).catch();
-    
-    
+    }
   }
 
   onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });
@@ -53,7 +54,31 @@ class Write extends Component {
       this.setState({ response: err.message });
     }
   };
-
+  addNewNode(treeData,id,name){
+    for(let i in treeData){
+      if(treeData[i].id===id){
+        if(!treeData[i]["children"]){
+          treeData[i]["children"]=[];
+        }
+        treeData[i]["children"].push({name:name});
+        treeData[i]["toggled"]=true;
+      }else{
+        if(treeData[i]["children"]){
+          this.addNewNode(treeData[i]["children"],id,name);
+        }
+      }
+    }
+  };
+  addNode(){
+    let val = this.refs.node.value;
+    let treeData = this.state.treeData;
+    if(this.state.selectedNode){
+      this.addNewNode(treeData,this.state.selectedNode,val);
+    }else{
+      treeData.push({name:val});
+    }
+    this.setState({treeData:treeData});
+  };
   onEditorStateChange =(editorState) =>{
     this.setState({
       editorState,
@@ -68,7 +93,8 @@ class Write extends Component {
       this.setState({editorState: EditorState.createWithContent(state)});
   }
   onToggle(node, toggled){
-
+debugger
+    this.setState({selectedNode:node.id});
     this.refs.title.value = node.name;
     this.refs.description.rawContentState = node.description;
 
@@ -83,93 +109,30 @@ class Write extends Component {
     this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
   };
   render() {
-    let treestyle = {
-      tree: {
-          base: {
-              listStyle: 'none',
-              backgroundColor: '#ffffff',
-              margin: 0,
-              padding: 0,
-              color: 'black',
-              fontFamily: 'lucida grande ,tahoma,verdana,arial,sans-serif',
-              fontSize: '14px'
-          },
-          node: {
-              base: {
-                  position: 'relative'
-              },
-              link: {
-                  cursor: 'pointer',
-                  position: 'relative',
-                  padding: '0px 5px',
-                  display: 'block'
-              },
-              activeLink: {
-                  background: '#ffffff'
-              },
-              toggle: {
-                  base: {
-                      position: 'relative',
-                      display: 'inline-block',
-                      verticalAlign: 'top',
-                      marginLeft: '-5px',
-                      height: '24px',
-                      width: '24px'
-                  },
-                  wrapper: {
-                      position: 'absolute',
-                      top: '50%',
-                      left: '50%',
-                      margin: '-7px 0 0 -7px',
-                      height: '14px'
-                  },
-                  height: 14,
-                  width: 14,
-                  arrow: {
-                      fill: '#9DA5AB',
-                      strokeWidth: 0
-                  }
-              },
-              header: {
-                  base: {
-                      display: 'inline-block',
-                      verticalAlign: 'top',
-                      color: 'black'
-                  },
-                  connector: {
-                      width: '2px',
-                      height: '12px',
-                      borderLeft: 'solid 2px black',
-                      borderBottom: 'solid 2px black',
-                      position: 'absolute',
-                      top: '0px',
-                      left: '-21px'
-                  },
-                  title: {
-                      lineHeight: '24px',
-                      verticalAlign: 'middle'
-                  }
-              },
-              subtree: {
-                  listStyle: 'none',
-                  paddingLeft: '19px'
-              },
-              loading: {
-                  color: '#E2C089'
-              }
-          }
-      }}
+    
     return (
       <div className="container">
        
     <div className="left-col">
     <div className="category">
+    
     <Treebeard
                 data={this.state.treeData}
                 onToggle={this.onToggle}
-                style={treestyle}
+                style={TREE_STYLE}
+                ref="treeMenu"
             />
+            
+            <input 
+            type="text"
+            placeholder="add node"
+            name="node"
+            ref="node"
+            minLength="3"
+            maxLength="100"
+          /><button type="submit" onClick={this.addNode} className="fa fa-plus"></button>
             </div>
+            
     </div>
     
     <div className="center-col">

@@ -41,7 +41,7 @@ export const TREE_STYLE ={
                 height: 14,
                 width: 14,
                 arrow: {
-                    fill: '#9DA5AB',
+                    fill: '#bb5a5a',
                     strokeWidth: 0
                 }
             },
