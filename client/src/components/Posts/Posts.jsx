@@ -44,7 +44,7 @@ onToggle(node, toggled){
   }
   this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
   
-  getContentById(this,node.titleId).then((res)=>{
+  getContentById(this,node.id).then((res)=>{
     if(res){
       this.setState({posts:res.data.posts});
     }

@@ -19,7 +19,7 @@ router.get('/getContentById', async(req, res) => {
     try {
         let emailId=req.query.email;
         let titleId=req.query.titleId;
-        const posts = await Posts.find({titleId:titleId}).sort({time:-1});
+        const posts = await Posts.find({email: emailId,titleId:titleId}).sort({time:-1});
         res.send({ posts })
         } catch(err) {
         res.status(400).send({ error: err });
