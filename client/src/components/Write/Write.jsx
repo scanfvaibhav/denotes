@@ -3,8 +3,10 @@ import {getPosts,getTree} from "../../service/BaseService";
 import '../AddUser/AddUser.css';
 import axios from "axios";
 import { EditorState, convertToRaw ,convertFromHTML,ContentState} from 'draft-js';
-import { Editor } from 'react-draft-wysiwyg';
-import draftToHtml from 'draftjs-to-html';
+
+import {Editor} from 'primereact/editor';
+import {InputTextarea} from 'primereact/inputtextarea';
+
 import {Treebeard} from 'react-treebeard';
 import {TREE_STYLE} from "../../constants/Style";
 import {v4} from "uuid";
@@ -38,16 +40,21 @@ class Write extends Component {
     }
   }
 
-  onChangeHandler = e => this.setState({ [e.target.name]: e.target.value });
+  onChangeHandler = e => {
+      this.setState({ [e.target.name]: e.target.value });
+  }
+  onEditorChangeHandler = e => {
+      this.setState({"description":  e.htmlValue });
+  }
 
   addPost = async e => {
     e.preventDefault();
     try {
-      let title = this.refs.title.value;
+      let title = this.state.title;
       let randomId = await this.appendNode(title);
       const newPost = await axios.post("/api/post/create", {
           title: title,
-          description: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
+          description: this.state.description,
           details: this.state.details,
           email:JSON.parse(localStorage.userInfo).email,
           titleId : randomId
@@ -144,7 +151,8 @@ debugger
             ref="node"
             minLength="3"
             maxLength="100"
-          /><button type="submit" onClick={this.addNode} className="fa fa-plus"></button>
+            className="AddNodeText"
+          /><button type="submit" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
             </div>
             
     </div>
@@ -152,38 +160,33 @@ debugger
     <div className="center-col">
     <div className="AddUser-Wrapper">
         <form className='editor' onSubmit={this.addPost}>
-          <textarea 
-            type="text"
-            placeholder="Title"
-            name="title"
-            onChange={this.onChangeHandler}
-            ref="title"
-            className="Add-User-Input"
-            minLength="3"
-            maxLength="100"
-            id="title"
-          />
-          <Editor
+
+        <InputTextarea 
+          rows={5} 
+          cols={30}
+          onChange={this.onChangeHandler.bind(this)}
+          autoResize={true}
+          type="text"
+          placeholder="Title"
+          name="title"
+          ref="title"
+          className="Add-User-Input"
+          minLength="3"
+          maxLength="100"
+          id="title"
+             />
+          
+          <Editor 
+          style={{height:'320px'}}
           placeholder ="Content"
           name ="description"
-          editorState ={this.state.editorState}
-          onEditorStateChange ={this.onEditorStateChange}
           ref ="description"
           required
           minLength ="3"
           maxLength ="1000000"
           id ="description"
-          toolbar ={{
-            inline: { inDropdown: true },
-            list: { inDropdown: true },
-            textAlign: { inDropdown: true },
-            link: { inDropdown: true },
-            history: { inDropdown: true },
-            image: { uploadCallback: uploadImageCallBack, alt: { present: true, mandatory: true } },
-          }}
-        />
-          
-         
+          onTextChange={this.onEditorChangeHandler.bind(this)}
+          />
           <button type="submit" className="Add-User-Submit fa fa-plus"></button>
           <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
 

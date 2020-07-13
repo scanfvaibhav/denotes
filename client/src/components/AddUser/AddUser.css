@@ -29,9 +29,24 @@
   cursor: pointer;
   outline: none;
 }
-
+.Add-Node-Submit {
+  width: 25px;
+  height: 20px;
+  color: #fff;
+  border: none;
+  margin-left: 18px;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  background-color: #3833A5;
+}
 .Add-User-Submit {
   background-color: #3833A5;
+}
+.AddNodeText {
+  display: block;
+    padding: 4px;
+    width: 150px;
 }
 
 .Add-User-Reset {
