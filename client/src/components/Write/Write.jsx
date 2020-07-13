@@ -30,7 +30,7 @@ class Write extends Component {
         }
         getTree(this).then((res)=>{
           if(res){
-            this.setState({treeData:res.data});
+            this.setState({treeData:res.data.data});
           }
         }).catch();
       }).catch();
@@ -69,7 +69,7 @@ class Write extends Component {
       }
     }
   };
-  addNode(){
+  async addNode(){
     let val = this.refs.node.value;
     let treeData = this.state.treeData;
     if(this.state.selectedNode){
@@ -77,7 +77,13 @@ class Write extends Component {
     }else{
       treeData.push({name:val});
     }
-    this.setState({treeData:treeData});
+    const menu = await axios.post("/api/post/updateMenuTree", {
+        menu: treeData,
+        email:JSON.parse(localStorage.userInfo).email
+      }
+    );
+    this.setState({treeData:menu.data.menu});
+    
   };
   onEditorStateChange =(editorState) =>{
     this.setState({

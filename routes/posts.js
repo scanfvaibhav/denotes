@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const Posts = require('../models/posts');
+const Menu = require('../models/menu');
 
 
 router.get('/default', async(req, res) => {
@@ -32,89 +33,35 @@ router.post('/create', async (req, res) => {
 
 router.get('/tree',async(req,res)=>{
     try{
-      res.send([
-        {
-            "name": "JavaScript",
-            "id":"ajsb",
-            "description" : "<p><hey text/p>",
-            "children": [
-                {
-                    "name": "Closures",
-                    "id":"cls"
-                },
-                {
-                    "name": "Arrow Function",
-                    "id":"arr"
-                },
-                {
-                    "name": "Data types",
-                    "active": false
-                },
-                {
-                    "name": "Asynchronous JS"
-                },
-                {
-                    "name": "Call()"
-                }
-            ],
-            "active": false,
-            "toggled": true
-        },
-        {
-            "name": "React",
-            "children": [{
-                "name":"State/Props",
-
-            },{
-                "name":"Hooks",
-
-            }]
-        },
-        {
-            "name": "Data Structures",
-            "children": [
-                {
-                    "name": "Linked List",
-                    "children": [
-                        {
-                            "name": "Singly"
-                        },
-                        {
-                            "name": "Doubly"
-                        },{
-                            "name": "Circular"
-                        }
-                    ]
-                },
-                {
-                    "name": "Tree"
-                }
-            ]
-        },
-        {
-            "name": "Algorithm",
-            "children": [
-                {
-                    "name": "Big O Notation"
-                },
-                {
-                    "name": "Complexity"
-                }
-            ]
-        },
-        {
-            "name": "Genetic Engineering"
-        },
-        {
-            "name": "Behavioural Studies"
-        },
-        {
-            "name": "Health",
-            "active": false
-        }
-    ])
-    } catch(err){
+        let emailId=req.query.email;
+        let menu= await Menu.find({email: emailId});
+        res.send({data:menu.length?menu[0].menu:[]});
+      } catch(err){
       res.status(400).send({error:err});
     }
 });
+
+router.post('/updateMenuTree',async(req,res)=>{
+    try{
+        debugger
+        let emailId=req.body.email;
+        let menu= await Menu.find({'email':emailId});
+        if(menu.length){
+            menu = await Menu.findOneAndUpdate({
+                email:emailId,
+                menu : req.body.menu
+            });
+        }else{
+            menu = await Menu.create({
+                id:0,
+                email:emailId,
+                menu : req.body.menu
+            });
+        }
+        res.send(menu);
+      } catch(err){
+      res.status(400).send({error:err});
+    }
+});
+
 module.exports = router;

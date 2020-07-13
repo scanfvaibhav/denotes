@@ -27,7 +27,7 @@ componentDidMount(){
     }
     getTree(this).then((res)=>{
       if(res){
-        this.setState({treeData:res.data});
+        this.setState({treeData:res.data.data});
       }
     }).catch();
   }).catch();
