@@ -15,6 +15,17 @@ router.get('/default', async(req, res) => {
       }
     });
 
+router.get('/getContentById', async(req, res) => {
+    try {
+        let emailId=req.query.email;
+        let titleId=req.query.titleId;
+        const posts = await Posts.find({titleId:titleId}).sort({time:-1});
+        res.send({ posts })
+        } catch(err) {
+        res.status(400).send({ error: err });
+        }
+    });
+
 router.post('/create', async (req, res) => {
       try {
         const newUser = await Posts.create({ 
@@ -22,7 +33,8 @@ router.post('/create', async (req, res) => {
           description: req.body.description,
           details: req.body.details,
           time:Date.now(),
-          email:req.body.email
+          email:req.body.email,
+          titleId: req.body.titleId
         });
          res.send({ newUser });
       } catch(err) {

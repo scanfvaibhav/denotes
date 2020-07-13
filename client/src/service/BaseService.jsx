@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {GLOBAL_SEARCH,GET_USER,GET_DEFAULT_POSTS, GET_MSG,GET_TREE} from '../constants/BaseConstants';
+import {GLOBAL_SEARCH,GET_USER,GET_DEFAULT_POSTS, GET_MSG,GET_TREE,GET_CONTENT_BY_TITLE_ID} from '../constants/BaseConstants';
 export function getSearchinfo(query,_this){
     if (_this.cancel) {
 		_this.cancel.cancel();
@@ -53,6 +53,24 @@ export function getPosts(_this){
         
     })); 
 }
+export function getContentById(_this,id){
+    if (_this.cancel) {
+		_this.cancel.cancel();
+	}
+  _this.cancel = axios.CancelToken.source();
+    return new Promise((resolve,reject)=>axios.get(GET_CONTENT_BY_TITLE_ID,{
+        cancelToken: _this.cancel.token,
+        params:{'email':JSON.parse(localStorage.userInfo).email,titleId:id}
+    })
+    .then((res) => {
+        resolve(res);
+    })
+    .catch((error) => {
+        reject(error);
+        
+    })); 
+}
+
 export function getTree(_this){
     if (_this.cancel) {
 		_this.cancel.cancel();

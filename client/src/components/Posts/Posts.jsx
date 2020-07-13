@@ -1,7 +1,7 @@
 import React,{Component, useState} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
-import {getPosts,getTree} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById} from "../../service/BaseService"; 
 import renderHTML from 'react-render-html';
 import {Treebeard} from 'react-treebeard';
 import Fullscreen from "react-full-screen";
@@ -43,6 +43,12 @@ onToggle(node, toggled){
       node.toggled = toggled; 
   }
   this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
+  
+  getContentById(this,node.titleId).then((res)=>{
+    if(res){
+      this.setState({posts:res.data.posts});
+    }
+  }).catch();
 };
 
 render() {

@@ -26,6 +26,9 @@ const postSchema = new mongoose.Schema({
     time :{
       type: Date,
       required:true
+    },
+    titleId:{
+      type: String
     }
 });
 

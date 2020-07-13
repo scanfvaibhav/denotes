@@ -7,6 +7,7 @@ import { Editor } from 'react-draft-wysiwyg';
 import draftToHtml from 'draftjs-to-html';
 import {Treebeard} from 'react-treebeard';
 import {TREE_STYLE} from "../../constants/Style";
+import {v4} from "uuid";
 
 
 class Write extends Component {
@@ -42,40 +43,47 @@ class Write extends Component {
   addPost = async e => {
     e.preventDefault();
     try {
-      const newUser = await axios.post("/api/post/create", {
-          title: this.refs.title.value,
+      let title = this.refs.title.value;
+      let randomId = await this.appendNode(title);
+      const newPost = await axios.post("/api/post/create", {
+          title: title,
           description: draftToHtml(convertToRaw(this.state.editorState.getCurrentContent())),
           details: this.state.details,
-          email:JSON.parse(localStorage.userInfo).email
+          email:JSON.parse(localStorage.userInfo).email,
+          titleId : randomId
         }
       );
-      this.setState({ response: `User ${newUser.data.newUser.name} created!` });
+      this.setState({ response: `Done!` });
     } catch (err) {
       this.setState({ response: err.message });
     }
   };
-  addNewNode(treeData,id,name){
+  addNewNode(treeData,id,name,randomId){
     for(let i in treeData){
       if(treeData[i].id===id){
         if(!treeData[i]["children"]){
           treeData[i]["children"]=[];
         }
-        treeData[i]["children"].push({name:name});
+        treeData[i]["children"].push({name:name,id:randomId});
         treeData[i]["toggled"]=true;
       }else{
         if(treeData[i]["children"]){
-          this.addNewNode(treeData[i]["children"],id,name);
+          this.addNewNode(treeData[i]["children"],id,name,randomId);
         }
       }
     }
   };
   async addNode(){
     let val = this.refs.node.value;
+    await this.appendNode(val);
+  };
+  async appendNode(value){
     let treeData = this.state.treeData;
+    let randomId = v4();
     if(this.state.selectedNode){
-      this.addNewNode(treeData,this.state.selectedNode,val);
+      this.addNewNode(treeData,this.state.selectedNode,value,randomId);
     }else{
-      treeData.push({name:val});
+      treeData.push({name:value,id:randomId});
     }
     const menu = await axios.post("/api/post/updateMenuTree", {
         menu: treeData,
@@ -83,7 +91,7 @@ class Write extends Component {
       }
     );
     this.setState({treeData:menu.data.menu});
-    
+    return randomId;
   };
   onEditorStateChange =(editorState) =>{
     this.setState({
