@@ -32,6 +32,7 @@ router.get('/getContentByNode', async(req, res) => {
         let node=JSON.parse(req.query.node);
         let arr=[];
         getNode([node],arr);
+        
         const posts = await Posts.find({email: emailId,titleId:arr}).sort({time:-1});
         res.send({ posts })
         } catch(err) {
