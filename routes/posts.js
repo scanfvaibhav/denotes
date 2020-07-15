@@ -26,6 +26,28 @@ router.get('/getContentById', async(req, res) => {
         }
     });
 
+router.get('/getContentByNode', async(req, res) => {
+    try {
+        let emailId=req.query.email;
+        let node=JSON.parse(req.query.node);
+        let arr=[];
+        getNode([node],arr);
+        const posts = await Posts.find({email: emailId,titleId:arr}).sort({time:-1});
+        res.send({ posts })
+        } catch(err) {
+        res.status(400).send({ error: err });
+        }
+    });
+var  getNode = async function(node,arr){
+
+    for(let i=0;i<node.length;i++){
+        
+        arr.push(node[i].id);
+        if(node[i].children && node[i].children.length>0){
+            getNode(node[i].children,arr);
+        }
+    }
+};
 router.post('/create', async (req, res) => {
       try {
         const newUser = await Posts.create({ 

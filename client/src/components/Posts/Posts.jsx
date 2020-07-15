@@ -1,11 +1,12 @@
 import React,{Component, useState} from 'react';
 import Profile from '../Profile/Profile';
 import  "./Posts.css";
-import {getPosts,getTree,getContentById} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,getContentByNode} from "../../service/BaseService"; 
 import renderHTML from 'react-render-html';
 import {Treebeard} from 'react-treebeard';
 import Fullscreen from "react-full-screen";
 import {TREE_STYLE} from "../../constants/Style";
+
 
 
 class Posts extends Component {
@@ -44,7 +45,7 @@ onToggle(node, toggled){
   }
   this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
   
-  getContentById(this,node.id).then((res)=>{
+  getContentByNode(this,node).then((res)=>{
     if(res){
       this.setState({posts:res.data.posts});
     }
