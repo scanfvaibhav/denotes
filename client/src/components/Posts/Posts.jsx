@@ -6,6 +6,7 @@ import renderHTML from 'react-render-html';
 import {Treebeard} from 'react-treebeard';
 import Fullscreen from "react-full-screen";
 import {TREE_STYLE} from "../../constants/Style";
+import {Card} from 'primereact/card';
 
 
 
@@ -81,7 +82,7 @@ function PostList(props){
   return(
     <div>{
       props.posts.map(function(data, index){
-        return <Post className = "mainPost" key={index} data={data}/>
+        return <Card className="ui-card-shadow"><Post className = "mainPost" key={index} data={data}/></Card>
       })}
     </div>);
 }
