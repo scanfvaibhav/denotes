@@ -24,6 +24,7 @@ class Write extends Component {
     };
     this.onToggle = this.onToggle.bind(this);
     this.addNode = this.addNode.bind(this);
+    this.removeNode = this.removeNode.bind(this);
   }
   componentDidMount(){
     if(this.state.treeData.length==0){
@@ -84,6 +85,28 @@ class Write extends Component {
     let val = this.refs.node.value;
     await this.appendNode(val);
   };
+
+  async removeNode(){
+    let val = this.state.selectedNode;
+    let treeData = this.state.treeData;
+    this.removeNodeFromState(treeData,val);
+    const menu = await axios.post("/api/post/updateMenuTree", {
+      menu: treeData,
+      email:JSON.parse(localStorage.userInfo).email
+    });
+    this.setState({treeData:menu.data.menu});
+
+  };
+
+  async removeNodeFromState(treeData,id){
+    for(let i=0;i<treeData.length;i++){
+      if(treeData[i].id===id){
+        treeData.splice(i,1);
+      }else if(treeData[i].children)
+        this.removeNodeFromState(treeData[i].children,id)
+    }
+  };
+
   async appendNode(value){
     let treeData = this.state.treeData;
     let randomId = v4();
@@ -153,6 +176,7 @@ debugger
             maxLength="100"
             className="AddNodeText"
           /><button type="submit" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
+          <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
             </div>
             
     </div>
