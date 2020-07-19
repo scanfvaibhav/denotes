@@ -25,6 +25,7 @@ class Write extends Component {
     this.onToggle = this.onToggle.bind(this);
     this.addNode = this.addNode.bind(this);
     this.removeNode = this.removeNode.bind(this);
+    this.edit = this.edit.bind(this);
   }
   componentDidMount(){
     if(this.state.treeData.length==0){
@@ -87,7 +88,7 @@ class Write extends Component {
   };
 
   async removeNode(){
-    let val = this.state.selectedNode;
+    let val = this.state.selectedNode.id;
     let treeData = this.state.treeData;
     this.removeNodeFromState(treeData,val);
     const menu = await axios.post("/api/post/updateMenuTree", {
@@ -107,11 +108,17 @@ class Write extends Component {
     }
   };
 
+  edit(){
+    let selectedNode = this.state.selectedNode;
+    this.setState({descriptionData:"geee"});
+    //this.refs.description.value="hello"
+  };
+
   async appendNode(value){
     let treeData = this.state.treeData;
     let randomId = v4();
     if(this.state.selectedNode){
-      this.addNewNode(treeData,this.state.selectedNode,value,randomId);
+      this.addNewNode(treeData,this.state.selectedNode.id,value,randomId);
     }else{
       treeData.push({name:value,id:randomId});
     }
@@ -137,8 +144,7 @@ class Write extends Component {
       this.setState({editorState: EditorState.createWithContent(state)});
   }
   onToggle(node, toggled){
-debugger
-    this.setState({selectedNode:node.id});
+    this.setState({selectedNode:node});
     this.refs.title.value = node.name;
     this.refs.description.rawContentState = node.description;
 
@@ -175,8 +181,12 @@ debugger
             minLength="3"
             maxLength="100"
             className="AddNodeText"
-          /><button type="submit" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
+          />
+
+          <button type="submit" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
           <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
+          <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button>
+
             </div>
             
     </div>
@@ -209,6 +219,7 @@ debugger
           minLength ="3"
           maxLength ="1000000"
           id ="description"
+          value={this.state.descriptionData}
           onTextChange={this.onEditorChangeHandler.bind(this)}
           />
           <button type="submit" className="Add-User-Submit fa fa-plus"></button>

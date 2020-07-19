@@ -110,12 +110,12 @@ export default class Login extends React.Component {
       graphPopupmsg:"Friends"
     });
   } 
-  login = async e => {
-    e.preventDefault();
+  login = async (val) => {
+    debugger
     try {
       const newUser = await axios.post("/api/login/login", {
-          email: this.refs.email.value,
-          password: this.refs.password.value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
         }
       );
       localStorage.setItem("authInfo",JSON.stringify(newUser.data));
@@ -128,34 +128,31 @@ export default class Login extends React.Component {
       this.setState({ response: err.message });
     }
   };
- 
+  startLoading() {
+    this.setState({
+      loading: true
+    })
+  }
+
+  finishLoading() {
+    this.setState({
+      loading: false
+    })
+  }
+
+  onTabsChange() {
+    this.setState({
+      error: null
+    });
+  }
   render() {
     return (
       <div>
       <p>{this.state.user.name}</p>
         <p>
           {this.state.user.name?<button onClick={() => this.logout()}>Logout</button>:
-          <form className='editor' onSubmit={this.login}>
-          <input 
-            type="text"
-            placeholder="email"
-            name="email"
-            ref="email"
-            minLength="3"
-            maxLength="100"
-            id="email"
-          /><input 
-          type="text"
-          placeholder="Password"
-          name="password"
-          ref="password"
-          minLength="3"
-          maxLength="100"
-          id="password"
-        />
-          <button type="submit">Login</button>
-          <button onClick={() => this.openModal()} class="RML-facebook-login-button"><svg xmlns="http://www.w3.org/2000/svg" width="2500" height="2500" viewBox="0 0 266.893 266.895"><path d="M252.164 266.895c8.134 0 14.729-6.596 14.729-14.73V14.73c0-8.137-6.596-14.73-14.729-14.73H14.73C6.593 0 0 6.594 0 14.73v237.434c0 8.135 6.593 14.73 14.73 14.73h237.434z" fill="#fff"></path><path d="M184.152 266.895V163.539h34.692l5.194-40.28h-39.887V97.542c0-11.662 3.238-19.609 19.962-19.609l21.329-.01V41.897c-3.689-.49-16.351-1.587-31.08-1.587-30.753 0-51.807 18.771-51.807 53.244v29.705h-34.781v40.28h34.781v103.355h41.597z" fill="#3b5998"></path></svg><span>Login</span></button>
-       </form>
+    
+          <button onClick={() => this.openModal()} class="RML-facebook-login-button">SignIn/SignUp</button>
           
         }
         </p>
@@ -164,6 +161,7 @@ export default class Login extends React.Component {
           onCloseModal={this.closeModal.bind(this)}
           loading={this.state.loading}
           error={this.state.error}
+          ref = 'login'
           tabs={{
             afterChange: this.afterTabsChange.bind(this)
           }}
@@ -175,6 +173,44 @@ export default class Login extends React.Component {
           }}
           startLoading={this.startLoading.bind(this)}
           finishLoading={this.finishLoading.bind(this)}
+          form={{
+            'registerInputs':[{
+              type:'text',
+              id:'name',
+              name:'name',
+              placeholder:'Name'
+            },{
+              type:'email',
+              id:'email',
+              name:'email',
+              placeholder:'email'
+            },{
+              type:'password',
+              id:'password',
+              name:'password',
+              placeholder:'password'
+            }],
+            'registerBtn':{
+              label:"SignUp"
+            },
+            'loginInputs':[{
+              type:'email',
+              id:'email',
+              ref:'email',
+              name:'email',
+              placeholder:'email'
+            },{
+              type:'password',
+              id:'password',
+              ref:'password',
+              name:'password',
+              placeholder:'password'
+            }],
+            loginBtn:{
+              label:'SignIn'
+            },
+            onLogin :this.login
+          }}
           providers={{
             facebook: {
               config: facebookConfig,
@@ -182,13 +218,13 @@ export default class Login extends React.Component {
               onLoginFail: this.onLoginFail.bind(this),
               label: "Continue with Facebook"
             }
-            /*,
+            ,
             google: {
               config: googleConfig,
               onLoginSuccess: this.onLoginSuccess.bind(this),
               onLoginFail: this.onLoginFail.bind(this),
               label: "Continue with Google"
-            }*/
+            }
           }}
         />
       </div>

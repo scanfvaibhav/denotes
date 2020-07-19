@@ -10,6 +10,7 @@ import Chat from "../Layout/Chat/Chat";
 import Posts from "../Layout/Posts/Posts";
 import Write from "../Layout/Write/Write";
 import Login from "../components/Login/Login";
+import Register from "../components/Register/Register";
 
 
 const Routes = () => {
@@ -28,7 +29,7 @@ const Routes = () => {
           <Route path="/Users" component={ Home } exact />
 
 
-        </Switch>:<Login login={(value)=>setLogin(value)}/>}
+        </Switch>:<Register login={(value)=>setLogin(value)}/>}
       </Fragment>
   );
 };
