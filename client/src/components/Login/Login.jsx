@@ -128,6 +128,25 @@ export default class Login extends React.Component {
       this.setState({ response: err.message });
     }
   };
+  register = async (val) => {
+    debugger
+    try {
+      const newUser = await axios.post("/api/login/register", {
+          name: document.getElementById("name").value,
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+        }
+      );
+      localStorage.setItem("authInfo",JSON.stringify(newUser.data));
+      localStorage.setItem("userInfo",JSON.stringify(newUser.data));
+      
+      if(this.props.login){
+        this.props.login(true);
+      }
+    } catch (err) {
+      this.setState({ response: err.message });
+    }
+  };
   startLoading() {
     this.setState({
       loading: true
@@ -178,17 +197,20 @@ export default class Login extends React.Component {
               type:'text',
               id:'name',
               name:'name',
-              placeholder:'Name'
+              placeholder:'Name',
+              label  :'Name'
             },{
               type:'email',
               id:'email',
               name:'email',
-              placeholder:'email'
+              placeholder:'email',
+              label : 'Email'
             },{
               type:'password',
               id:'password',
               name:'password',
-              placeholder:'password'
+              placeholder:'password',
+              label:'Password'
             }],
             'registerBtn':{
               label:"SignUp"
@@ -198,18 +220,21 @@ export default class Login extends React.Component {
               id:'email',
               ref:'email',
               name:'email',
-              placeholder:'email'
+              placeholder:'email',
+              label:'Email'
             },{
               type:'password',
               id:'password',
               ref:'password',
               name:'password',
-              placeholder:'password'
+              placeholder:'password',
+              label :'Password'
             }],
             loginBtn:{
               label:'SignIn'
             },
-            onLogin :this.login
+            onLogin :this.login,
+            onRegister:this.register
           }}
           providers={{
             facebook: {
@@ -217,14 +242,13 @@ export default class Login extends React.Component {
               onLoginSuccess: this.onLoginSuccess.bind(this),
               onLoginFail: this.onLoginFail.bind(this),
               label: "Continue with Facebook"
-            }
-            ,
-            google: {
+            },
+            /*google: {
               config: googleConfig,
               onLoginSuccess: this.onLoginSuccess.bind(this),
               onLoginFail: this.onLoginFail.bind(this),
               label: "Continue with Google"
-            }
+            }*/
           }}
         />
       </div>

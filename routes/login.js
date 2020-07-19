@@ -29,8 +29,8 @@ router.post('/register',async(req,res)=>{
       email: email,
       password:password,
       name:req.body.name,
-      gender: req.body.gender,
-      age:req.body.age
+      gender: "Male",
+      age:"20"
     });
     res.send(user);
   }catch(err) {
