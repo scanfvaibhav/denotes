@@ -1,6 +1,7 @@
 import React from "react";
 import ReactModalLogin from "react-modal-login";
 import axios from "axios";
+import "./Login.css";
  
 import { facebookConfig, googleConfig } from "../../config/social-config";
 import  {getUser}  from '../../service/BaseService';
@@ -171,7 +172,7 @@ export default class Login extends React.Component {
         <p>
           {this.state.user.name?<button onClick={() => this.logout()}>Logout</button>:
     
-          <button onClick={() => this.openModal()} class="RML-facebook-login-button">SignIn/SignUp</button>
+          <button onClick={() => this.openModal()} className="glossy-button glossy-button--blue">SignIn/SignUp</button>
           
         }
         </p>

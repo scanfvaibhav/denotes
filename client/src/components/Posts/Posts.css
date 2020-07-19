@@ -6,6 +6,20 @@
     margin-top: 3%;
 
   }
+.tagLines{
+  font-family: monospace;
+  color: #fff8f8;
+  font-size: 110px;
+}
+.startNow{
+  color: #fff8f8;
+}
+  .reg-container {
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+    background-color: #bb5a5a;
+  }
   .category {
     background-color: #ffffff;
   }
