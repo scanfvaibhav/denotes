@@ -52,6 +52,7 @@ export default class Login extends React.Component {
     });
     if(this.props.login){
       this.props.login(false);
+      this.refreshPage();
     }
   }
   onLoginSuccess(method, response) {
@@ -63,6 +64,7 @@ export default class Login extends React.Component {
       localStorage.setItem("authInfo",JSON.stringify(response));
       if(this.props.login){
         this.props.login(true);
+        this.refreshPage();
       }
 
     console.log("logged successfully with " + response);
@@ -99,7 +101,9 @@ export default class Login extends React.Component {
       loading: false
     });
   }
- 
+  refreshPage() {
+    window.location.reload(false);
+  }
   afterTabsChange() {
     this.setState({
       error: null
@@ -124,6 +128,8 @@ export default class Login extends React.Component {
       
       if(this.props.login){
         this.props.login(true);
+        this.refreshPage();
+        
       }
     } catch (err) {
       this.setState({ response: err.message });
@@ -143,6 +149,7 @@ export default class Login extends React.Component {
       
       if(this.props.login){
         this.props.login(true);
+        this.refreshPage();
       }
     } catch (err) {
       this.setState({ response: err.message });
