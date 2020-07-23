@@ -1,11 +1,12 @@
 import React, { Component } from "react";
-import {getPosts,getTree} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,getContentByNode} from "../../service/BaseService"; 
 import '../AddUser/AddUser.css';
 import axios from "axios";
 import { EditorState, convertToRaw ,convertFromHTML,ContentState} from 'draft-js';
 
 import {Editor} from 'primereact/editor';
 import {InputTextarea} from 'primereact/inputtextarea';
+import {TabView,TabPanel} from 'primereact/tabview';
 
 import {Treebeard} from 'react-treebeard';
 import {TREE_STYLE} from "../../constants/Style";
@@ -110,7 +111,14 @@ class Write extends Component {
 
   edit(){
     let selectedNode = this.state.selectedNode;
-    this.setState({descriptionData:"geee"});
+    getContentByNode(this,selectedNode).then((res)=>{
+      if(res){
+        this.setState({
+          descriptionData:res.data.posts[0].description,
+          title : res.data.posts[0].topic
+        });
+      }
+    }).catch();
     //this.refs.description.value="hello"
   };
 
@@ -193,39 +201,82 @@ class Write extends Component {
     
     <div className="center-col">
     <div className="AddUser-Wrapper">
-        <form className='editor' onSubmit={this.addPost}>
+    <TabView activeIndex={this.state.activeIndex} onTabChange={(e) => this.setState({activeIndex: e.index})}>
+    <TabPanel header="New" leftIcon="pi pi-calendar">
+    
+    <form className='editor' onSubmit={this.addPost}>
 
-        <InputTextarea 
-          rows={5} 
-          cols={30}
-          onChange={this.onChangeHandler.bind(this)}
-          autoResize={true}
-          type="text"
-          placeholder="Title"
-          name="title"
-          ref="title"
-          className="Add-User-Input"
-          minLength="3"
-          maxLength="100"
-          id="title"
-             />
-          
-          <Editor 
-          style={{height:'320px'}}
-          placeholder ="Content"
-          name ="description"
-          ref ="description"
-          required
-          minLength ="3"
-          maxLength ="1000000"
-          id ="description"
-          value={this.state.descriptionData}
-          onTextChange={this.onEditorChangeHandler.bind(this)}
-          />
-          <button type="submit" className="Add-User-Submit fa fa-plus"></button>
-          <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
+    <InputTextarea 
+      rows={5} 
+      cols={30}
+      onChange={this.onChangeHandler.bind(this)}
+      autoResize={true}
+      type="text"
+      placeholder="Title"
+      name="title"
+      ref="title"
+      className="Add-User-Input"
+      minLength="3"
+      maxLength="100"
+      id="title"
+      value={this.state.title}
+         />
+      
+      <Editor 
+      style={{height:'320px'}}
+      placeholder ="Content"
+      name ="description"
+      ref ="description"
+      required
+      minLength ="3"
+      maxLength ="1000000"
+      id ="description"
+      value={this.state.descriptionData}
+      onTextChange={this.onEditorChangeHandler.bind(this)}
+      />
+      <button type="submit" className="Add-User-Submit fa fa-plus"></button>
+      <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
 
-       </form>
+   </form>
+    </TabPanel>
+    <TabPanel header="Edit">
+    <form className='editor' onSubmit={this.addPost}>
+
+    <InputTextarea 
+      rows={5} 
+      cols={30}
+      onChange={this.onChangeHandler.bind(this)}
+      autoResize={true}
+      type="text"
+      placeholder="Title"
+      name="title"
+      ref="title"
+      className="Add-User-Input"
+      minLength="3"
+      maxLength="100"
+      id="title"
+      value={this.state.title}
+         />
+      
+      <Editor 
+      style={{height:'320px'}}
+      placeholder ="Content"
+      name ="description"
+      ref ="description"
+      required
+      minLength ="3"
+      maxLength ="1000000"
+      id ="description"
+      value={this.state.descriptionData}
+      onTextChange={this.onEditorChangeHandler.bind(this)}
+      />
+      <button type="submit" className="Add-User-Submit fa fa-plus"></button>
+      <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
+
+   </form>
+    </TabPanel>
+</TabView>
+        
 
         <p>{this.state.response}</p>
       </div>
