@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import {getPosts,getTree,getContentById,getContentByNode} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,getContentByNode,parseData} from "../../service/BaseService"; 
 import '../AddUser/AddUser.css';
 import axios from "axios";
 import { EditorState, convertToRaw ,convertFromHTML,ContentState} from 'draft-js';
@@ -11,6 +11,11 @@ import {TabView,TabPanel} from 'primereact/tabview';
 import {Treebeard} from 'react-treebeard';
 import {TREE_STYLE} from "../../constants/Style";
 import {v4} from "uuid";
+import {PanelMenu} from 'primereact/panelmenu';
+import {Tree} from 'primereact/tree';
+import 'primeicons/primeicons.css';
+import 'primereact/resources/themes/nova-light/theme.css';
+import 'primereact/resources/primereact.css';
 
 
 class Write extends Component {
@@ -21,12 +26,16 @@ class Write extends Component {
       editorState: EditorState.createEmpty(),
       details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""},
       posts:[],
-      treeData:[] 
+      treeData:[],
+      activeIndex:0
     };
     this.onToggle = this.onToggle.bind(this);
     this.addNode = this.addNode.bind(this);
     this.removeNode = this.removeNode.bind(this);
     this.edit = this.edit.bind(this);
+    this.tabChange = this.tabChange.bind(this);
+
+    this.onSelectionChange = this.onSelectionChange.bind(this);
   }
   componentDidMount(){
     if(this.state.treeData.length==0){
@@ -36,13 +45,15 @@ class Write extends Component {
         }
         getTree(this).then((res)=>{
           if(res){
-            this.setState({treeData:res.data.data});
+            let data=res.data.data;
+            parseData(data);
+            this.setState({treeData:data});
           }
         }).catch();
       }).catch();
     }
   }
-
+  
   onChangeHandler = e => {
       this.setState({ [e.target.name]: e.target.value });
   }
@@ -54,7 +65,9 @@ class Write extends Component {
     e.preventDefault();
     try {
       let title = this.state.title;
-      let randomId = await this.appendNode(title);
+     
+      if(this.state.activeIndex==0){
+        let randomId = await this.appendNode(title);
       const newPost = await axios.post("/api/post/create", {
           title: title,
           description: this.state.description,
@@ -63,11 +76,23 @@ class Write extends Component {
           titleId : randomId
         }
       );
+      }else{
+        const newPost = await axios.post("/api/post/create", {
+          title: title,
+          description: this.state.description,
+          details: this.state.details,
+          email:JSON.parse(localStorage.userInfo).email,
+          titleId : this.state.selectedNode
+        }
+      );
+      }
+      
       this.setState({ response: `Done!` });
     } catch (err) {
       this.setState({ response: err.message });
     }
   };
+
   addNewNode(treeData,id,name,randomId){
     for(let i in treeData){
       if(treeData[i].id===id){
@@ -83,20 +108,22 @@ class Write extends Component {
       }
     }
   };
+
   async addNode(){
     let val = this.refs.node.value;
     await this.appendNode(val);
   };
 
   async removeNode(){
-    let val = this.state.selectedNode.id;
+    let val = this.state.selectedNode;
     let treeData = this.state.treeData;
     this.removeNodeFromState(treeData,val);
     const menu = await axios.post("/api/post/updateMenuTree", {
       menu: treeData,
       email:JSON.parse(localStorage.userInfo).email
     });
-    this.setState({treeData:menu.data.menu});
+    parseData(treeData);
+    this.setState({treeData:treeData});
 
   };
 
@@ -111,11 +138,13 @@ class Write extends Component {
 
   edit(){
     let selectedNode = this.state.selectedNode;
-    getContentByNode(this,selectedNode).then((res)=>{
-      if(res){
+    getContentById(this,selectedNode).then((res)=>{
+      if(res && res.data && res.data.posts[0]){
         this.setState({
           descriptionData:res.data.posts[0].description,
-          title : res.data.posts[0].topic
+          title : res.data.posts[0].topic,
+          id : res.data.posts[0].titleId,
+          activeIndex:1
         });
       }
     }).catch();
@@ -126,7 +155,7 @@ class Write extends Component {
     let treeData = this.state.treeData;
     let randomId = v4();
     if(this.state.selectedNode){
-      this.addNewNode(treeData,this.state.selectedNode.id,value,randomId);
+      this.addNewNode(treeData,this.state.selectedNode,value,randomId);
     }else{
       treeData.push({name:value,id:randomId});
     }
@@ -135,7 +164,9 @@ class Write extends Component {
         email:JSON.parse(localStorage.userInfo).email
       }
     );
-    this.setState({treeData:menu.data.menu});
+    let data=menu.data.menu;
+    parseData(data);
+    this.setState({treeData:data});
     return randomId;
   };
   onEditorStateChange =(editorState) =>{
@@ -152,6 +183,8 @@ class Write extends Component {
       this.setState({editorState: EditorState.createWithContent(state)});
   }
   onToggle(node, toggled){
+    debugger
+    this.setState({expandedKeys: node.value});
     this.setState({selectedNode:node});
     this.refs.title.value = node.name;
     this.refs.description.rawContentState = node.description;
@@ -166,6 +199,15 @@ class Write extends Component {
     }
     this.setState(() => ({cursor: node, data: Object.assign({}, data)}));
   };
+  onSelectionChange(e){
+    debugger
+  };
+  tabChange(e){
+    if(e.index==0){
+      //this.refs.description.props.value="test"
+    }
+      this.setState({activeIndex: e.index})
+  }
   render() {
     
     return (
@@ -174,12 +216,14 @@ class Write extends Component {
     <div className="left-col">
     <div className="category">
     
-    <Treebeard
-                data={this.state.treeData}
-                onToggle={this.onToggle}
-                style={TREE_STYLE}
-                ref="treeMenu"
-            />
+    <Tree value={this.state.treeData} 
+    expandedKeys={this.state.expandedKeys}
+                    onToggle={e => this.setState({expandedKeys: e.value})} 
+                    selectionMode="single" 
+                    selectionKeys={this.state.selectedNode} 
+                    onSelectionChange={e => this.setState({selectedNode: e.value})}
+                    style={{marginTop: '.5em'}} />
+    
             
             <input 
             type="text"
@@ -191,7 +235,7 @@ class Write extends Component {
             className="AddNodeText"
           />
 
-          <button type="submit" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
+          <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
           <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
           <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button>
 
@@ -201,7 +245,7 @@ class Write extends Component {
     
     <div className="center-col">
     <div className="AddUser-Wrapper">
-    <TabView activeIndex={this.state.activeIndex} onTabChange={(e) => this.setState({activeIndex: e.index})}>
+    <TabView activeIndex={this.state.activeIndex} onTabChange={this.tabChange}>
     <TabPanel header="New" leftIcon="pi pi-calendar">
     
     <form className='editor' onSubmit={this.addPost}>
@@ -220,20 +264,21 @@ class Write extends Component {
       maxLength="100"
       id="title"
       value={this.state.title}
-         />
+      />
       
       <Editor 
-      style={{height:'320px'}}
-      placeholder ="Content"
-      name ="description"
-      ref ="description"
-      required
-      minLength ="3"
-      maxLength ="1000000"
-      id ="description"
-      value={this.state.descriptionData}
-      onTextChange={this.onEditorChangeHandler.bind(this)}
+        style={{height:'320px'}} 
+        placeholder ="Content" 
+        name ="description" 
+        ref ="description"
+        required
+        minLength ="3"
+        maxLength ="1000000"
+        id ="description"
+        value={this.state.descriptionData}
+        onTextChange={this.onEditorChangeHandler.bind(this)}
       />
+
       <button type="submit" className="Add-User-Submit fa fa-plus"></button>
       <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
 

@@ -59,6 +59,20 @@ export function getPosts(_this){
         
     })); 
 }
+export function parseData(data){
+    for(let i=0;i<data.length;i++){
+      Object.assign(data[i],{
+        "key": data[i].id,
+        "label": data[i].name,
+        "data": data[i].name,
+        "icon": "pi pi-fw pi-inbox",
+        "draggable":true,
+        "droppable":true
+      });
+      if(data[i].children)
+        parseData(data[i].children);
+    }
+  }
 export function getContentById(_this,id){
     if (_this.cancel) {
 		_this.cancel.cancel();
@@ -102,7 +116,10 @@ export function getTree(_this){
   _this.cancel = axios.CancelToken.source();
     return new Promise((resolve,reject)=>axios.get(GET_TREE,{
         cancelToken: _this.cancel.token,
-        params:{'email':JSON.parse(localStorage.userInfo).email}
+        params:{
+            'email':JSON.parse(localStorage.userInfo).email,
+            'type':'READ'
+        }
     })
     .then((res) => {
         resolve(res);

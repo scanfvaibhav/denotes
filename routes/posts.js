@@ -51,7 +51,19 @@ var  getNode = async function(node,arr){
 };
 router.post('/create', async (req, res) => {
       try {
-        const newUser = await Posts.create({ 
+        let menu= await Posts.find({titleId: req.body.titleId});
+        if(menu.length){
+             menu = await Posts.update({
+                titleId: req.body.titleId
+            },{ 
+              topic: req.body.title,
+              description: req.body.description,
+              details: req.body.details,
+              time:Date.now(),
+              email:req.body.email
+            });
+        }else{
+         menu = await Posts.create({ 
           topic: req.body.title,
           description: req.body.description,
           details: req.body.details,
@@ -59,7 +71,8 @@ router.post('/create', async (req, res) => {
           email:req.body.email,
           titleId: req.body.titleId
         });
-         res.send({ newUser });
+    }
+         res.send({ menu });
       } catch(err) {
         res.status(400).send({ error: err });
       }
