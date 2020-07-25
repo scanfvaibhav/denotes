@@ -64,7 +64,7 @@ render() {
                         selectionMode="single" 
                         selectionKeys={this.state.selectedNode} 
                         onSelectionChange={this.onSelectionChange}
-                        style={{marginTop: '.5em'}} />
+                        style={{marginTop: '.5em',border: '0px solid #c8c8c8'}} />
           
         </div>
       </div>
