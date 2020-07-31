@@ -917,6 +917,24 @@ label {
   border-left: 5px solid #f1f1f1;
   padding-left: 5px;
 }
+body .p-tabview .p-tabview-panels {
+  background-color: #ffffff;
+  padding: 0.571em 0em;
+   border: 0px solid #c8c8c8;
+  color: #333333;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+body .p-editor-container .p-editor-toolbar {
+  border: 1px solid #da6767;
+  background-color: #e8d5d5;
+  width: 90%;
+}
+.p-highlight a {
+  background-color: #bb5a59;
+  border: 1px solid #ffffff;
+  color: #ffffff;
+}
 
 .rdw-editor-main pre {
   background: #f1f1f1;

@@ -245,7 +245,6 @@ class Write extends Component {
     </div>
     
     <div className="center-col">
-    <div className="AddUser-Wrapper">
     <TabView activeIndex={this.state.activeIndex} onTabChange={this.tabChange}>
     <TabPanel header="New" leftIcon="pi pi-calendar">
     
@@ -265,10 +264,11 @@ class Write extends Component {
       maxLength="100"
       id="title"
       value={this.state.title}
+      style={{width:'90%'}} 
       />
       
       <Editor 
-        style={{height:'320px'}} 
+        style={{height:'95%',width:'90%'}} 
         placeholder ="Content" 
         name ="description" 
         ref ="description"
@@ -302,10 +302,11 @@ class Write extends Component {
       maxLength="100"
       id="title"
       value={this.state.title}
+      style={{width:'90%'}} 
          />
       
       <Editor 
-      style={{height:'320px'}}
+      style={{height:'95%',width:'90%'}} 
       placeholder ="Content"
       name ="description"
       ref ="description"
@@ -326,10 +327,7 @@ class Write extends Component {
 
         <p>{this.state.response}</p>
       </div>
-    </div>
     
-    <div className="right-col">
-    </div>
   </div>
       
     );
