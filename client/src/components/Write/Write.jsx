@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import {getPosts,getTree,getContentById,getContentByNode,parseData} from "../../service/BaseService"; 
-import '../AddUser/AddUser.css';
+
 import axios from "axios";
 import { EditorState, convertToRaw ,convertFromHTML,ContentState} from 'draft-js';
 
@@ -16,6 +16,7 @@ import {Tree} from 'primereact/tree';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
+import '../AddUser/AddUser.css';
 
 
 class Write extends Component {

@@ -8,16 +8,20 @@
 }
 
 .NavBar-Title {
-  font-weight: lighter;
-  padding-left: 1rem;
+  font-weight: bolder;
+  flex : 0.05
 }
 
 .NavBar-Link {
   padding: .8rem;
-  color: #828384;
+  color: #d8d9da;
   transition: .7s color ease;
+  flex:0.4
 }
 
 .NavBar-Link:hover {
   color: #fff;
+}
+.NavBar-search{
+  flex:0.55
 }
