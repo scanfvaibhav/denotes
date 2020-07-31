@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
 import Chatbox from '../../components/Chatbox/Chatbox';
@@ -32,6 +32,7 @@ const Home = () => {
      <div>
        <h3 className="NavBar-Title">Denotes</h3>
      </div>
+     {localStorage.getItem("userInfo")?<Fragment>
      <div className="NavBar-Links">
       <Link to="/" className="NavBar-Link">Home</Link>
       <Link to="/Write" className="NavBar-Link">Write</Link>
@@ -45,7 +46,7 @@ const Home = () => {
       suggestions={brandSuggestions}
       completeMethod={suggestBrands} 
       />
-     </div>
+     </div></Fragment>:null}
      
    </nav>
   );

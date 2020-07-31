@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {getPosts,getTree,getContentById,getContentByNode,parseData} from "../../service/BaseService"; 
 
 import axios from "axios";
@@ -226,7 +226,8 @@ class Write extends Component {
                     style={{marginTop: '.5em',border: '0px solid #c8c8c8'}} />
     
             
-            <input 
+            {this.state.selectedNode?
+              <Fragment><input 
             type="text"
             placeholder="add node"
             name="node"
@@ -238,7 +239,7 @@ class Write extends Component {
 
           <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
           <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
-          <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button>
+          <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button></Fragment>:null}
 
             </div>
             
