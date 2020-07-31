@@ -216,34 +216,25 @@ class Write extends Component {
        
     <div className="left-col">
     <div className="category">
+    {this.state.selectedNode?
+      <Fragment>
+        <input type="text" placeholder="add node" name="node" ref="node" minLength="3" maxLength="100" className="AddNodeText"/>
+        <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
+        <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
+        <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button>
+      </Fragment>:null}
     
     <Tree value={this.state.treeData} 
-    expandedKeys={this.state.expandedKeys}
-                    onToggle={e => this.setState({expandedKeys: e.value})} 
-                    selectionMode="single" 
-                    selectionKeys={this.state.selectedNode} 
-                    onSelectionChange={e => this.setState({selectedNode: e.value})}
-                    style={{marginTop: '.5em',border: '0px solid #c8c8c8'}} />
-    
-            
-            {this.state.selectedNode?
-              <Fragment><input 
-            type="text"
-            placeholder="add node"
-            name="node"
-            ref="node"
-            minLength="3"
-            maxLength="100"
-            className="AddNodeText"
-          />
+          expandedKeys={this.state.expandedKeys}
+          onToggle={e => this.setState({expandedKeys: e.value})} 
+          selectionMode="single" 
+          selectionKeys={this.state.selectedNode} 
+          onSelectionChange={e => this.setState({selectedNode: e.value})}
+          style={{marginTop: '.5em',border: '0px solid #c8c8c8'}} />
 
-          <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
-          <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
-          <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button></Fragment>:null}
-
-            </div>
-            
     </div>
+            
+  </div>
     
     <div className="center-col">
     <TabView activeIndex={this.state.activeIndex} onTabChange={this.tabChange}>
