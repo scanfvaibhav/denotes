@@ -21,7 +21,7 @@ router.get('/getContentById', async(req, res) => {
         let titleId=req.query.titleId;
         debugger
         const menu = await Menu.find({email:emailId});
-        let arr = [];
+        let arr = [titleId];
         getNode(menu[0].menu,arr,false,titleId);
 
         const posts = await Posts.find({email: emailId,titleId:arr}).sort({time:-1});
@@ -49,13 +49,13 @@ var  getNode = async function(node,arr,flag,titleId){
 
     for(let i=0;i<node.length;i++){
         let id = node[i].key?node[i].key:node[i].id;
-        if(id==titleId){
-            flag=true;
-        }
+        
         if(flag){
                 arr.push(id);
         }
-        
+        if(id==titleId){
+            flag=true;
+        }
         if(node[i].children && node[i].children.length>0){
             getNode(node[i].children,arr,flag,titleId);
         }
