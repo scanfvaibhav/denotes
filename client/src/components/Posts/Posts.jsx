@@ -119,7 +119,11 @@ function Topic(props){
 }
 
 function Description(props){
-  return renderHTML(props?props.data:"");
+  if(props  & props.data){
+    return renderHTML(props.data);
+  }else{
+    return "";
+  }
 }
 
 function Details(props){
