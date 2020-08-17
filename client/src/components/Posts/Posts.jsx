@@ -92,20 +92,15 @@ function PostList(props){
 function Post(props){
 
   const [isFull,setIsFull]=useState(false);
+  
   if(props){
     return (
+      
+      <Card title={props.data?props.data.topic:""}>
+        {props.data?props.data.description:""}
+      </Card>
     
-      <div>
-        <button  className="open-full-screen-button" title="Open in Full Screen" onClick={()=>setIsFull(true)}><i class="fa fa-window-maximize icon-3x"></i>
-        </button>
-        <Fullscreen enabled={isFull} onChange={(full) => setIsFull(full)}>
-          <div className="post-main">
-            <Topic data={props.data?props.data.topic:""}/>
-            <Description  className = "post-discription" data={props.data?props.data.description:""}/>
-            <Details data={props.data}/>
-          </div>
-        </Fullscreen>
-      </div>);
+      );
 
   }else{
     return null;
