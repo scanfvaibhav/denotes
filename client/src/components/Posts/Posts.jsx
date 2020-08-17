@@ -97,7 +97,7 @@ function Post(props){
     return (
       
       <Card title={props.data?props.data.topic:""}>
-        {props.data?props.data.description:""}
+        {renderHTML(props.data?props.data.description:"<p></p>")}
       </Card>
     
       );
