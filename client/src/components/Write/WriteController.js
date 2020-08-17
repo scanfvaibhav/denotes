@@ -75,7 +75,7 @@ export async function appendNode(value){
   export async function removeNode(){
     let val = _this.state.selectedNode;
     let treeData = _this.state.treeData;
-    _this.removeNodeFromState(treeData,val);
+    removeNodeFromState(treeData,val);
     const menu = await axios.post("/api/post/updateMenuTree", {
       menu: treeData,
       email:JSON.parse(localStorage.userInfo).email
@@ -126,7 +126,7 @@ async function removeNodeFromState(treeData,id){
   }
 };
 
-export function edit(){
+export function edit(_this){
   let selectedNode = _this.state.selectedNode;
   getContentById(_this,selectedNode).then((res)=>{
     if(res && res.data && res.data.posts[0]){

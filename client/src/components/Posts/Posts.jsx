@@ -84,7 +84,7 @@ function PostList(props){
   return(
     <div>{
       props.posts.map(function(data, index){
-        return <Card className="ui-card-shadow"><Post className = "mainPost" key={index} data={data}/></Card>
+        return <Post className = "mainPost" key={index} data={data}/>
       })}
     </div>);
 }
@@ -92,19 +92,26 @@ function PostList(props){
 function Post(props){
 
   const [isFull,setIsFull]=useState(false);
+  if(props){
+    return (
+    
+      <div>
+        <button  className="open-full-screen-button" title="Open in Full Screen" onClick={()=>setIsFull(true)}><i class="fa fa-window-maximize icon-3x"></i>
+        </button>
+        <Fullscreen enabled={isFull} onChange={(full) => setIsFull(full)}>
+          <div className="post-main">
+            <Topic data={props.data?props.data.topic:""}/>
+            <Description  className = "post-discription" data={props.data?props.data.description:""}/>
+            <Details data={props.data}/>
+          </div>
+        </Fullscreen>
+      </div>);
+
+  }else{
+    return null;
+  }
   
-  return (
-    <div>
-      <button  className="open-full-screen-button" title="Open in Full Screen" onClick={()=>setIsFull(true)}><i class="fa fa-window-maximize icon-3x"></i>
-      </button>
-      <Fullscreen enabled={isFull} onChange={(full) => setIsFull(full)}>
-        <div className="post-main">
-          <Topic data={props.data?props.data.topic:""}/>
-          <Description  className = "post-discription" data={props.data?props.data.description:""}/>
-          <Details data={props.data}/>
-        </div>
-      </Fullscreen>
-    </div>);
+
 }
 
 function Topic(props){

@@ -72,7 +72,7 @@ class Write extends Component {
         <input type="text" placeholder="add node" name="node" ref="node" minLength="3" maxLength="100" className="AddNodeText"/>
         <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
         <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
-        <button type="submit" onClick={this.edit} className="Add-Node-Submit fa fa-pencil-square-o"></button>
+        <button type="submit" onClick={this.edit(this)} className="Add-Node-Submit fa fa-pencil-square-o"></button>
       </Fragment>:null}
     <DnoTreeTable treeData={this.state.treeData} />
     <Tree value={this.state.treeData} 
