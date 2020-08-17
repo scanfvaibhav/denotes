@@ -93,7 +93,7 @@ function Post(props){
 
   const [isFull,setIsFull]=useState(false);
   
-  if(props){
+  if(props && props.data){
     return (
       
       <Card title={props.data?props.data.topic:""}>
