@@ -228,15 +228,13 @@ export default class Login extends React.Component {
               id:'email',
               ref:'email',
               name:'email',
-              placeholder:'email',
-              label:'Email'
+              placeholder:'email'
             },{
               type:'password',
               id:'password',
               ref:'password',
               name:'password',
-              placeholder:'password',
-              label :'Password'
+              placeholder:'password'
             }],
             loginBtn:{
               label:'SignIn'

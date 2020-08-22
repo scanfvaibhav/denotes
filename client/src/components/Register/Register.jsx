@@ -26,7 +26,7 @@ class Register extends Component{
         
         return (
             <div className="reg-container-main">
-                <h1>Prepare Your Notes</h1>
+                <h1>Prepare</h1>
                 <h1>&</h1>
                 <h1>Share Your Notes</h1>
                 <Login login={this.setLogin}/>

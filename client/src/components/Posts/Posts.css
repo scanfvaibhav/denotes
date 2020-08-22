@@ -1,11 +1,23 @@
-.container {
+
+
+  
+  .container {
     display: flex;
     flex-direction: row;
     overflow-y: scroll;
     background-color: #ffffff;
     margin-top: 3%;
   }
-
+  @media only screen and (max-device-width : 640px) {
+    .container {
+      display: flex;
+      flex-direction: column;
+      overflow-y: scroll;
+      background-color: #ffffff;
+      margin-top: 3%;
+    }
+    }
+    
 .startNow{
   color: #fff8f8;
 }
