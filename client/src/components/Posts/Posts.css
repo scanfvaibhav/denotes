@@ -44,7 +44,6 @@
   
   .center-col {
     flex: 60;
-    overflow-x: scroll;
   }
   .mainPost{
     justify-content: left;
