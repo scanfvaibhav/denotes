@@ -7,3 +7,14 @@
     font-size: x-large;
     font-weight: bold;
   }
+  @media (max-width: 600px) {
+    .reg-container-main {
+        display: flex;
+        flex-direction: column;
+        background-color: #bb5a5a;
+        align-items: center;
+        color:#ffffff;
+        font-size: large;
+        font-weight: bold;
+    }
+  }
