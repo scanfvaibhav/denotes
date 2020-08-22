@@ -4,7 +4,6 @@ import {v4} from "uuid";
 
 var _this=null;
 export function load(obj){
-    
     _this=obj;
 }
 export function loadPosts(){
@@ -28,7 +27,7 @@ export function addPosts(e){
       let title = _this.state.title;
      
       if(_this.state.activeIndex==0){
-        let randomId = appendNode(title);
+        let randomId = this.appendNode(title);
       const newPost = axios.post("/api/post/create", {
           title: title,
           description: _this.state.description,
@@ -53,7 +52,7 @@ export function addPosts(e){
       _this.setState({ response: err.message });
     }
 }
-export async function appendNode(value){
+export const appendNode= async (value)=>{
     let treeData = _this.state.treeData;
     let randomId = v4();
     if(_this.state.selectedNode){
@@ -94,7 +93,7 @@ export function onEditorChangeHandler(e){
 
 
 
-function addNewNode(treeData,id,name,randomId){
+ const addNewNode=(treeData,id,name,randomId)=>{
   for(let i in treeData){
     if(treeData[i].id===id){
       if(!treeData[i]["children"]){
@@ -111,6 +110,7 @@ function addNewNode(treeData,id,name,randomId){
 };
 
 export async function  addNode(){
+  debugger
   let val = _this.refs.node.value;
   await _this.appendNode(val);
 };

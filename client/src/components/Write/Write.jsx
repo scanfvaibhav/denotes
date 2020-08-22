@@ -28,7 +28,9 @@ import {
   edit,
   tabChange,
   onChangeHandler,
-  onEditorChangeHandler
+  onEditorChangeHandler,
+  appendNode,
+  addNewNode
 } from './WriteController.js';
 
 
@@ -47,6 +49,8 @@ class Write extends Component {
     };
     this.onToggle = onToggle.bind(this);
     this.addNode = addNode.bind(this);
+    this.appendNode = appendNode.bind(this);
+    this.addNewNode = appendNode.bind(this);
     this.removeNode = removeNode.bind(this);
     this.edit = edit.bind(this);
     this.tabChange = tabChange.bind(this);

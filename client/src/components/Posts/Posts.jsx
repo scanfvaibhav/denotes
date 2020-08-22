@@ -1,19 +1,24 @@
-import React,{Component, useState} from 'react';
+import React,{Component, useState, Fragment} from 'react';
 import Profile from '../Profile/Profile';
 
 import {getPosts,getTree,getContentById,getContentByNode,parseData} from "../../service/BaseService"; 
 import renderHTML from 'react-render-html';
-import {Treebeard} from 'react-treebeard';
-import Fullscreen from "react-full-screen";
-import {TREE_STYLE} from "../../constants/Style";
 import {Card} from 'primereact/card';
 import {Tree} from 'primereact/tree';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
 import  "./Posts.css";
+import Footer from './Footer';
+import AddTodo from './AddTodo';
+import VisibleTodoList from './VisibleTodoList';
+
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
+import rootReducer from '../../reducers'
 
 
+const store = createStore(rootReducer);
 
 class Posts extends Component {
   constructor(props) {
@@ -24,7 +29,7 @@ class Posts extends Component {
         treeData:[],
         isFull: false,   
     };
-    this.onSelectionChange = this.onSelectionChange.bind(this);
+    //this.onSelectionChange = this.onSelectionChange.bind(this);
 }
 
 componentDidMount(){
@@ -43,7 +48,7 @@ componentDidMount(){
 }
 
 
-onSelectionChange(node){
+onSelectionChange=(node)=>{
   this.setState({selectedNode: node.value});
   getContentById(this,node.value).then((res)=>{
     if(res){
@@ -74,7 +79,11 @@ render() {
       </div>
     
       <div className="right-col">
-        <Profile data={this.state.userData}/>
+        <Provider store={store}>
+          <AddTodo />
+          <VisibleTodoList />
+          <Footer />
+        </Provider>
       </div>
   </div>);  
   }  
@@ -95,29 +104,16 @@ function Post(props){
   
   if(props && props.data){
     return (
-      
-      <Card title={props.data?props.data.topic:""}>
-        {renderHTML(props.data?props.data.description:"<p></p>")}
-      </Card>
-    
+      <Fragment>
+        <Card title={props.data?props.data.topic:""}>
+          {renderHTML(props.data?props.data.description:"<p></p>")}
+        </Card>
+        <Details data={props.data}/>
+      </Fragment>
       );
 
   }else{
     return null;
-  }
-  
-
-}
-
-function Topic(props){
-  return(<p className="post-topic">{props.data}</p>);
-}
-
-function Description(props){
-  if(props  & props.data){
-    return renderHTML(props.data);
-  }else{
-    return "";
   }
 }
 
