@@ -1,0 +1,9 @@
+.reg-container-main {
+    display: flex;
+    flex-direction: column;
+    background-color: #bb5a5a;
+    align-items: center;
+    color:#ffffff;
+    font-size: xx-large;
+    font-weight: bold;
+  }

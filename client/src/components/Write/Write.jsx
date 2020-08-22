@@ -78,8 +78,7 @@ class Write extends Component {
         <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
         <button type="submit" onClick={this.edit(this)} className="Add-Node-Submit fa fa-pencil-square-o"></button>
       </Fragment>:null}
-    <DnoTreeTable treeData={this.state.treeData} />
-    <Tree value={this.state.treeData} 
+     <Tree value={this.state.treeData} 
           expandedKeys={this.state.expandedKeys}
           onToggle={e => this.setState({expandedKeys: e.value})} 
           selectionMode="single" 

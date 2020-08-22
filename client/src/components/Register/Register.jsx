@@ -4,7 +4,7 @@ import YouTube from 'react-youtube';
 import Profile from '../Profile/Profile';
 
 import Login from "../Login/Login";
-import  "../Posts/Posts.css";
+import  "./Register.css";
 class Register extends Component{
     constructor(props){
         super(props);
@@ -23,30 +23,14 @@ class Register extends Component{
         event.target.pauseVideo();
       }
     render(){
-        const opts = {
-            height: '490',
-            width: '740',
-            playerVars: {
-              // https://developers.google.com/youtube/player_parameters
-              autoplay: 1,
-            },
-          };
+        
         return (
-            <div className="reg-container">
-            <div className="left-col"></div>
-                <div className="center-col">
-
-                <div className="tagLines">
-                <h>Prepare & Share Your Notes</h>
-                <br/>
-
-                </div>
-                <h className="startNow">Start Now </h>
+            <div className="reg-container-main">
+                <h1>Prepare Your Notes</h1>
+                <h1>&</h1>
+                <h1>Share Your Notes</h1>
                 <Login login={this.setLogin}/>
-                </div>
-                <div className="right-col">
-                
-                </div>
+ 
             </div>
         )
     }

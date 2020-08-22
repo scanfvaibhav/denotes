@@ -6,7 +6,7 @@ import { Button } from 'primereact/button';
 export default class DnoTreeTable extends Component {
 
     constructor(props) {
-        debugger
+        
         super(props);
         this.state = {
             nodes: [{

@@ -1,7 +1,6 @@
-import React,{Component, useState, Fragment} from 'react';
-import Profile from '../Profile/Profile';
+import React,{Component, useState} from 'react';
 
-import {getPosts,getTree,getContentById,getContentByNode,parseData} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
 import renderHTML from 'react-render-html';
 import {Card} from 'primereact/card';
 import {Tree} from 'primereact/tree';
@@ -98,22 +97,16 @@ function PostList(props){
     </div>);
 }
 
-function Post(props){
-
-  const [isFull,setIsFull]=useState(false);
-  
-  if(props && props.data){
+function Post(props){  
+  if(props && props.data && props.data.description && props.data.topic){
     return (
-      <Fragment>
-        <Card title={props.data?props.data.topic:""}>
-          {renderHTML(props.data?props.data.description:"<p></p>")}
-        </Card>
+        <Card title={props.data.topic}>
+          {renderHTML(props.data.description?props.data.description:"<p>_</p>")}
         <Details data={props.data}/>
-      </Fragment>
+        </Card>
       );
-
   }else{
-    return null;
+    return (<p>_</p>);
   }
 }
 
