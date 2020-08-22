@@ -12,9 +12,10 @@ import Footer from './Footer';
 import AddTodo from './AddTodo';
 import VisibleTodoList from './VisibleTodoList';
 
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
-import rootReducer from '../../reducers'
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import rootReducer from '../../reducers';
+import Profile from '../Profile/Profile';
 
 
 const store = createStore(rootReducer);
@@ -78,11 +79,7 @@ render() {
       </div>
     
       <div className="right-col">
-        <Provider store={store}>
-          <AddTodo />
-          <VisibleTodoList />
-          <Footer />
-        </Provider>
+       <Profile data={this.state.userData}/>
       </div>
   </div>);  
   }  
