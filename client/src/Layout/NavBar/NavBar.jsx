@@ -38,15 +38,7 @@ const Home = () => {
       <Link to="/Write" className="NavBar-Link">Write</Link>
       
      </div>
-     <div className="NavBar-search">
-     <AutoComplete 
-      size={50}
-      value={brand} 
-      onChange={(e) => setBrand( e.value)}
-      suggestions={brandSuggestions}
-      completeMethod={suggestBrands} 
-      />
-     </div></Fragment>:null}
+     </Fragment>:null}
      
    </nav>
   );
