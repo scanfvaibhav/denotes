@@ -134,7 +134,6 @@ class Write extends Component {
                   />
                   <button type="submit" className="Add-User-Submit fa fa-plus"></button>
                   <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
-
               </form>
             </TabPanel>
           </TabView>

@@ -36,22 +36,24 @@
     overflow-y: scroll;
   }
   .left-col {
-    flex: 20;
+    flex: 0.2;
     display: flex;
     justify-content: center;
     align-items: top;
   }
   
   .center-col {
-    flex: 60;
+    flex: 0.6;
   }
   .mainPost{
     justify-content: left;
     overflow-x: scroll;
+    width:500;
+    margin-top: 5px;
   }
   
   .right-col {
-    flex: 20;
+    flex: 0.2;
     display: flex;
     justify-content: center;
     align-items: top;
