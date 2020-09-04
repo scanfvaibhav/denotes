@@ -16,6 +16,10 @@
       background-color: #ffffff;
       margin-top: 3%;
     }
+    .post-card{
+      overflow-wrap: break-word;
+      margin-top: 5px;
+    }
     }
     
 .startNow{
@@ -64,8 +68,11 @@
     align-items: top;
   }
   .post-card{
-    width: 720px;
+    width: 700px;
+    overflow-wrap: break-word;
+    margin-top: 5px;
   }
+  
   .posts{
     color: rgb(0, 0, 0);
   }

@@ -87,12 +87,11 @@ function PostList(props){
 
 function Post(props){  
   if(props && props.data && props.data.description && props.data.topic){
-    return (<Fragment>
-          <Card className = "post-card" title={props.data.topic}>
+    return (
+          <Card  className = "post-card" title={props.data.topic}>
             {renderHTML(props.data.description?props.data.description:"<p>_</p>")}
           <Details data={props.data}/>
           </Card>
-          <br/></Fragment>
       );
   }else{
     return (<p>_</p>);
