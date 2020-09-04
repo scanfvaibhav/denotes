@@ -1,4 +1,4 @@
-import {getPosts,getTree,getContentById,getContentByNode,parseData} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
 import axios from "axios";
 import {v4} from "uuid";
 
@@ -26,9 +26,9 @@ export function addPosts(e){
     try {
       let title = _this.state.title;
      
-      if(_this.state.activeIndex==0){
+      if(_this.state.activeIndex===0){
         let randomId = this.appendNode(title);
-      const newPost = axios.post("/api/post/create", {
+       axios.post("/api/post/create", {
           title: title,
           description: _this.state.description,
           details: _this.state.details,
@@ -37,7 +37,7 @@ export function addPosts(e){
         }
       );
       }else{
-        const newPost =  axios.post("/api/post/create", {
+        axios.post("/api/post/create", {
           title: title,
           description: _this.state.description,
           details: _this.state.details,
@@ -75,7 +75,7 @@ export const appendNode= async (value)=>{
     let val = _this.state.selectedNode;
     let treeData = _this.state.treeData;
     removeNodeFromState(treeData,val);
-    const menu = await axios.post("/api/post/updateMenuTree", {
+    await axios.post("/api/post/updateMenuTree", {
       menu: treeData,
       email:JSON.parse(localStorage.userInfo).email
     });
@@ -91,23 +91,6 @@ export function onEditorChangeHandler(e){
     _this.setState({"description":  e.htmlValue });
 }
 
-
-
- const addNewNode=(treeData,id,name,randomId)=>{
-  for(let i in treeData){
-    if(treeData[i].id===id){
-      if(!treeData[i]["children"]){
-        treeData[i]["children"]=[];
-      }
-      treeData[i]["children"].push({name:name,id:randomId});
-      treeData[i]["toggled"]=true;
-    }else{
-      if(treeData[i]["children"]){
-        _this.addNewNode(treeData[i]["children"],id,name,randomId);
-      }
-    }
-  }
-};
 
 export async function  addNode(){
   debugger
@@ -142,11 +125,7 @@ export function edit(_this){
 };
 
 
-function onEditorStateChange(editorState){
-  _this.setState({
-    editorState,
-  });
-}
+
 
 export function onToggle(node, toggled){
   debugger
@@ -167,7 +146,7 @@ export function onToggle(node, toggled){
 };
 
 export function tabChange(e){
-  if(e.index==0){
+  if(e.index===0){
     //_this.refs.description.props.value="test"
   }
     _this.setState({activeIndex: e.index})
