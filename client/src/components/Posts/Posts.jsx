@@ -60,7 +60,6 @@ onSelectionChange=(node)=>{
 render() {
   return (
     <div className="container">
-
       <div className="left-col">
         <div className="category">
         <Tree value={this.state.treeData}
@@ -97,10 +96,13 @@ function PostList(props){
 function Post(props){  
   if(props && props.data && props.data.description && props.data.topic){
     return (
-        <Card title={props.data.topic}>
-          {renderHTML(props.data.description?props.data.description:"<p>_</p>")}
-        <Details data={props.data}/>
-        </Card>
+      <div>
+          <Card title={props.data.topic}>
+            {renderHTML(props.data.description?props.data.description:"<p>_</p>")}
+          <Details data={props.data}/>
+          </Card>
+          <br/>
+      </div>
       );
   }else{
     return (<p>_</p>);

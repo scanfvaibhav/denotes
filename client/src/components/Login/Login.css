@@ -12,7 +12,7 @@
     font-size: 22px;
     font-family: sans-serif;
     font-weight: bold;
-    color: white;
+    color:061b3d;
     padding: 20px 40px;
     text-shadow:
       0 0 15px hsla(0, 0%, 100%, 1), /* bloom */
@@ -57,4 +57,7 @@
       /* multiple light sources yall */
       -12px 12px 5px hsla(0, 0%, 0%, 0.15), /* drop shadow 1 */
       10px 25px 10px hsla(0, 0%, 0%, 0.2); /* drop shadow 2 */
+  }
+  .login-popup{
+    color: #061b3d;
   }

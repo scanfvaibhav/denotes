@@ -25,7 +25,7 @@
     display: flex;
     flex-direction: row;
     overflow-y: scroll;
-    background-color: #bb5a5a;
+    background-color: #061b3d;
   }
   .category {
     background-color: #ffffff;
@@ -36,22 +36,24 @@
     overflow-y: scroll;
   }
   .left-col {
-    flex: 20;
+    flex: 0.2;
     display: flex;
     justify-content: center;
     align-items: top;
   }
   
   .center-col {
-    flex: 60;
+    flex: 0.6;
   }
   .mainPost{
     justify-content: left;
     overflow-x: scroll;
+    width:500;
+    margin-top: 5px;
   }
   
   .right-col {
-    flex: 20;
+    flex: 0.2;
     display: flex;
     justify-content: center;
     align-items: top;
@@ -97,7 +99,7 @@
   overflow-y:scroll;
 }
 body .p-tree .p-tree-container .p-treenode .p-treenode-content.p-highlight{
-  background-color: #bb5a5a;
+  background-color: #061b3d;
     color: #ffffff;
 }
 
