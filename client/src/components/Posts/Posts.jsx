@@ -1,24 +1,14 @@
-import React,{Component, useState} from 'react';
+import React,{Component, Fragment} from 'react';
 
 import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
 import renderHTML from 'react-render-html';
 import {Card} from 'primereact/card';
 import {Tree} from 'primereact/tree';
-import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
 import  "./Posts.css";
-import Footer from './Footer';
-import AddTodo from './AddTodo';
-import VisibleTodoList from './VisibleTodoList';
-
-import { Provider } from 'react-redux';
-import { createStore } from 'redux';
-import rootReducer from '../../reducers';
 import Profile from '../Profile/Profile';
 
-
-const store = createStore(rootReducer);
 
 class Posts extends Component {
   constructor(props) {
@@ -74,11 +64,13 @@ render() {
       </div>
     
       <div className="center-col">
-        <PostList posts={this.state.posts}/>
+        {this.state.posts?
+          <PostList posts={this.state.posts}/>:null
+        }
       </div>
     
       <div className="right-col">
-       <Profile data={this.state.userData}/>
+         <Profile data={this.state.userData}/>
       </div>
   </div>);  
   }  
@@ -88,21 +80,19 @@ function PostList(props){
   return(
     <div>{
       props.posts.map(function(data, index){
-        return <Post className = "mainPost" key={index} data={data}/>
+        return <Post key={index} data={data}/>
       })}
     </div>);
 }
 
 function Post(props){  
   if(props && props.data && props.data.description && props.data.topic){
-    return (
-      <div>
-          <Card title={props.data.topic}>
+    return (<Fragment>
+          <Card className = "post-card" title={props.data.topic}>
             {renderHTML(props.data.description?props.data.description:"<p>_</p>")}
           <Details data={props.data}/>
           </Card>
-          <br/>
-      </div>
+          <br/></Fragment>
       );
   }else{
     return (<p>_</p>);

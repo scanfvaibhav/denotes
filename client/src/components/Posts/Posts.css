@@ -44,19 +44,27 @@
   
   .center-col {
     flex: 0.6;
-  }
-  .mainPost{
-    justify-content: left;
-    overflow-x: scroll;
-    width:500;
-    margin-top: 5px;
-  }
-  
-  .right-col {
-    flex: 0.2;
     display: flex;
     justify-content: center;
     align-items: top;
+  }
+  
+  .mainPost{
+    justify-content: left;
+    margin-top: 5px;
+  }
+  .postlist{
+    display: flex;
+    flex-direction: row;
+    overflow-y: scroll;
+  }
+  .right-col {
+    flex: 0.2;
+    justify-content: center;
+    align-items: top;
+  }
+  .post-card{
+    width: 720px;
   }
   .posts{
     color: rgb(0, 0, 0);

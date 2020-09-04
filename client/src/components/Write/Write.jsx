@@ -40,7 +40,7 @@ class Write extends Component {
     this.removeNode = removeNode.bind(this);
     this.edit = edit.bind(this);
     this.tabChange = tabChange.bind(this);
-    if(this.state.treeData.length==0){
+    if(this.state.treeData.length===0){
       loadPosts(this);
     }
   }

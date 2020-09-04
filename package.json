@@ -27,6 +27,7 @@
     "material-ui": "^0.20.0",
     "mongoose": "^5.2.1",
     "node-fetch": "^2.1.2",
+    "primeflex": "^2.0.0",
     "primeicons": "^4.0.0",
     "primereact": "^4.2.2",
     "prop-types": "^15.7.2",
