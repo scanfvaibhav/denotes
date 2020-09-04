@@ -50,7 +50,7 @@
 }
 
 .Add-User-Reset {
-  background-color: rgb(165, 51, 51);
+  background-color:#061b3d;
 }
 
 label {
@@ -926,12 +926,12 @@ body .p-tabview .p-tabview-panels {
   border-bottom-right-radius: 0px;
 }
 body .p-editor-container .p-editor-toolbar {
-  border: 1px solid #da6767;
+  border: 1px solid #061b3d;
   background-color: #e8d5d5;
   width: 90%;
 }
 .p-highlight a {
-  background-color: #bb5a59;
+  background-color: #061b3d;
   border: 1px solid #ffffff;
   color: #ffffff;
 }

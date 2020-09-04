@@ -1,17 +1,17 @@
 .reg-container-main {
     display: flex;
     flex-direction: column;
-    background-color: #bb5a5a;
     align-items: center;
     color:#ffffff;
     font-size: x-large;
     font-weight: bold;
+    background:#061b3d;
   }
   @media (max-width: 600px) {
     .reg-container-main {
         display: flex;
         flex-direction: column;
-        background-color: #bb5a5a;
+        background-color: #061b3d;
         align-items: center;
         color:#ffffff;
         font-size: large;

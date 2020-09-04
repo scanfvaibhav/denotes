@@ -63,7 +63,7 @@ class Write extends Component {
                 selectionMode="single" 
                 selectionKeys={this.state.selectedNode} 
                 onSelectionChange={e => this.setState({selectedNode: e.value})}
-                style={{marginTop: '.5em',border: '0px solid #c8c8c8'}} />
+                style={{marginTop: '.5em',border: '0px solid #061b3d'}} />
           </div>        
         </div>
         <div className="center-col">

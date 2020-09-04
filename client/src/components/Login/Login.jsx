@@ -56,7 +56,6 @@ export default class Login extends React.Component {
     }
   }
   onLoginSuccess(method, response) {
-      debugger
       this.closeModal();
       let token=response.authResponse.accessToken;
       this.initUser(token);
@@ -116,7 +115,6 @@ export default class Login extends React.Component {
     });
   } 
   login = async (val) => {
-    debugger
     try {
       const newUser = await axios.post("/api/login/login", {
           email: document.getElementById("email").value,
@@ -136,7 +134,6 @@ export default class Login extends React.Component {
     }
   };
   register = async (val) => {
-    debugger
     try {
       const newUser = await axios.post("/api/login/register", {
           name: document.getElementById("name").value,
@@ -201,24 +198,23 @@ export default class Login extends React.Component {
           startLoading={this.startLoading.bind(this)}
           finishLoading={this.finishLoading.bind(this)}
           form={{
+            
             'registerInputs':[{
               type:'text',
               id:'name',
               name:'name',
               placeholder:'Name',
-              label  :'Name'
+              'containerClass':'login-popup',
             },{
               type:'email',
               id:'email',
               name:'email',
               placeholder:'email',
-              label : 'Email'
             },{
               type:'password',
               id:'password',
               name:'password',
-              placeholder:'password',
-              label:'Password'
+              placeholder:'password'
             }],
             'registerBtn':{
               label:"SignUp"
