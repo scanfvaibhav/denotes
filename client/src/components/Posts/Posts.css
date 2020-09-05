@@ -72,7 +72,12 @@
     overflow-wrap: break-word;
     margin-top: 5px;
   }
-  
+  @media (max-width: 600px) {
+    .post-card{
+      overflow-wrap: break-word;
+      margin-top: 5px;
+    }
+    }
   .posts{
     color: rgb(0, 0, 0);
   }
