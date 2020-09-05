@@ -50,7 +50,7 @@ class Write extends Component {
       <div className="container">
         <div className="left-col">
           <div className="category">
-            {this.state.selectedNode?
+            {this.state.selectedNode || this.state.treeData.length==0?
             <Fragment>
               <input type="text" placeholder="add node" name="node" ref="node" minLength="3" maxLength="100" className="AddNodeText"/>
               <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
