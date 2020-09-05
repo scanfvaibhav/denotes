@@ -52,35 +52,31 @@ export default class Login extends React.Component {
     });
     if(this.props.login){
       this.props.login(false);
-      this.refreshPage();
+      
     }
+    this.refreshPage();
   }
   onLoginSuccess(method, response) {
       this.closeModal();
       let token=response.authResponse.accessToken;
-      this.initUser(token);
-
       localStorage.setItem("authInfo",JSON.stringify(response));
-      if(this.props.login){
-        this.props.login(true);
-        this.refreshPage();
+      getUser(this,token).then((res) => {
+        if(res){
+          localStorage.setItem("userInfo",JSON.stringify(res.data));
+        if(this.props.login){
+          this.props.login(true);
+          this.refreshPage();
+        }
+        this.setState({
+          user: res.data,
+          picture: res.data.picture,
+        });
       }
-
-    console.log("logged successfully with " + response);
-  }
-  initUser(token) {
-    getUser(this,token).then((res) => {
-      if(res){
-        localStorage.setItem("userInfo",JSON.stringify(res.data));
-      this.setState({
-        user: res.data,
-        picture: res.data.picture,
+      }).catch(() => {
+        //reject('ERROR GETTING DATA FROM FACEBOOK')
       });
-    }
-    }).catch(() => {
-      //reject('ERROR GETTING DATA FROM FACEBOOK')
-    });
   }
+  
  
   onLoginFail(method, response) {
     console.log("logging failed with " + method);
