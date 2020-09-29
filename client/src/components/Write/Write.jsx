@@ -10,10 +10,6 @@ import 'primereact/resources/primereact.css';
 import '../AddUser/AddUser.css';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
-import Button from '@material-ui/core/Button';
-import Dialog from '@material-ui/core/Dialog';
-import Draggable from 'react-draggable';
-import Paper from '@material-ui/core/Paper';
 import {
   load,
   onToggle,
@@ -82,13 +78,7 @@ class Write extends Component {
   handleClose(){
     this.setState({'open':false});
   };
-  PaperComponent(props) {
-    return (
-      <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
-        <Paper {...props} />
-      </Draggable>
-    );
-  };
+  
   render() {
     return (
       <div className="container">
