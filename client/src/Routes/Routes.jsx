@@ -11,7 +11,6 @@ import Posts from "../Layout/Posts/Posts";
 import Write from "../Layout/Write/Write";
 import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
-import User from "../components/Profile/User";
 
 
 const Routes = () => {
@@ -27,7 +26,6 @@ const Routes = () => {
           <Route path="/Chat" component={ Chat } exact />
           <Route path="/Posts" component={ Posts } exact />
           <Route path="/Write" component={ Write } exact />
-          <Route path="/Users" component={ Home } exact />
           <Route path="/User" component={ User } exact />
           
 
