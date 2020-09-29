@@ -26,7 +26,6 @@ const Routes = () => {
           <Route path="/Chat" component={ Chat } exact />
           <Route path="/Posts" component={ Posts } exact />
           <Route path="/Write" component={ Write } exact />
-          <Route path="/User" component={ User } exact />
           
 
 
