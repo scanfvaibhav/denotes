@@ -8,9 +8,14 @@ import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
 import '../AddUser/AddUser.css';
+import { TreeTable } from 'primereact/treetable';
+import { Column } from 'primereact/column';
+import Button from '@material-ui/core/Button';
+import Dialog from '@material-ui/core/Dialog';
+import Draggable from 'react-draggable';
+import Paper from '@material-ui/core/Paper';
 import {
   load,
-  loadPosts,
   onToggle,
   addNode,
   removeNode,
@@ -18,8 +23,12 @@ import {
   tabChange,
   onChangeHandler,
   onEditorChangeHandler,
-  appendNode
+  appendNode,
+  addPosts,
+  resetPost
 } from './WriteController.js';
+import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
+
 
 class Write extends Component {
   constructor(props){
@@ -31,7 +40,8 @@ class Write extends Component {
       details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""},
       posts:[],
       treeData:[],
-      activeIndex:0
+      activeIndex:0,
+      open:false
     };
     this.onToggle = onToggle.bind(this);
     this.addNode = addNode.bind(this);
@@ -40,36 +50,60 @@ class Write extends Component {
     this.removeNode = removeNode.bind(this);
     this.edit = edit.bind(this);
     this.tabChange = tabChange.bind(this);
-    if(this.state.treeData.length===0){
-      loadPosts(this);
-    }
+    this.handleClickOpen=this.handleClickOpen.bind(this);
+    this.handleClose=this.handleClose.bind(this);
+   
   }
-
+  componentDidMount(){
+    getPosts(this).then((res)=>{
+      if(res && res.data.posts && res.data.posts.length){
+        this.setState({posts:res.data.posts});
+      }
+      getTree(this).then((res)=>{
+        if(res && res.data.data && res.data.data.length){
+          let  data = res.data.data;
+          parseData(data);
+          this.setState({treeData:data});
+        }
+      }).catch();
+    }).catch();
+  }
+  actionTemplate(node, column) {
+    return <div key={node.key}>
+        <button type="submit" name="Save" className="Add-Node-Submit fa fa-plus"></button>
+        <button type="submit" onClick={removeNode.bind(this,node.key)} className="Add-Node-Submit fa fa-minus"></button>
+        <button type="submit" key={node.key} onClick={edit.bind(this,node.key)} className="Add-Node-Submit fa fa-pencil-square-o"></button>
+      </div>;
+  }
+ 
+  handleClickOpen () {
+    this.setState({'open':true});
+  };
+  handleClose(){
+    this.setState({'open':false});
+  };
+  PaperComponent(props) {
+    return (
+      <Draggable handle="#draggable-dialog-title" cancel={'[class*="MuiDialogContent-root"]'}>
+        <Paper {...props} />
+      </Draggable>
+    );
+  };
   render() {
     return (
       <div className="container">
-        <div className="left-col">
-          <div className="category">
-            {this.state.selectedNode || this.state.treeData.length==0?
-            <Fragment>
-              <input type="text" placeholder="add node" name="node" ref="node" minLength="3" maxLength="100" className="AddNodeText"/>
-              <button type="submit" name="Save" onClick={this.addNode} className="Add-Node-Submit fa fa-plus"></button>
-              <button type="submit" onClick={this.removeNode} className="Add-Node-Submit fa fa-minus"></button>
-              <button type="submit" onClick={this.edit(this)} className="Add-Node-Submit fa fa-pencil-square-o"></button>
-            </Fragment>:null}
-            <Tree value={this.state.treeData} 
-                expandedKeys={this.state.expandedKeys}
-                onToggle={e => this.setState({expandedKeys: e.value})} 
-                selectionMode="single" 
-                selectionKeys={this.state.selectedNode} 
-                onSelectionChange={e => this.setState({selectedNode: e.value})}
-                style={{marginTop: '.5em',border: '0px solid #061b3d'}} />
-          </div>        
+        <div className="left-col-write">
+        <TreeTable value={this.state.treeData}>
+        <Column field="name" style={{ textAlign: 'left' ,flex:1.5}} expander></Column>
+              
+              <Column field="name" body={this.actionTemplate} style={{ flex:1,textAlign: 'left' }}></Column>
+              
+            </TreeTable>
         </div>
-        <div className="center-col">
-          <TabView activeIndex={this.state.activeIndex} onTabChange={this.tabChange}>
-            <TabPanel header="New" leftIcon="pi pi-calendar">
-              <form className='editor' onSubmit={this.addPost}>
+        <div className="center-col-write">
+        <div className="card">
+        
+       
                 <InputTextarea 
                   rows={5} 
                   cols={30}
@@ -98,47 +132,16 @@ class Write extends Component {
                   value={this.state.descriptionData}
                   onTextChange={onEditorChangeHandler.bind(this)}
                 />
-                <button type="submit" className="Add-User-Submit fa fa-plus"></button>
-                <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
-              </form>
-            </TabPanel>
-            <TabPanel header="Edit">
-              <form className='editor' onSubmit={this.addPost}>
-                <InputTextarea 
-                  rows={5} 
-                  cols={30}
-                  onChange={onChangeHandler.bind(this)}
-                  autoResize={true}
-                  type="text"
-                  placeholder="Title"
-                  name="title"
-                  ref="title"
-                  className="Add-User-Input"
-                  minLength="3"
-                  maxLength="100"
-                  id="title"
-                  value={this.state.title}
-                  style={{width:'90%'}} 
-                    />
-                  <Editor 
-                  style={{height:'95%',width:'90%'}} 
-                  placeholder ="Content"
-                  name ="description"
-                  ref ="description"
-                  required
-                  minLength ="3"
-                  maxLength ="1000000"
-                  id ="description"
-                  value={this.state.descriptionData}
-                  onTextChange={onEditorChangeHandler.bind(this)}
-                  />
-                  <button type="submit" className="Add-User-Submit fa fa-plus"></button>
-                  <button type="reset" className="Add-User-Reset fa fa-eraser"></button>
-              </form>
-            </TabPanel>
-          </TabView>
+                <button type="submit" onClick={addPosts.bind(this)}className="Add-User-Submit fa fa-plus"></button>
+                <button type="reset" onClick={resetPost.bind(this)}className="Add-User-Reset fa fa-eraser"></button>
+             
+              </div>
+           
           <p>{this.state.response}</p>
-      </div>
+        </div>
+        <div>
+        
+        </div>
     </div>);
   }
 }

@@ -6,37 +6,20 @@ var _this=null;
 export function load(obj){
     _this=obj;
 }
-export function loadPosts(){
-    getPosts(_this).then((res)=>{
-        if(res){
-          _this.setState({posts:res.data.posts});
-        }
-        getTree(_this).then((res)=>{
-          if(res){
-            let data=res.data.data;
-            parseData(data);
-            _this.setState({treeData:data});
-          }
-        }).catch();
-      }).catch();
+export const resetPost=(e)=>{
+  _this.setState({
+    descriptionData:"",
+    title : "",
+    id : "",
+    selectedNode:""
+  });
 }
-
-export function addPosts(e){
-    e.preventDefault();
+export const addPosts=(e)=>{
+   // e.preventDefault();
     try {
       let title = _this.state.title;
      
-      if(_this.state.activeIndex===0){
-        let randomId = this.appendNode(title);
-       axios.post("/api/post/create", {
-          title: title,
-          description: _this.state.description,
-          details: _this.state.details,
-          email:JSON.parse(localStorage.userInfo).email,
-          titleId : randomId
-        }
-      );
-      }else{
+      if(_this.state.selectedNode){
         axios.post("/api/post/create", {
           title: title,
           description: _this.state.description,
@@ -45,6 +28,19 @@ export function addPosts(e){
           titleId : _this.state.selectedNode
         }
       );
+        
+      }else{
+        _this.appendNode(title).then((res)=>{
+          axios.post("/api/post/create", {
+            title: title,
+            description: _this.state.description,
+            details: _this.state.details,
+            email:JSON.parse(localStorage.userInfo).email,
+            titleId : res
+          }
+        );
+        });
+      
       }
       
       _this.setState({ response: `Done!` });
@@ -71,8 +67,7 @@ export const appendNode= async (value)=>{
     return randomId;
   };
 
-  export async function removeNode(){
-    let val = _this.state.selectedNode;
+  export async function removeNode(val){
     let treeData = _this.state.treeData;
     removeNodeFromState(treeData,val);
     await axios.post("/api/post/updateMenuTree", {
@@ -100,24 +95,23 @@ export async function  addNode(){
 
 
 
-async function removeNodeFromState(treeData,id){
+function removeNodeFromState(treeData,id){
   for(let i=0;i<treeData.length;i++){
     if(treeData[i].id===id){
       treeData.splice(i,1);
     }else if(treeData[i].children)
-      _this.removeNodeFromState(treeData[i].children,id)
+      removeNodeFromState(treeData[i].children,id)
   }
 };
 
-export function edit(_this){
-  let selectedNode = _this.state.selectedNode;
-  getContentById(_this,selectedNode).then((res)=>{
+export function edit(value,a,b,c){
+  getContentById(_this,value).then((res)=>{
     if(res && res.data && res.data.posts[0]){
       _this.setState({
         descriptionData:res.data.posts[0].description,
         title : res.data.posts[0].topic,
         id : res.data.posts[0].titleId,
-        activeIndex:1
+        selectedNode:value
       });
     }
   }).catch();
