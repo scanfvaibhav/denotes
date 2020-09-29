@@ -37,7 +37,6 @@
     "react-draft-wysiwyg": "^1.14.5",
     "react-full-screen": "^0.2.4",
     "react-modal-login": "^1.4.5",
-    "react-redux": "^7.2.0",
     "react-render-html": "^0.6.0",
     "react-router-dom": "^4.3.1",
     "react-scripts": "1.1.4",
@@ -46,7 +45,6 @@
     "react-super-treeview": "^0.3.3",
     "react-treebeard": "^3.2.4",
     "react-youtube": "^7.11.2",
-    "redux": "^4.0.5",
     "socket.io": "^2.3.0",
     "socket.io-client": "^1.7.0",
     "uuid": "^8.2.0"
