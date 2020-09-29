@@ -60,12 +60,10 @@ label {
 .container {
   display: flex;
   flex-direction: row;
-  overflow-y: scroll;
 }
 .containerHeader{
   display: flex;
   flex-direction: row;
-  overflow-y: scroll;
 }
 .left-col {
   flex: 1.5;
@@ -77,10 +75,30 @@ label {
 .center-col {
   flex: 3;
   height:100%;
+  flex-direction: column;
+  float: down;
 }
-
+.left-col-write {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+  background-color: #061b3d;
+  margin-left: 5px;
+}
+.center-col-write {
+  flex: 1.5;
+  height:100%;
+  margin-left: 5px;
+}
 .right-col {
   flex: 2;
+  display: flex;
+  justify-content: center;
+  align-items: top;
+}
+.right-col-write {
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: top;
@@ -170,7 +188,6 @@ label {
   margin: 0;
   padding: 0;
   max-height: 250px;
-  overflow-y: scroll;
 }
 .rdw-dropdown-optionwrapper:hover {
   box-shadow: 1px 1px 0px #BFBDBD;

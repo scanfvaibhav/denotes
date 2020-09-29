@@ -64,7 +64,9 @@ export function parseData(data){
       Object.assign(data[i],{
         "key": data[i].id,
         "label": data[i].name,
-        "data": data[i].name,
+        "data": {
+            "name":data[i].name
+        },
         "icon": "pi pi-fw pi-inbox",
         "draggable":true,
         "droppable":true

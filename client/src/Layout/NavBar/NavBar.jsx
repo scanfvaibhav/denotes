@@ -1,7 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import './NavBar.css';
 import { Link } from 'react-router-dom';
-import Chatbox from '../../components/Chatbox/Chatbox';
 import { AutoComplete } from 'primereact/autocomplete';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
