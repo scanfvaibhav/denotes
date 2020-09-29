@@ -2,8 +2,6 @@ import React, { Component, Fragment } from "react";
 import {EditorState} from 'draft-js';
 import {Editor} from 'primereact/editor';
 import {InputTextarea} from 'primereact/inputtextarea';
-import {TabView,TabPanel} from 'primereact/tabview';
-import {Tree} from 'primereact/tree';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/nova-light/theme.css';
 import 'primereact/resources/primereact.css';
