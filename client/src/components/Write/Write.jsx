@@ -19,7 +19,8 @@ import {
   onEditorChangeHandler,
   appendNode,
   addPosts,
-  resetPost
+  resetPost,
+  addNewNode
 } from './WriteController.js';
 import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
 
@@ -63,10 +64,10 @@ class Write extends Component {
     }).catch();
   }
   actionTemplate(node, column) {
-    return <div key={node.key}>
-        <button type="submit" name="Save" className="Add-Node-Submit fa fa-plus"></button>
-        <button type="submit" onClick={removeNode.bind(this,node.key)} className="Add-Node-Submit fa fa-minus"></button>
-        <button type="submit" key={node.key} onClick={edit.bind(this,node.key)} className="Add-Node-Submit fa fa-pencil-square-o"></button>
+    return <div key={node.key+"parent"}>
+        <button type="submit" name="Save" onClick={addNewNode.bind(this,node.key)} style={{ margin: '.1em' }} className="Add-Node-Submit fa fa-plus"></button>
+        <button type="submit" onClick={removeNode.bind(this,node.key)}style={{ margin: '.1em' }} className="Add-Node-Submit fa fa-minus"></button>
+        <button type="submit" key={node.key} onClick={edit.bind(this,node.key)} style={{ margin: '.1em' }} className="Add-Node-Submit fa fa-pencil-square-o"></button>
       </div>;
   }
  
@@ -81,10 +82,21 @@ class Write extends Component {
     return (
       <div className="container">
         <div className="left-col-write">
-        <TreeTable value={this.state.treeData}>
-        <Column field="name" style={{ textAlign: 'left' ,flex:1.5}} expander></Column>
+        <TreeTable value={this.state.treeData} scrollable style={{background: '',border: ''}}>
+        <Column field="name" header="Topic" style={
+                {
+                  'margin-left':'0',
+                  width:'200px',
+                  height:'10px',
+                  textAlign: 'left'
+                }} expander></Column>
               
-              <Column field="name" body={this.actionTemplate} style={{ flex:1,textAlign: 'left' }}></Column>
+              <Column field="name" body={this.actionTemplate} style={
+                {
+                  margin:'0 0 0 0',
+                  width:'120px',
+                  textAlign: 'left'
+                }}></Column>
               
             </TreeTable>
         </div>
