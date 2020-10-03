@@ -79,15 +79,13 @@ label {
   float: down;
 }
 .left-col-write {
-  flex: 1;
-  display: flex;
+  flex: 0.3;
   justify-content: center;
   align-items: top;
-  background-color: #061b3d;
   margin-left: 5px;
 }
 .center-col-write {
-  flex: 1.5;
+  flex: 2;
   height:100%;
   margin-left: 5px;
 }

@@ -48,6 +48,15 @@ export const addPosts=(e)=>{
       _this.setState({ response: err.message });
     }
 }
+export const addNewNode=async (value)=>{
+  _this.setState({
+    "selectedNode":value,
+  "descriptionData":"",
+  "title" :"New Topic"});
+  _this.appendNode("New Topic").then((res)=>{
+    _this.setState({"selectedNode":res});
+  });
+}
 export const appendNode= async (value)=>{
     let treeData = _this.state.treeData;
     let randomId = v4();
