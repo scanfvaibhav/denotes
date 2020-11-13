@@ -4,7 +4,8 @@ import {
     GET_USER,GET_DEFAULT_POSTS,
     GET_MSG,GET_TREE,
     GET_CONTENT_BY_TITLE_ID,
-    GET_CONTENT_BY_NODE
+    GET_CONTENT_BY_NODE,
+    GET_TOP_POSTS
 } from '../constants/BaseConstants';
 export function getSearchinfo(query,_this){
     if (_this.cancel) {
@@ -33,6 +34,22 @@ export function  getUser(_this,token){
     return new Promise((resolve,reject)=>axios.get(GET_USER,{
         cancelToken: _this.cancel.token,
         params:{'token':token}
+    })
+    .then((res) => {
+        resolve(res);
+    })
+    .catch((error) => {
+        reject(error);
+        
+    })); 
+}
+export function getTopPosts(_this){
+    if (_this.cancel) {
+		_this.cancel.cancel();
+	}
+  _this.cancel = axios.CancelToken.source();
+    return new Promise((resolve,reject)=>axios.get(GET_TOP_POSTS,{
+        cancelToken: _this.cancel.token
     })
     .then((res) => {
         resolve(res);
