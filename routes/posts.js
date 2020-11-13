@@ -14,7 +14,23 @@ router.get('/default', async(req, res) => {
         res.status(400).send({ error: err });
       }
     });
-
+    router.get('/default', async(req, res) => {
+        try {
+            let emailId=req.query.email; 
+            const posts = await Posts.find({email: emailId}).sort({time:-1});
+            res.send({ posts })
+          } catch(err) {
+            res.status(400).send({ error: err });
+          }
+        });
+        router.get('/top', async(req, res) => {
+            try {
+                const posts = await Posts.find().sort({time:-1});
+                res.send({ posts })
+              } catch(err) {
+                res.status(400).send({ error: err });
+              }
+            });
 router.get('/getContentById', async(req, res) => {
     try {
         let emailId=req.query.email;
@@ -106,6 +122,14 @@ router.get('/tree',async(req,res)=>{
     }
 });
 
+router.post('/login',async(req,res)=>{
+    try{
+        res.send();
+        
+      } catch(err){
+      res.status(400).send({error:err});
+    }
+});
 router.post('/updateMenuTree',async(req,res)=>{
     try{
         debugger
