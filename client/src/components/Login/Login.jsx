@@ -177,6 +177,9 @@ export default class Login extends React.Component {
         }
         </p>
         <ReactModalLogin
+          mainWrapClass = 'reactModel'
+          overlayClass = 'reactModel'
+          containerClass = 'reactModel'
           visible={this.state.showModal}
           onCloseModal={this.closeModal.bind(this)}
           loading={this.state.loading}
@@ -199,8 +202,7 @@ export default class Login extends React.Component {
               type:'text',
               id:'name',
               name:'name',
-              placeholder:'Name',
-              'containerClass':'login-popup',
+              placeholder:'Name'
             },{
               type:'email',
               id:'email',

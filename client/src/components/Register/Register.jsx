@@ -2,9 +2,12 @@ import React,{ Component } from "react";
 import YouTube from 'react-youtube';
 
 import Profile from '../Profile/Profile';
+import {Card} from 'primereact/card';
 import {getTopPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
+import renderHTML from 'react-render-html';
 import Login from "../Login/Login";
 import  "./Register.css";
+import { func } from "prop-types";
 class Register extends Component{
     constructor(props){
         super(props);
@@ -15,11 +18,8 @@ class Register extends Component{
     componentDidMount(){
         getTopPosts(this).then((res)=>{
             if(res && res.data.posts && res.data.posts.length){
-                let divs="";
-            for(let i=0;i<10;i++){
-               divs=divs+"<div class='statement-card'><div class='monthly-balance'>"+res.data.posts[i].title+"</div></div>"
-            }
-              this.setState({topPosts:divs});
+                let posts=res.data.posts;
+                this.setState({topPosts:posts});
             }
           }).catch();
     }
@@ -37,10 +37,13 @@ class Register extends Component{
         
         return (
             <div className="reg-container-main">
-                <h1>Write & Share</h1>
                 <Login login={this.setLogin}/>
-                <div id="monthly-statements">{this.state.topPosts}</div>
+                {this.state.topPosts?
+            <div className="monthly-statements">{this.state.topPosts.map((obj,index)=>{
+                return <Card  className = "statement-card">{obj.topic}</Card>
+            })}</div>:""}
             </div>
+           
         )
     }
 
