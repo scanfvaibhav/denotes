@@ -28,7 +28,6 @@ const Routes = () => {
           <Route path="/Write" component={ Write } exact />
           
 
-
         </Switch>:<Register login={(value)=>setLogin(value)}/>}
       </Fragment>
   );
