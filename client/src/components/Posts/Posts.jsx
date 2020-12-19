@@ -30,7 +30,7 @@ componentDidMount(){
     getTree(this).then((res)=>{
       if(res && res.data.data && res.data.data.length){
         let  data = res.data.data;
-        parseData(data);
+       // parseData(data);
         this.setState({treeData:data});
       }
     }).catch();
@@ -52,6 +52,7 @@ render() {
     <div className="container">
       <div className="left-col">
         <div className="category">
+          
         <Tree value={this.state.treeData}
         expandedKeys={this.state.expandedKeys}
                         onToggle={e => this.setState({expandedKeys: e.value})} 
