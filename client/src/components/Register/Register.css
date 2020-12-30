@@ -21,10 +21,12 @@
   .statement-card {
     flex: 1 1 100%;
     max-width: 22%;
+    height: 200px;
     margin: 8px;
     background: white;
     padding: 8px;
     border-radius: 4px;
+    overflow: hidden;
     box-shadow: 0 2px 7px 0 rgba(206, 221, 232, .84);
 }
 .statements-view {

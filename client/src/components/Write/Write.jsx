@@ -9,7 +9,6 @@ import '../AddUser/AddUser.css';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { Tree } from 'primereact/tree';
-
 import {
   load,
   onToggle,
@@ -24,7 +23,7 @@ import {
   resetPost,
   addNewNode
 } from './WriteController.js';
-import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService";
 
 
 class Write extends Component {
