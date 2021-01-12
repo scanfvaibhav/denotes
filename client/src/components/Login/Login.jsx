@@ -172,7 +172,7 @@ export default class Login extends React.Component {
         <p>
           {this.state.user.name?<button onClick={() => this.logout()}>Logout</button>:
     
-          <button onClick={() => this.openModal()} className="glossy-button glossy-button--blue">SignIn/SignUp</button>
+          <button onClick={() => this.openModal()} className="glossy-button glossy-button--red">SignIn/SignUp</button>
           
         }
         </p>

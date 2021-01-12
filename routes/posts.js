@@ -27,8 +27,9 @@ router.get('/default', async(req, res) => {
 
 router.get('/top', async(req, res) => {
     try {
-        const posts = await Posts.find().sort({time:-1});
-        res.send({ posts })
+        var posts = await Posts.find().sort({time:-1});
+        posts=posts.slice(0,10);
+        res.send({ posts });
         } catch(err) {
         res.status(400).send({ error: err });
         }

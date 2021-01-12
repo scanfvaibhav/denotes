@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React,{ Component,Fragment, useState, useEffect, useRef } from 'react';
 import {EditorState} from 'draft-js';
 import {Editor} from 'primereact/editor';
 import {InputTextarea} from 'primereact/inputtextarea';
@@ -8,6 +8,9 @@ import 'primereact/resources/primereact.css';
 import '../AddUser/AddUser.css';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
+import { Tree } from 'primereact/tree';
+import { Button } from 'primereact/button';
+import { SplitButton } from 'primereact/splitbutton';
 import {
   load,
   onToggle,
@@ -22,7 +25,7 @@ import {
   resetPost,
   addNewNode
 } from './WriteController.js';
-import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService"; 
+import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService";
 
 
 class Write extends Component {
@@ -34,9 +37,10 @@ class Write extends Component {
       editorState: EditorState.createEmpty(),
       details: {name:localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')).name:""},
       posts:[],
-      treeData:[],
       activeIndex:0,
-      open:false
+      open:false,
+      selectedNodeKeys3:[],
+      treeData: []
     };
     this.onToggle = onToggle.bind(this);
     this.addNode = addNode.bind(this);
@@ -50,26 +54,16 @@ class Write extends Component {
    
   }
   componentDidMount(){
-    getPosts(this).then((res)=>{
-      if(res && res.data.posts && res.data.posts.length){
-        this.setState({posts:res.data.posts});
-      }
+    
       getTree(this).then((res)=>{
         if(res && res.data.data && res.data.data.length){
           let  data = res.data.data;
-          parseData(data);
+          //parseData(data);
           this.setState({treeData:data});
         }
       }).catch();
-    }).catch();
   }
-  actionTemplate(node, column) {
-    return <div key={node.key+"parent"}>
-        <button type="submit" name="Save" onClick={addNewNode.bind(this,node.key)} style={{ margin: '.1em' }} className="Add-Node-Submit fa fa-plus"></button>
-        <button type="submit" onClick={removeNode.bind(this,node.key)}style={{ margin: '.1em' }} className="Add-Node-Submit fa fa-minus"></button>
-        <button type="submit" key={node.key} onClick={edit.bind(this,node.key)} style={{ margin: '.1em' }} className="Add-Node-Submit fa fa-pencil-square-o"></button>
-      </div>;
-  }
+ 
  
   handleClickOpen () {
     this.setState({'open':true});
@@ -79,30 +73,54 @@ class Write extends Component {
   };
   
   render() {
+  
+    const setSelectedNodeKeys3 =(value)=>{
+      
+      this.setState({selectedNodeKeys3:value});
+    };
+    const items = [
+      {
+          label: 'Update',
+          icon: 'pi pi-refresh',
+          command: (e) => {
+             // toast.current.show({severity:'success', summary:'Updated', detail:'Data Updated'});
+          }
+      },
+      {
+          label: 'Delete',
+          icon: 'pi pi-times',
+          command: (e) => {
+             // toast.current.show({ severity: 'success', summary: 'Delete', detail: 'Data Deleted' });
+          }
+      },
+      {
+          label: 'React Website',
+          icon: 'pi pi-external-link',
+          command:(e) => {
+              window.location.href = 'https://facebook.github.io/react/'
+          }
+      },
+      {   label: 'Upload',
+          icon: 'pi pi-upload',
+          command:(e) => {
+              window.location.hash = "/fileupload"
+          }
+      }
+  ];
+    const save = () => {
+    //  toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
+  }
     return (
       <div className="container">
         <div className="left-col-write">
-        <TreeTable value={this.state.treeData} scrollable style={{background: '',border: ''}}>
-        <Column field="name" header="Topic" style={
-                {
-                  'margin-left':'0',
-                  width:'200px',
-                  height:'10px',
-                  textAlign: 'left'
-                }} expander></Column>
-              
-              <Column field="name" body={this.actionTemplate} style={
-                {
-                  margin:'0 0 0 0',
-                  width:'120px',
-                  textAlign: 'left'
-                }}></Column>
-              
-            </TreeTable>
+        <div className="card">
+            <Tree value={this.state.treeData} selectionMode="checkbox" selectionKeys={this.state.selectedNodeKeys3} onSelectionChange={e => setSelectedNodeKeys3(e.value)} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} />
+        </div>
         </div>
         <div className="center-col-write">
-        <div className="card">
+        {Object.keys(this.state.selectedNodeKeys3).length?<SplitButton label="Actions" icon="pi" model={items} className="p-button-danger p-mr-2"></SplitButton>:""}
         
+        <div className="card">
        
                 <InputTextarea 
                   rows={5} 

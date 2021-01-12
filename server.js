@@ -16,6 +16,7 @@ app.use('/api/users', require('./routes/users'));
 app.use('/api/login', require('./routes/login'));
 app.use('/api/post', require('./routes/posts'));
 app.use('/api/message', require('./routes/message'));
+app.use('/api/getApkDetails', require('./routes/apkDetails'));
 
 const server=app.listen(PORT, () => console.log(`App running on port ${PORT}`)  );
 

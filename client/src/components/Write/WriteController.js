@@ -4,6 +4,7 @@ import {v4} from "uuid";
 
 var _this=null;
 export function load(obj){
+  
     _this=obj;
 }
 export const resetPost=(e)=>{
@@ -42,7 +43,7 @@ export const addPosts=(e)=>{
         });
       
       }
-      
+      _this.toast.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
       _this.setState({ response: `Done!` });
     } catch (err) {
       _this.setState({ response: err.message });
@@ -60,19 +61,14 @@ export const addNewNode=async (value)=>{
 export const appendNode= async (value)=>{
     let treeData = _this.state.treeData;
     let randomId = v4();
-    if(_this.state.selectedNode){
-      _this.addNewNode(treeData,_this.state.selectedNode,value,randomId);
-    }else{
-      treeData.push({name:value,id:randomId});
-    }
+    treeData.push({ "key": randomId, "label": value, "icon": "pi pi-fw pi-file", "data": value });
+    
     const menu = await axios.post("/api/post/updateMenuTree", {
         menu: treeData,
         email:JSON.parse(localStorage.userInfo).email
       }
     );
-    let data=menu.data.menu;
-    parseData(data);
-    _this.setState({treeData:data});
+    _this.setState({treeData:treeData});
     return randomId;
   };
 
