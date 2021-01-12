@@ -47,7 +47,7 @@
   .glossy-button--blue { background-color: #19F; }
   .glossy-button--gold { background-color: #EA0; }
   .glossy-button--green { background-color: #6C6; }
-  .glossy-button--red { background-color: #E21; }
+  .glossy-button--red { background-color: #ef007b; }
   
   .glossy-button:hover {
     transform: scale(1.05);

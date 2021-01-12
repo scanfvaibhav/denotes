@@ -4,6 +4,7 @@ import {v4} from "uuid";
 
 var _this=null;
 export function load(obj){
+  
     _this=obj;
 }
 export const resetPost=(e)=>{
@@ -42,7 +43,7 @@ export const addPosts=(e)=>{
         });
       
       }
-      
+      _this.toast.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
       _this.setState({ response: `Done!` });
     } catch (err) {
       _this.setState({ response: err.message });

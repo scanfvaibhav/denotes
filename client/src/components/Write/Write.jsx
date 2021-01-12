@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React,{ Component,Fragment, useState, useEffect, useRef } from 'react';
 import {EditorState} from 'draft-js';
 import {Editor} from 'primereact/editor';
 import {InputTextarea} from 'primereact/inputtextarea';
@@ -9,6 +9,8 @@ import '../AddUser/AddUser.css';
 import { TreeTable } from 'primereact/treetable';
 import { Column } from 'primereact/column';
 import { Tree } from 'primereact/tree';
+import { Button } from 'primereact/button';
+import { SplitButton } from 'primereact/splitbutton';
 import {
   load,
   onToggle,
@@ -37,6 +39,7 @@ class Write extends Component {
       posts:[],
       activeIndex:0,
       open:false,
+      selectedNodeKeys3:[],
       treeData: []
     };
     this.onToggle = onToggle.bind(this);
@@ -71,14 +74,52 @@ class Write extends Component {
   
   render() {
   
+    const setSelectedNodeKeys3 =(value)=>{
+      
+      this.setState({selectedNodeKeys3:value});
+    };
+    const items = [
+      {
+          label: 'Update',
+          icon: 'pi pi-refresh',
+          command: (e) => {
+             // toast.current.show({severity:'success', summary:'Updated', detail:'Data Updated'});
+          }
+      },
+      {
+          label: 'Delete',
+          icon: 'pi pi-times',
+          command: (e) => {
+             // toast.current.show({ severity: 'success', summary: 'Delete', detail: 'Data Deleted' });
+          }
+      },
+      {
+          label: 'React Website',
+          icon: 'pi pi-external-link',
+          command:(e) => {
+              window.location.href = 'https://facebook.github.io/react/'
+          }
+      },
+      {   label: 'Upload',
+          icon: 'pi pi-upload',
+          command:(e) => {
+              window.location.hash = "/fileupload"
+          }
+      }
+  ];
+    const save = () => {
+    //  toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
+  }
     return (
       <div className="container">
         <div className="left-col-write">
         <div className="card">
-            <Tree value={this.state.treeData} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} />
+            <Tree value={this.state.treeData} selectionMode="checkbox" selectionKeys={this.state.selectedNodeKeys3} onSelectionChange={e => setSelectedNodeKeys3(e.value)} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} />
         </div>
         </div>
         <div className="center-col-write">
+        {Object.keys(this.state.selectedNodeKeys3).length?<SplitButton label="Actions" icon="pi" model={items} className="p-button-danger p-mr-2"></SplitButton>:""}
+        
         <div className="card">
        
                 <InputTextarea 
