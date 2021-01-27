@@ -25,7 +25,7 @@ import {
   resetPost,
   addNewNode
 } from './WriteController.js';
-import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService";
+import {getPosts,getTree,getContentById,parseData,share} from "../../service/BaseService";
 
 
 class Write extends Component {
@@ -80,7 +80,7 @@ class Write extends Component {
     };
     const items = [
       {
-          label: 'Update',
+          label: 'Edit',
           icon: 'pi pi-refresh',
           command: (e) => {
              // toast.current.show({severity:'success', summary:'Updated', detail:'Data Updated'});
@@ -94,16 +94,11 @@ class Write extends Component {
           }
       },
       {
-          label: 'React Website',
+          label: 'Share',
           icon: 'pi pi-external-link',
           command:(e) => {
+            share(this);
               window.location.href = 'https://facebook.github.io/react/'
-          }
-      },
-      {   label: 'Upload',
-          icon: 'pi pi-upload',
-          command:(e) => {
-              window.location.hash = "/fileupload"
           }
       }
   ];
@@ -139,7 +134,7 @@ class Write extends Component {
                   style={{width:'90%'}} 
                   />
                 <Editor 
-                  style={{height:'95%',width:'90%'}} 
+                  style={{height:'195px',width:'90%'}} 
                   placeholder ="Content" 
                   name ="description" 
                   ref ="description"
@@ -150,8 +145,11 @@ class Write extends Component {
                   value={this.state.descriptionData}
                   onTextChange={onEditorChangeHandler.bind(this)}
                 />
-                <button type="submit" onClick={addPosts.bind(this)}className="Add-User-Submit fa fa-plus"></button>
-                <button type="reset" onClick={resetPost.bind(this)}className="Add-User-Reset fa fa-eraser"></button>
+                <span className="p-buttonset">
+                    <Button label="Save" className="p-button-success" icon="pi pi-check" type="submit" onClick={addPosts.bind(this)}/>
+                    <Button label="Cancel" className="p-button-secondary" icon="pi pi-times" type="reset" onClick={resetPost.bind(this)} />
+                </span>
+              
              
               </div>
            

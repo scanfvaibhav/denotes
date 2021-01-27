@@ -8,6 +8,7 @@ import {getTopPosts,getTree,getContentById,parseData} from "../../service/BaseSe
 import Login from "../Login/Login";
 import  "./Register.css";
 import renderHTML from 'react-render-html';
+import { Button } from 'primereact/button';
 import { func } from "prop-types";
 class Register extends Component{
     constructor(props){
@@ -35,13 +36,14 @@ class Register extends Component{
       }
       
     render(){
+        
          return (<div className="reg-container-main">
                 <Login login={this.setLogin}/>
                 {this.state.topPosts?
             <div className="monthly-statements">{this.state.topPosts.map((obj,index)=>{
+               
             return <Card  className = "statement-card" title={obj.topic} >
                 {renderHTML(obj.description?obj.description:"<p>_</p>")}
-                
                 </Card>
             })}</div>:""}
             </div>)

@@ -28,7 +28,9 @@ router.get('/default', async(req, res) => {
 router.get('/top', async(req, res) => {
     try {
         var posts = await Posts.find().sort({time:-1});
-        posts=posts.slice(0,10);
+        // posts=posts.slice(0,10).map(function(rec){
+        //    // rec.description=rec.description.substring(0,60);
+        //     return rec;});
         res.send({ posts });
         } catch(err) {
         res.status(400).send({ error: err });

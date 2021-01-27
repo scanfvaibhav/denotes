@@ -59,6 +59,23 @@ export function getTopPosts(_this){
         
     })); 
 }
+export function share(_this){
+    if (_this.cancel) {
+		_this.cancel.cancel();
+	}
+  _this.cancel = axios.CancelToken.source();
+    return new Promise((resolve,reject)=>axios.get(GET_DEFAULT_POSTS,{
+        cancelToken: _this.cancel.token,
+        params:{'email':JSON.parse(localStorage.userInfo).email}
+    })
+    .then((res) => {
+        resolve(res);
+    })
+    .catch((error) => {
+        reject(error);
+        
+    })); 
+}
 export function getPosts(_this){
     if (_this.cancel) {
 		_this.cancel.cancel();
