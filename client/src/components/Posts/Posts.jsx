@@ -66,7 +66,7 @@ render() {
     
       <div className="center-col">
         {this.state.posts?
-          <PostList posts={this.state.posts}/>:null
+          <PostList posts={this.state.posts}/>:"Please wait..."
         }
       </div>
     
