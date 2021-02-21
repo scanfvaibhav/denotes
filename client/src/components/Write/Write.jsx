@@ -113,8 +113,9 @@ class Write extends Component {
         </div>
         </div>
         <div className="center-col-write">
-        {Object.keys(this.state.selectedNodeKeys3).length?<SplitButton label="Actions" icon="pi" model={items} className="p-button-danger p-mr-2"></SplitButton>:""}
-        
+        {Object.keys(this.state.selectedNodeKeys3).length?
+        <SplitButton label="Actions" icon="pi" model={items} className="p-button-secondary p-mr-2"></SplitButton>:""}
+        <Button label="Add New Section" icon="pi pi-add" className="p-button-secondary p-mr-2" iconPos="right" />
         <div className="card">
        
                 <InputTextarea 
