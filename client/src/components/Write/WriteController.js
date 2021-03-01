@@ -15,8 +15,16 @@ export const resetPost=(e)=>{
     selectedNode:""
   });
 }
+
+export const deletePosts=()=>{
+  
+  if(_this.state.selectedNodeKeys3)
+    _this.removeNode(_this.state.selectedNodeKeys3);
+}
+
 export const addPosts=(e)=>{
    // e.preventDefault();
+   debugger
     try {
       let title = _this.state.title;
      
@@ -79,7 +87,7 @@ export const appendNode= async (value)=>{
       menu: treeData,
       email:JSON.parse(localStorage.userInfo).email
     });
-    parseData(treeData);
+   // parseData(treeData);
     _this.setState({treeData:treeData});
 
   };
@@ -100,14 +108,24 @@ export async function  addNode(){
 
 
 
-function removeNodeFromState(treeData,id){
+function removeNodeFromState(treeData,obj){
+ if(typeof obj==="object"){
+   for(let i in obj){
+     if(obj[i].checked==true && obj[i].partialChecked==false){
+      removeNodebyId(treeData,i);
+     }
+   }
+ }
+};
+
+function removeNodebyId(treeData,id){
   for(let i=0;i<treeData.length;i++){
-    if(treeData[i].id===id){
+    if(treeData[i].key===id){
       treeData.splice(i,1);
     }else if(treeData[i].children)
-      removeNodeFromState(treeData[i].children,id)
+    removeNodebyId(treeData[i].children,id)
   }
-};
+}
 
 export function edit(value,a,b,c){
   getContentById(_this,value).then((res)=>{
