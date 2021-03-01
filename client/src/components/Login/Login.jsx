@@ -2,6 +2,7 @@ import React from "react";
 import ReactModalLogin from "react-modal-login";
 import axios from "axios";
 import "./Login.css";
+import { Button } from 'primereact/button';
  
 import { facebookConfig, googleConfig } from "../../config/social-config";
 import  {getUser}  from '../../service/BaseService';
@@ -168,12 +169,15 @@ export default class Login extends React.Component {
   render() {
     return (
       <div>
-      <p>{this.state.user.name}</p>
+      
         <p>
-          {this.state.user.name?<button onClick={() => this.logout()}>Logout</button>:
-    
-          <button onClick={() => this.openModal()} className="glossy-button glossy-button--red">SignIn/SignUp</button>
           
+          {this.state.user.name?<p>
+          <p><Button icon="pi pi-user" className="p-button-rounded p-button-info p-button-text" />
+          {this.state.user.name}</p>
+          <Button label="Logout" className="p-button-danger" onClick={() => this.logout()}/></p>:
+          <Button label="SignIn/SignUp" onClick={() => this.openModal()} className="p-button-danger" />
+         
         }
         </p>
         <ReactModalLogin
