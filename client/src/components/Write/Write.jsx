@@ -109,7 +109,7 @@ class Write extends Component {
           label: 'Share',
           icon: 'pi pi-external-link',
           command:(e) => {
-            share(this);
+            //share(this);
               window.location.href = 'https://facebook.github.io/react/'
           }
       }
