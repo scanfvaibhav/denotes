@@ -11,6 +11,9 @@ import { Column } from 'primereact/column';
 import { Tree } from 'primereact/tree';
 import { Button } from 'primereact/button';
 import { SplitButton } from 'primereact/splitbutton';
+import "react-responsive-modal/styles.css";
+import { Modal } from "react-responsive-modal";
+import { InputText } from 'primereact/inputtext';
 import {
   load,
   onToggle,
@@ -22,11 +25,15 @@ import {
   onEditorChangeHandler,
   appendNode,
   addPosts,
+  deletePosts,
   resetPost,
   addNewNode
 } from './WriteController.js';
 import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService";
-
+const styles = {
+  fontFamily: "sans-serif",
+  textAlign: "center"
+};
 
 class Write extends Component {
   constructor(props){
@@ -40,7 +47,8 @@ class Write extends Component {
       activeIndex:0,
       open:false,
       selectedNodeKeys3:[],
-      treeData: []
+      treeData: [],
+      nodeId: ""
     };
     this.onToggle = onToggle.bind(this);
     this.addNode = addNode.bind(this);
@@ -71,7 +79,13 @@ class Write extends Component {
   handleClose(){
     this.setState({'open':false});
   };
-  
+  onOpenModal = () => {
+    this.setState({ open: true });
+  };
+
+  onCloseModal = () => {
+    this.setState({ open: false });
+  };
   render() {
   
     const setSelectedNodeKeys3 =(value)=>{
@@ -89,9 +103,7 @@ class Write extends Component {
       {
           label: 'Delete',
           icon: 'pi pi-times',
-          command: (e) => {
-             // toast.current.show({ severity: 'success', summary: 'Delete', detail: 'Data Deleted' });
-          }
+          command: deletePosts
       },
       {
           label: 'React Website',
@@ -110,17 +122,40 @@ class Write extends Component {
     const save = () => {
     //  toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
   }
+  const { open } = this.state;
     return (
       <div className="container">
         <div className="left-col-write">
         <div className="card">
             <Tree value={this.state.treeData} selectionMode="checkbox" selectionKeys={this.state.selectedNodeKeys3} onSelectionChange={e => setSelectedNodeKeys3(e.value)} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} />
         </div>
+        <Modal open={open} onClose={this.onCloseModal}>
+          <p>This will add new section/category to left menu</p>
+          <p>
+          <InputTextarea 
+                  rows={5} 
+                  cols={30}
+                  onChange={onChangeHandler.bind(this)}
+                  autoResize={true}
+                  type="text"
+                  placeholder="Title"
+                  name="title"
+                  ref="title1"
+                  className="Add-User-Input"
+                  minLength="3"
+                  maxLength="100"
+                  id="title1"
+                  value={this.state.title}
+                  style={{width:'90%'}} 
+                  />
+          <Button label="Proceed" onClick={addPosts.bind(this)} className="p-button-raised p-button-rounded" />
+          </p>
+        </Modal>
         </div>
         <div className="center-col-write">
         {Object.keys(this.state.selectedNodeKeys3).length?
         <SplitButton label="Actions" icon="pi" model={items} className="p-button-secondary p-mr-2"></SplitButton>:""}
-        <Button label="Add New Section" icon="pi pi-add" className="p-button-secondary p-mr-2" iconPos="right" />
+        <Button label="Add New Section" onClick={this.onOpenModal} icon="pi pi-add" className="p-button-secondary p-mr-2" iconPos="right" />
         <div className="card">
        
                 <InputTextarea 
