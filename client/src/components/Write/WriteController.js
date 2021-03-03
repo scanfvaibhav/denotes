@@ -69,7 +69,20 @@ export const addNewNode=async (value)=>{
 export const appendNode= async (value)=>{
     let treeData = _this.state.treeData;
     let randomId = v4();
-    treeData.push({ "key": randomId, "label": value, "icon": "pi pi-fw pi-file", "data": value });
+    let selected_node = _this.state.selectedNodeKeys3;
+    let newObj={ "key": randomId, "label": value, "icon": "pi pi-fw pi-file", "data": {"name":value}};
+    let not_found=true;
+    for(let i in treeData){
+      if(selected_node[treeData[i].key]){
+        if(treeData[i].children)
+          treeData[i].children.push(newObj);
+        else
+          treeData[i].children=[newObj];
+        not_found=false;
+      }
+    }
+    if(not_found)
+      treeData.push(newObj);
     
     const menu = await axios.post("/api/post/updateMenuTree", {
         menu: treeData,

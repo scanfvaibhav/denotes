@@ -111,8 +111,7 @@ class Write extends Component {
     //  toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
   }
   const actionTemplate = (node, column) => {
-    return <div>
-        <Button type="button" icon="pi pi-pencil" className="p-button-warning" onClick={edit.bind(node)}></Button>
+    return <div>{ node.children?null:<Button type="button" icon="pi pi-pencil" className="p-button-warning" onClick={edit.bind(node)}></Button>}
         </div>
         }
   const { open } = this.state;
