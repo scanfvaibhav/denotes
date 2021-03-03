@@ -24,7 +24,7 @@ export const deletePosts=()=>{
 
 export const addPosts=(e)=>{
    // e.preventDefault();
-   debugger
+   
     try {
       let title = _this.state.title;
      
@@ -128,6 +128,7 @@ function removeNodebyId(treeData,id){
 }
 
 export function edit(value,a,b,c){
+  value=this.key;
   getContentById(_this,value).then((res)=>{
     if(res && res.data && res.data.posts[0]){
       _this.setState({

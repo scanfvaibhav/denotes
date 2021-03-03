@@ -80,7 +80,7 @@ class Write extends Component {
     this.setState({'open':false});
   };
   onOpenModal = () => {
-    this.setState({ open: true });
+    this.setState({ open: true});
   };
 
   onCloseModal = () => {
@@ -93,13 +93,6 @@ class Write extends Component {
       this.setState({selectedNodeKeys3:value});
     };
     const items = [
-      {
-          label: 'Edit',
-          icon: 'pi pi-refresh',
-          command: (e) => {
-             // toast.current.show({severity:'success', summary:'Updated', detail:'Data Updated'});
-          }
-      },
       {
           label: 'Delete',
           icon: 'pi pi-times',
@@ -117,12 +110,29 @@ class Write extends Component {
     const save = () => {
     //  toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
   }
+  const actionTemplate = (node, column) => {
+    return <div>
+        <Button type="button" icon="pi pi-pencil" className="p-button-warning" onClick={edit.bind(node)}></Button>
+        </div>
+        }
   const { open } = this.state;
+  const header = "File Viewer";
+    const footer = <div style={{ textAlign: 'left' }}><Button icon="pi pi-refresh" tooltip="Reload" /></div>;
+
     return (
       <div className="container">
         <div className="left-col-write">
         <div className="card">
-            <Tree value={this.state.treeData} selectionMode="checkbox" selectionKeys={this.state.selectedNodeKeys3} onSelectionChange={e => setSelectedNodeKeys3(e.value)} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} />
+            <TreeTable value={this.state.treeData.map((obj)=>{
+              if(typeof obj.data==="string")
+              obj["data"]={"name":obj.data};
+              return obj
+            })}
+            style={{ width: '20em' }}
+             selectionMode="checkbox" selectionKeys={this.state.selectedNodeKeys3} onSelectionChange={e => setSelectedNodeKeys3(e.value)} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} footer={footer}>
+              <Column field="name" header="Name" expander></Column>
+              <Column body={actionTemplate} style={{ textAlign: 'center', width: '4em' }} />
+            </TreeTable>
         </div>
         <Modal open={open} onClose={this.onCloseModal}>
           <p>This will add new section/category to left menu</p>
@@ -143,7 +153,7 @@ class Write extends Component {
                   value={this.state.title}
                   style={{width:'90%'}} 
                   />
-          <Button label="Proceed" onClick={addPosts.bind(this)} className="p-button-raised p-button-rounded" />
+          <Button label="Proceed" name="addSection" onClick={addPosts.bind(this)} className="p-button-raised p-button-rounded" />
           </p>
         </Modal>
         </div>
