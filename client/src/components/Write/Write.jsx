@@ -27,7 +27,8 @@ import {
   addPosts,
   deletePosts,
   resetPost,
-  addNewNode
+  addNewNode,
+  loadTree
 } from './WriteController.js';
 import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService";
 const styles = {
@@ -59,17 +60,12 @@ class Write extends Component {
     this.tabChange = tabChange.bind(this);
     this.handleClickOpen=this.handleClickOpen.bind(this);
     this.handleClose=this.handleClose.bind(this);
+    this.loadTree=loadTree.bind(this);
    
   }
   componentDidMount(){
     
-      getTree(this).then((res)=>{
-        if(res && res.data.data && res.data.data.length){
-          let  data = res.data.data;
-          //parseData(data);
-          this.setState({treeData:data});
-        }
-      }).catch();
+      loadTree();
   }
  
  
@@ -116,7 +112,7 @@ class Write extends Component {
         }
   const { open } = this.state;
   const header = "File Viewer";
-    const footer = <div style={{ textAlign: 'left' }}><Button icon="pi pi-refresh" tooltip="Reload" /></div>;
+    const footer = <div style={{ textAlign: 'left' }}><Button icon="pi pi-refresh" onClick={loadTree} tooltip="Reload" /></div>;
 
     return (
       <div className="container">

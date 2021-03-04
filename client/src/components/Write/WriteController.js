@@ -57,6 +57,15 @@ export const addPosts=(e)=>{
       _this.setState({ response: err.message });
     }
 }
+export const loadTree = ()=>{
+  getTree(_this).then((res)=>{
+    if(res && res.data.data && res.data.data.length){
+      let  data = res.data.data;
+      //parseData(data);
+      _this.setState({treeData:data});
+    }
+  }).catch();
+}
 export const addNewNode=async (value)=>{
   _this.setState({
     "selectedNode":value,
