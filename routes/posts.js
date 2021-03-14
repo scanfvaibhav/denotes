@@ -137,21 +137,37 @@ router.post('/login',async(req,res)=>{
     }
 });
 
-router.post('/updateMenuTree',async(req,res)=>{
+router.post('/updateMenuTree',(req,res)=>{
     try{
         debugger
         let emailId=req.body.email;
-        let menu= await Menu.find({'email':emailId});
+        let selected_node=req.body.selected_node;
+        let newObj=req.body.newObj;
+        let menu= Menu.find({'email':emailId});
         if(menu.length){
-            menu = await Menu.findOneAndUpdate({
-                email:emailId,
-                menu : req.body.menu
+            let not_found=true;
+            let treeData=menu;
+            for(let i in treeData){
+              if(selected_node[treeData[i].key]){
+                if(treeData[i].children)
+                  treeData[i].children.push(newObj);
+                else
+                  treeData[i].children=[newObj];
+                not_found=false;
+              }
+            }
+            if(not_found)
+              treeData.push(newObj);
+            menu =  Menu.Update({
+                email:emailId
+            },{
+                menu : treeData
             });
         }else{
-            menu = await Menu.create({
+            menu =  Menu.create({
                 id:0,
                 email:emailId,
-                menu : req.body.menu
+                menu : [newObj]
             });
         }
         res.send(menu);

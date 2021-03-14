@@ -7,6 +7,8 @@ export const GET_CONTENT_BY_TITLE_ID = 'api/post/getContentById';
 export const GET_CONTENT_BY_NODE = 'api/post/getContentByNode';
 export const GET_TREE = 'api/post/tree';
 export const GET_MSG = 'api/message/all';
+export const GET_FORM = '/api/form/getFormMeta';
+export const SAVE_FORM = '/api/form/addFormMeta';
 export const PLAYER_API_CONFIG = {
   name: 'name',
   id: 'id',

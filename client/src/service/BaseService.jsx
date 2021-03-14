@@ -5,7 +5,9 @@ import {
     GET_MSG,GET_TREE,
     GET_CONTENT_BY_TITLE_ID,
     GET_CONTENT_BY_NODE,
-    GET_TOP_POSTS
+    GET_TOP_POSTS,
+    GET_FORM,
+    SAVE_FORM
 } from '../constants/BaseConstants';
 export function getSearchinfo(query,_this){
     if (_this.cancel) {
@@ -181,4 +183,44 @@ export function getMessages(_this,email){
         reject(error);
         
     })); 
+}
+export function getForm(_this,id){
+    if (_this.cancel) {
+		_this.cancel.cancel();
+	}
+  _this.cancel = axios.CancelToken.source();
+    return new Promise((resolve,reject)=>axios.get(GET_FORM,{
+        cancelToken: _this.cancel.token,
+        params:{
+            'email':JSON.parse(localStorage.userInfo).email,
+            'url':id
+        }
+    })
+    .then((res) => {
+        resolve(res);
+    })
+    .catch((error) => {
+        reject(error);
+        
+    }));
+}
+export function saveForm(_this,formData){
+    if (_this.cancel) {
+		_this.cancel.cancel();
+	}
+  _this.cancel = axios.CancelToken.source();
+    return new Promise((resolve,reject)=>axios.post(SAVE_FORM,{
+        cancelToken: _this.cancel.token,
+        params:{
+            'email':JSON.parse(localStorage.userInfo).email,
+            ...formData
+        }
+    })
+    .then((res) => {
+        resolve(res);
+    })
+    .catch((error) => {
+        reject(error);
+        
+    }));
 }
