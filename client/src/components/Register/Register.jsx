@@ -43,7 +43,7 @@ class Register extends Component{
             <div className="monthly-statements">{this.state.topPosts.map((obj,index)=>{
                
             return <Card  className = "statement-card" title={obj.topic} >
-                {renderHTML(obj.description?obj.description:"<p>_</p>")}
+                <p className="statement-content">{renderHTML(obj.description?obj.description:"<p>_</p>")}</p>
                 </Card>
             })}</div>:""}
             </div>)

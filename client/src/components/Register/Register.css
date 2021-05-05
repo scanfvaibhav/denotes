@@ -30,6 +30,9 @@
     overflow: hidden;
     box-shadow: 0 2px 7px 0 rgba(206, 221, 232, .84);
 }
+.statement-content {
+  font-size: xx-small
+}
 .statements-view {
   margin: 20px auto;
   width: 90%;
