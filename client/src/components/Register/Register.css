@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color:#ffffff;
+    background-color:#f2f3ed;
     font-size: x-large;
     font-weight: bold;
     color:#061b3d;
@@ -13,7 +13,7 @@
         flex-direction: column;
         color: #061b3d;
         align-items: center;
-        background-color:#ffffff;
+        background-color:#f2f3ed;
         font-size: large;
         font-weight: bold;
     }
@@ -23,7 +23,7 @@
     max-width: 22%;
     height: 200px;
     margin: 8px;
-    background: white;
+    background:#f2f3ed;
     padding: 8px;
     font-size: 5px;
     border-radius: 4px;
