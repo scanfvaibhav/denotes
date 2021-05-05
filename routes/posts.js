@@ -117,12 +117,26 @@ router.post('/create', async (req, res) => {
       }
     
     });
+const formatTree =(treeData)=>{
+    for(let i in treeData){
+        treeData[i]['data']={'name':treeData[i].label};
+        if(treeData[i].children){
+            formatTree(treeData[i].children);
+        }
+    }
 
+}
 router.get('/tree',async(req,res)=>{
     try{
         let emailId=req.query.email;
-        let menu= await Menu.find({email: emailId});
-        res.send({data:menu.length?menu[0].menu:[]});
+        let menu= await Menu.findOne({email:emailId}).sort({time:-1});
+        if(menu){
+            let treeData=menu.get('menu');
+            formatTree(treeData)
+            res.send({data:treeData?treeData:[]});
+        }else{
+            res.status(400).send({error:"no configured"});
+        }
       } catch(err){
       res.status(400).send({error:err});
     }
@@ -136,41 +150,50 @@ router.post('/login',async(req,res)=>{
       res.status(400).send({error:err});
     }
 });
-
-router.post('/updateMenuTree',(req,res)=>{
+const appendInTree = (treeData,selected_node,not_found,newObj)=>{
+    for(let i in treeData){
+        if(selected_node[treeData[i].key]){
+          if(treeData[i].children)
+            treeData[i].children.push(newObj);
+          else
+            treeData[i].children=[newObj];
+          return false;
+        }else if(treeData[i].children.length){
+            return appendInTree(treeData[i].children,selected_node,not_found,newObj)
+        }
+      }
+}
+router.post('/updateMenuTree',async (req,res)=>{
     try{
         debugger
         let emailId=req.body.email;
         let selected_node=req.body.selected_node;
-        let newObj=req.body.newObj;
-        let menu= Menu.find({'email':emailId});
-        if(menu.length){
+        let reqObj=req.body.newObj;
+        let newObj={
+            "key":reqObj.key,
+            "label":reqObj.label,
+            "children":[]
+        }
+        let menu= await Menu.findOne({email:emailId}).sort({time:-1});
+        if(menu){
+            
             let not_found=true;
-            let treeData=menu;
-            for(let i in treeData){
-              if(selected_node[treeData[i].key]){
-                if(treeData[i].children)
-                  treeData[i].children.push(newObj);
-                else
-                  treeData[i].children=[newObj];
-                not_found=false;
-              }
-            }
+            let treeData=menu.get('menu');
+            if(Array.isArray(treeData))
+            not_found=appendInTree(treeData.filter((obj)=>obj.key?true:false),selected_node,not_found,newObj);
+            else
+                treeData=[];
             if(not_found)
               treeData.push(newObj);
-            menu =  Menu.Update({
-                email:emailId
-            },{
-                menu : treeData
-            });
+              await Menu.updateMany({email:emailId}, { $set: { menu: treeData } });
+              res.status(200).send({successs:"ok"});
         }else{
-            menu =  Menu.create({
+            Menu.create({
                 id:0,
                 email:emailId,
                 menu : [newObj]
             });
         }
-        res.send(menu);
       } catch(err){
       res.status(400).send({error:err});
     }

@@ -28,7 +28,8 @@ import {
   deletePosts,
   resetPost,
   addNewNode,
-  loadTree
+  loadTree,
+  updateTree,
 } from './WriteController.js';
 import {getPosts,getTree,getContentById,parseData} from "../../service/BaseService";
 const styles = {
@@ -107,7 +108,7 @@ class Write extends Component {
     //  toast.current.show({severity: 'success', summary: 'Success', detail: 'Data Saved'});
   }
   const actionTemplate = (node, column) => {
-    return <div>{ node.children?null:<Button type="button" icon="pi pi-pencil" className="p-button-warning" onClick={edit.bind(node)}></Button>}
+    return <div>{ node.children.length?null:<Button type="button" icon="pi pi-pencil" className="p-button-warning" onClick={edit.bind(node)}></Button>}
         </div>
         }
   const { open } = this.state;
@@ -118,13 +119,13 @@ class Write extends Component {
       <div className="container">
         <div className="left-col-write">
         <div className="card">
-            <TreeTable value={this.state.treeData.map((obj)=>{
-              if(typeof obj.data==="string")
-              obj["data"]={"name":obj.data};
-              return obj
-            })}
-            style={{ width: '20em' }}
-             selectionMode="checkbox" selectionKeys={this.state.selectedNodeKeys3} onSelectionChange={e => setSelectedNodeKeys3(e.value)} dragdropScope="demo" onDragDrop={event => this.setState({ treeData: event.value })} footer={footer}>
+            <TreeTable value={this.state.treeData}
+              style={{ width: '20em' }}
+              selectionMode="checkbox" 
+              selectionKeys={this.state.selectedNodeKeys3}
+              onSelectionChange={e => setSelectedNodeKeys3(e.value)}
+              dragdropScope="demo" 
+              onDragDrop={event => this.setState({ treeData: event.value })} footer={footer}>
               <Column field="name" header="Name" expander></Column>
               <Column body={actionTemplate} style={{ textAlign: 'center', width: '4em' }} />
             </TreeTable>
@@ -148,7 +149,7 @@ class Write extends Component {
                   value={this.state.title}
                   style={{width:'90%'}} 
                   />
-          <Button label="Proceed" name="addSection" onClick={addPosts.bind(this)} className="p-button-raised p-button-rounded" />
+          <Button label="Proceed" name="addSection" onClick={updateTree.bind(this)} className="p-button-raised p-button-rounded" />
           </p>
         </Modal>
         </div>

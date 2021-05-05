@@ -21,8 +21,18 @@ export const deletePosts=()=>{
   if(_this.state.selectedNodeKeys3)
     _this.removeNode(_this.state.selectedNodeKeys3);
 }
-
-export const addPosts=(e)=>{
+export const updateTree = async ()=>{
+  let randomId = v4();
+  let title = _this.state.title;
+  await axios.post("/api/post/updateMenuTree", {
+    newObj:{ "key": randomId, "label": title},
+    selected_node:_this.state.selectedNodeKeys3,
+    email:JSON.parse(localStorage.userInfo).email
+  });
+  loadTree();
+  _this.setState({ open: false });
+}
+export const addPosts = async (e)=>{
    // e.preventDefault();
    
     try {
@@ -39,20 +49,23 @@ export const addPosts=(e)=>{
       );
         
       }else{
-        _this.appendNode(title).then((res)=>{
-          axios.post("/api/post/create", {
-            title: title,
-            description: _this.state.description,
-            details: _this.state.details,
-            email:JSON.parse(localStorage.userInfo).email,
-            titleId : res
-          }
-        );
-        });
+        let randomId = v4();
+   await axios.post("/api/post/updateMenuTree", {
+        newObj:{ "key": randomId, "label": title},
+        selected_node:_this.state.selectedNodeKeys3,
+        email:JSON.parse(localStorage.userInfo).email
+      }
+    );
+    await axios.post("/api/post/create", {
+      title: title,
+      description: _this.state.description,
+      details: _this.state.details,
+      email:JSON.parse(localStorage.userInfo).email,
+      titleId : randomId
+    });
+    loadTree();
       
       }
-      _this.toast.show({severity: 'success', summary: 'Success Message', detail: 'Order submitted'});
-      _this.setState({ response: `Done!` });
     } catch (err) {
       _this.setState({ response: err.message });
     }
@@ -76,7 +89,6 @@ export const addNewNode=async (value)=>{
   });
 }
 export const appendNode=  (value)=>{
-    let treeData = _this.state.treeData;
     let randomId = v4();
     const menu =  axios.post("/api/post/updateMenuTree", {
         newObj:{ "key": randomId, "label": value, "icon": "pi pi-fw pi-file", "data": {"name":value}},
@@ -85,8 +97,7 @@ export const appendNode=  (value)=>{
       }
     );
     menu.then((res)=>{
-      debugger
-      _this.setState({treeData:res.data.menu});
+      loadTree();
     })
     
     return randomId;
