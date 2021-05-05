@@ -150,16 +150,16 @@ router.post('/login',async(req,res)=>{
       res.status(400).send({error:err});
     }
 });
-const appendInTree = (treeData,selected_node,not_found,newObj)=>{
+const appendInTree = (treeData,selected_node,found,newObj)=>{
     for(let i in treeData){
         if(selected_node[treeData[i].key]){
           if(treeData[i].children)
             treeData[i].children.push(newObj);
           else
             treeData[i].children=[newObj];
-          return false;
+          return true;
         }else if(treeData[i].children.length){
-            return appendInTree(treeData[i].children,selected_node,not_found,newObj)
+            return appendInTree(treeData[i].children,selected_node,found,newObj)
         }
       }
 }
@@ -177,13 +177,13 @@ router.post('/updateMenuTree',async (req,res)=>{
         let menu= await Menu.findOne({email:emailId}).sort({time:-1});
         if(menu){
             
-            let not_found=true;
+            let found=false;
             let treeData=menu.get('menu');
             if(Array.isArray(treeData))
-            not_found=appendInTree(treeData.filter((obj)=>obj.key?true:false),selected_node,not_found,newObj);
+            found=appendInTree(treeData.filter((obj)=>obj.key?true:false),selected_node,found,newObj);
             else
                 treeData=[];
-            if(not_found)
+            if(!found)
               treeData.push(newObj);
               await Menu.updateMany({email:emailId}, { $set: { menu: treeData } });
               res.status(200).send({successs:"ok"});
