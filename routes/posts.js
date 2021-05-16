@@ -163,9 +163,41 @@ const appendInTree = (treeData,selected_node,found,newObj)=>{
         }
       }
 }
+
+const deleteFromTree = (treeData,selected_node,found)=>{
+    for(let i in treeData){
+        if(selected_node[treeData[i].key]){
+            delete treeData[i];
+        }else if(treeData[i].children.length){
+            return deleteFromTree(treeData[i].children,selected_node,found)
+        }
+      }
+      return treeData;
+}
+
+router.post('/deleteMenu', async (req, res)=>{
+    try{
+
+        let emailId=req.body.email;
+        let menu= await Menu.findOne({email:emailId}).sort({time:-1});
+        if(menu){
+            
+            let found=false;
+            let treeData=menu.get('menu');
+            let selected_node=req.body.value;
+            if(Array.isArray(treeData))
+            found=deleteFromTree(treeData.filter((obj)=>obj.key?true:false),selected_node,found);
+
+            if(found)
+              await Menu.updateMany({email:emailId}, { $set: { menu: found } });
+              res.status(200).send({successs:"ok"});
+        }
+    }catch(err){
+        res.status(400).send({error:err});
+      }
+});
 router.post('/updateMenuTree',async (req,res)=>{
     try{
-        debugger
         let emailId=req.body.email;
         let selected_node=req.body.selected_node;
         let reqObj=req.body.newObj;

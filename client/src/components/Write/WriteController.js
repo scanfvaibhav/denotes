@@ -103,16 +103,13 @@ export const appendNode=  (value)=>{
     return randomId;
   };
 
-  export async function removeNode(val){
-    let treeData = _this.state.treeData;
-    removeNodeFromState(treeData,val);
-    await axios.post("/api/post/updateMenuTree", {
-      menu: treeData,
+  export function removeNode(val){
+    axios.post("/api/post/deleteMenu", {
+      value: val,
       email:JSON.parse(localStorage.userInfo).email
+    }).then((res)=>{
+      loadTree();
     });
-   // parseData(treeData);
-    _this.setState({treeData:treeData});
-
   };
 
 export function onChangeHandler(e){
