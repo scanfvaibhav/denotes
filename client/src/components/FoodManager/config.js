@@ -10,43 +10,43 @@ export const config={
             items:[{
                 itemId:"roti",
                 type:"roti",
-                name:"प्रतिक्रिया पुस्तकालय",
+                name:"रोटी",
                 quantity:"6",
-                discription:"प्रतिक्रिया पुस्तकालय"
+                discription:"रोटी"
             },{
                 itemId:"matarPaneer",
                 type:"curry",
-                name:"प्रतिक्रिया पुस्तकालय",
-                discription:"प्रतिक्रिया पुस्तकालय"
+                name:"मटर पनीर",
+                discription:"मटर पनीर"
             },{
                 itemId:"raita",
                 type:"appetizers",
-                name:"Apple Raita",
-                discription:" mashed Apple Raita"
+                name:"सेब का रायता",
+                discription:"सेब का रायता"
             },{
                 itemId:"dal",
                 type:"dal",
-                name:"Dal",
-                discription:"Moong dal"
+                name:"दाल",
+                discription:"दाल"
             }]
         },
         dinner:{
             items:[{
                 itemId:"roti",
                 type:"roti",
-                name:"Roti",
+                name:"रोटी",
                 quantity:"6",
-                discription:"Wheet Roti"
+                discription:"रोटी"
             },{
                 itemId:"matarPaneer",
                 type:"curry",
                 name:"Paneer Matar",
                 discription:"Wheet Roti"
             },{
-                itemId:"raita",
+                itemId:"soup",
                 type:"appetizers",
-                name:"Paneer Matar",
-                discription:"Wheet Roti"
+                name:"टमाटर सूप",
+                discription:"टमाटर सूप"
             },{
                 itemId:"dal",
                 type:"dal",
@@ -61,10 +61,47 @@ export const config={
             items:[]
         },
         lunch:{
-            items:[]
+            items:[{
+                itemId:"roti",
+                type:"roti",
+                name:"रोटी",
+                quantity:"6",
+                discription:"रोटी"
+            },{
+                itemId:"bainganBharta",
+                type:"curry",
+                name:"शिमला मिर्च और आलू",
+                discription:"शिमला मिर्च और आलू"
+            },{
+                itemId:"raita",
+                type:"appetizers",
+                name:"सेब का रायता",
+                discription:"सेब का रायता"
+            },{
+                itemId:"dal",
+                type:"dal",
+                name:"चना दाल लौकी",
+                discription:"चना दाल लौकी"
+            }]
         },
         dinner:{
-            items:[]
+            items:[{
+                itemId:"rice",
+                type:"rice",
+                name:"चावल",
+                quantity:"2",
+                discription:"चावल"
+            },{
+                itemId:"matarPaneer",
+                type:"curry",
+                name:"मटर पनीर",
+                discription:"मटर पनीर"
+            },{
+                itemId:"soup",
+                type:"appetizers",
+                name:"टमाटर सूप",
+                discription:"टमाटर सूप"
+            }]
         }
     },
     "3":{
@@ -73,7 +110,28 @@ export const config={
             items:[]
         },
         lunch:{
-            items:[]
+            items:[{
+                itemId:"roti",
+                type:"roti",
+                name:"रोटी",
+                quantity:"6",
+                discription:"रोटी"
+            },{
+                itemId:"matarPaneer",
+                type:"curry",
+                name:"मटर पनीर",
+                discription:"मटर पनीर"
+            },{
+                itemId:"raita",
+                type:"appetizers",
+                name:"सेब का रायता",
+                discription:"सेब का रायता"
+            },{
+                itemId:"dal",
+                type:"dal",
+                name:"दाल",
+                discription:"दाल"
+            }]
         },
         dinner:{
             items:[]
