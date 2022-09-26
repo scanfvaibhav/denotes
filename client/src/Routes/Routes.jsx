@@ -12,6 +12,7 @@ import Write from "../Layout/Write/Write";
 import Login from "../components/Login/Login";
 import Register from "../components/Register/Register";
 import Dform from "../components/Dform/Dform";
+import FoodManager from "../components/FoodManager";
 //import Upload from "../components/FileUpload/FileUpload";
 
 
@@ -30,6 +31,8 @@ const Routes = () => {
           <Route path="/Write" component={ Write } exact />
           <Route path="/Upload" component={ Write } exact />
           <Route path="/Form/" component={ Dform } exact />
+          <Route path="/FoodManager/" component={ FoodManager } exact />
+
 
         </Switch>:<Register login={(value)=>setLogin(value)}/>}
       </Fragment>
