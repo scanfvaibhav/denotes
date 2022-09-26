@@ -2,6 +2,10 @@ import React from 'react';
 import {config} from './config';
 import  './style.css'
 const FoodManager=()=>{
+
+    setTimeout(function() {
+        window.location.reload();
+      }, 30000);
    const today = new Date();
    const day=today.getDay();
    const dayConfig=config[day];
@@ -35,7 +39,7 @@ const FoodManager=()=>{
     return <div> 
         <h1 className="StyledDay">{currentConfig.msg}</h1>
         <h2 className="StyledDay">{dayConfig.day}</h2>
-        <h2 className="StyledDay">{today.getDay()+"/"+today.getMonth()+"/"+today.getFullYear()}</h2>
+        <h2 className="StyledDay">{today.getDate()+"/"+(Number(today.getMonth())+1)+"/"+today.getFullYear()}</h2>
         <div className="StyledDay">{foodList}</div>
         <p className="StyledDay">"Thank You !!"</p>
     </div>
