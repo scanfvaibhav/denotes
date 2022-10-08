@@ -472,7 +472,7 @@ export const config=
         ]
       }
     },
-    "7": {
+    "0": {
       "day": "Sunday",
       "breakfast": {
         "items": []
