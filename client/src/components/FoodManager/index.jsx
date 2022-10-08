@@ -2,6 +2,8 @@ import { Button } from 'primereact/button';
 import React,{useState} from 'react';
 import {config} from './config';
 import  './style.css'
+import { Card } from 'primereact/card';
+
 const FoodManager=()=>{
 
     setTimeout(function() {
@@ -37,10 +39,11 @@ const FoodManager=()=>{
     const dayFood = dayConfig[foodCode].items;
     const foodList = dayFood.map((obj)=>
     <div>
-    <li>{obj.name}</li>
-    <li>{obj.discription}</li>
-    <li>"Quantity: "{obj.quantity}</li>
-    <br/>
+    <Card>
+        <li>{obj.name}</li>
+        <li>{obj.discription}</li>
+        <li>"Quantity: "{obj.quantity}</li>
+    </Card>
     <br/>
     </div>
 );
