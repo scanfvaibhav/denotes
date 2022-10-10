@@ -3,6 +3,9 @@ import React,{useState} from 'react';
 import {config} from './config';
 import  './style.css'
 import { Card } from 'primereact/card';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { TabView, TabPanel } from 'primereact/tabview';
 
 const FoodManager=()=>{
 
@@ -37,16 +40,28 @@ const FoodManager=()=>{
     
     const foodCode=foodMap[foodType].foodCode
     const dayFood = dayConfig[foodCode].items;
-    const foodList = dayFood.map((obj)=>
-    <div>
-    <Card>
-        <li>{obj.name}</li>
-        <li>{obj.discription}</li>
-        <li>"Quantity: "{obj.quantity}</li>
-    </Card>
-    <br/>
-    </div>
-);
+    const getFoodList=(food)=>{
+        return food.map((obj)=>
+        <div className="StyledDay">
+            <h3><b>{obj.name}</b></h3>
+            {obj.discription}
+            "Quantity: "{obj.quantity}
+        <br/>
+        </div>
+    );
+    }
+    const getFoodListFullMenu=(food)=>{
+        return food.map((obj)=>
+        <div className="StyledDay">
+            <h3><b>{obj.name}</b></h3>
+        </div>
+    );
+    }
+    const foodListRenderer=(record,index)=>{
+        return getFoodListFullMenu(record[index].items);
+    }
+    const foodList = getFoodList(dayFood);
+    
     const next=()=>{
         if(foodType===3){
             setFoodType(1);
@@ -72,15 +87,60 @@ const FoodManager=()=>{
             setFoodType(foodType-1);
         }
     }
+    const FullMenu=()=>{return(<div>
+        <DataTable value={config} responsiveLayout="scroll">
+            <Column field="day" header="Day Name"></Column>
+            <Column field="breakfast" body={(record)=>foodListRenderer(record,'breakfast')} header="Break Fast"></Column>
+            <Column field="lunch" body={(record)=>foodListRenderer(record,'lunch')} header="Lunch"></Column>
+            <Column field="dinner" body={(record)=>foodListRenderer(record,'dinner')} header="Dinner"></Column>
+        </DataTable>
+</div>)};
+const getAllItems=(items)=>{
+    let res=[];
+    const getItems=(obj)=>{
+        return [...obj.lunch.items,...obj.breakfast.items,...obj.dinner.items]
+    }
+    items.forEach((obj)=>{getItems(obj).forEach((obj)=>{if(obj.items){res=[...res,...obj.items]}});})
+return res;
+}
+  const AllItems=()=>{
+      return(<div>
+    <DataTable value={getAllItems(config)} responsiveLayout="scroll">
+        <Column field="itemId" header="Id"></Column>
+        <Column field="type"  header="Type"></Column>
+        <Column field="name"  header="Name"></Column>
+        <Column field="description"  header="Description"></Column>
+    </DataTable>
+</div>)};
+ const [activeIndex, setActiveIndex] = useState(0);
+const TodayMenu=()=>{
+    return (<div>
+        <h2 className="StyledDay">{dayConfig.day}</h2>
+        <h3 className="StyledDay">{foodCode}</h3>
+        <div className="StyledDay"> <Card className="food-item">{foodList}</Card><br/></div>
+        <div className="StyledDay"> <button className="next" onClick={previous}>&laquo; PREVIOUS</button> <button className="previous" onClick={next}> NEXT&raquo;</button></div>
+    </div>);
+}
     return <div> 
         <h1 className="StyledDay">{msg}</h1>
         <h2 className="StyledDay">{today.getDate()+"/"+(Number(today.getMonth())+1)+"/"+today.getFullYear()}</h2>
-        <div className="StyledDay"> <button className="next" onClick={previous}>&laquo;PREVIOUS</button></div>
+       
 
-        <h2 className="StyledDay">{dayConfig.day}</h2>
-        <h3 className="StyledDay">{foodCode}</h3>
-        <div className="StyledDay">{foodList}</div>
-        <div className="StyledDay"> <button className="previous" onClick={next}>NEXT&raquo;</button></div>
+<TabView activeIndex={activeIndex} onTabChange={(e) => setActiveIndex(e.index)}>
+    <TabPanel header="Today Menu">
+    <TodayMenu/>
+    </TabPanel>
+    <TabPanel header="All Menu">
+    <FullMenu/>
+    </TabPanel>
+    <TabPanel header="All Items">
+       <AllItems/>
+    </TabPanel>
+</TabView>
+        
+        
+        
+       
         <p className="StyledDay">"Thank You !!"</p>
     </div>
 }

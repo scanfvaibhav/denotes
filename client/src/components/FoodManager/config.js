@@ -1,7 +1,43 @@
 import react from 'react';
 export const config=
-  {
-    "1": {
+  [{
+    "day": "Sunday",
+    "breakfast": {
+      "items": []
+    },
+    "lunch": {
+      "items": [
+        {
+          "itemId": "rajma",
+          "type": "curry",
+          "name": "rajma/ chana",
+          "description": "palak paneer"
+        },
+        {
+          "itemId": "poori",
+          "type": "poori",
+          "name": "poori",
+          "description": "poori"
+        },
+        {
+          "itemId": "salad",
+          "type": "salad",
+          "name": "salad",
+          "description": "salad"
+        }
+      ]
+    },
+    "dinner": {
+      "items": [
+        {
+          "itemId": "khichadi",
+          "type": "khichadi",
+          "name": "khichadi",
+          "description": "khichadi"
+        }
+      ]
+    }
+  },{
       "day": "Monday",
       "breakfast": {
         "items": [
@@ -89,8 +125,7 @@ export const config=
           }
         ]
       }
-    },
-    "2": {
+    },{
       "day": "Tuesday",
       "dinner": {
         "items": [
@@ -149,7 +184,8 @@ export const config=
             "description": "mushroom matar tomatto",
             "items": [
               {
-                "name": "mushroom"
+                "name": "mushroom",
+                "itemId": "mushroom",
               },
               {
                 "name": "matar"
@@ -181,8 +217,7 @@ export const config=
           }
         ]
       }
-    },
-    "3": {
+    },{
       "day": "Wednesday",
       "breakfast": {
         "items": []
@@ -262,8 +297,7 @@ export const config=
           }
         ]
       }
-    },
-    "4": {
+    }, {
       "day": "Thursday",
       "breakfast": {
         "items": [
@@ -344,8 +378,7 @@ export const config=
           }
         ]
       }
-    },
-    "5": {
+    }, {
       "day": "Friday",
       "breakfast": {
         "items": [
@@ -412,8 +445,7 @@ export const config=
           }
         ]
       }
-    },
-    "6": {
+    }, {
       "day": "Saturday",
       "breakfast": {
         "items": [
@@ -471,43 +503,5 @@ export const config=
           }
         ]
       }
-    },
-    "0": {
-      "day": "Sunday",
-      "breakfast": {
-        "items": []
-      },
-      "lunch": {
-        "items": [
-          {
-            "itemId": "rajma",
-            "type": "curry",
-            "name": "rajma/ chana",
-            "description": "palak paneer"
-          },
-          {
-            "itemId": "poori",
-            "type": "poori",
-            "name": "poori",
-            "description": "poori"
-          },
-          {
-            "itemId": "salad",
-            "type": "salad",
-            "name": "salad",
-            "description": "salad"
-          }
-        ]
-      },
-      "dinner": {
-        "items": [
-          {
-            "itemId": "khichadi",
-            "type": "khichadi",
-            "name": "khichadi",
-            "description": "khichadi"
-          }
-        ]
-      }
-    }
-  }
+    }, 
+  ]
