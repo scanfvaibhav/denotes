@@ -3,7 +3,7 @@ import type { TreeNode } from "../types/tree"
 export const menuData: TreeNode[] = [
   {
     id: "1",
-    label: "Frontend Development",
+    label: "Frontend Development1",
     description:
       "Frontend development involves creating the user interface and user experience of web applications. It includes HTML, CSS, JavaScript, and modern frameworks.",
     children: [
